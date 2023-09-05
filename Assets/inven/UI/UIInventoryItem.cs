@@ -34,6 +34,7 @@ namespace Inventory.UI
         {
             itemImage.gameObject.SetActive(false);
             empty = true;
+            //Destroy(gameObject);
         }
         public void Deselect()
         {
