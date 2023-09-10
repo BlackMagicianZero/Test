@@ -15,6 +15,32 @@ public class PlayerController : MonoBehaviour
     TouchingDirections touchingDirections;
     Damageable damageable;
 
+    private GameObject currentOneWayPlatform;
+    [SerializeField] private CapsuleCollider2D playerCollider;
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("OneWayPlatform"))
+        {
+            currentOneWayPlatform = collision.gameObject;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("OneWayPlatform"))
+        {
+            currentOneWayPlatform = null;
+        }
+    }
+    private IEnumerator DisableCollision()
+    {
+        BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
+
+        Physics2D.IgnoreCollision(playerCollider, platformCollider);
+        yield return new WaitForSeconds(1f);
+        Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
+    }
     public float CurrentMoveSpeed
     {
         get
@@ -127,7 +153,7 @@ public class PlayerController : MonoBehaviour
         touchingDirections = GetComponent<TouchingDirections>();
         damageable = GetComponent<Damageable>();
     }
-    
+
     private void FixedUpdate()
     {
         if(!damageable.LockVelocity)
@@ -203,5 +229,17 @@ public class PlayerController : MonoBehaviour
     public void OnHit(int damage, Vector2 knockback)
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+    }
+
+    public void DownJump(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            if(currentOneWayPlatform != null)
+            {
+                StartCoroutine(DisableCollision());
+                animator.SetTrigger(AnimationStrings.jump);
+            }
+        }
     }
 }
