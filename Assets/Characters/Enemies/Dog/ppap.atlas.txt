@@ -1,0 +1,27 @@
+
+ppap.png
+size: 245,156
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_ear
+  rotate: false
+  xy: 156, 83
+  size: 87, 71
+  orig: 87, 71
+  offset: 0, 0
+  index: -1
+R_ear
+  rotate: false
+  xy: 156, 10
+  size: 87, 71
+  orig: 87, 71
+  offset: 0, 0
+  index: -1
+face
+  rotate: false
+  xy: 2, 2
+  size: 152, 152
+  orig: 152, 152
+  offset: 0, 0
+  index: -1

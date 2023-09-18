@@ -1,0 +1,28 @@
+날렵한 풀 토끼 이동.png
+size:55,46
+filter:Linear,Linear
+pma:true
+귀1
+bounds:2,2,15,12
+offsets:0,1,23,14
+귀2
+bounds:19,2,9,12
+offsets:10,2,19,14
+꼬리
+bounds:39,9,12,8
+rotate:90
+다리 1
+bounds:30,6,15,7
+rotate:90
+다리 2
+bounds:44,31,13,7
+rotate:90
+레이어 2
+bounds:44,23,9,6
+몸
+bounds:2,16,28,20
+offsets:11,0,39,20
+rotate:90
+와꾸
+bounds:24,23,21,18
+rotate:90
