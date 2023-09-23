@@ -11,12 +11,15 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 8f;
     public float airWalkSpeed = 3f;
     public float jumpImpulse = 10f;
+    public int remainingJumps = 1;
+    private bool isOnWallJumpCooldown = false;
     Vector2 moveInput;
     TouchingDirections touchingDirections;
     Damageable damageable;
 
     private GameObject currentOneWayPlatform;
     [SerializeField] private CapsuleCollider2D playerCollider;
+    [SerializeField] private Collider2D wallCollider;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -152,6 +155,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
         damageable = GetComponent<Damageable>();
+        wallCollider = GetComponentInChildren<Collider2D>();
     }
 
     private void FixedUpdate()
@@ -200,8 +204,8 @@ public class PlayerController : MonoBehaviour
             IsRunning = false;
         }
     }
-
-    public void OnJump(InputAction.CallbackContext context)
+    // 1 jump
+    /*public void OnJump(InputAction.CallbackContext context)
     {
         // TODO Check if alive as well
         if(context.started && touchingDirections.IsGrounded && CanMove)
@@ -209,6 +213,68 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger(AnimationStrings.jump);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
         }
+    }*/
+
+    // double jump
+    /*public void OnJump(InputAction.CallbackContext context)
+    {
+        // TODO Check if alive as well
+        if (context.started && CanMove)
+        {
+            if (touchingDirections.IsGrounded)
+            {
+                remainingJumps = 1; // 초기 점프 횟수 설정
+                animator.SetTrigger(AnimationStrings.jump);
+                rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+            }
+            else if (remainingJumps > 0) // 더블 점프 가능한 경우
+            {
+                remainingJumps--; // 더블 점프 횟수 감소
+                animator.SetTrigger(AnimationStrings.jump);
+                rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+            }
+        }
+    }*/
+    //벽점 + 2단점프
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        // TODO Check if alive as well
+        if (context.started && CanMove)
+        {
+            if (touchingDirections.IsGrounded)
+            {
+                remainingJumps = 2; // 초기 점프 횟수 설정
+                animator.SetTrigger(AnimationStrings.jump);
+                rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+            }
+            else if (remainingJumps > 0) // 더블 점프 가능한 경우
+            {
+                remainingJumps--; // 더블 점프 횟수 감소
+                animator.SetTrigger(AnimationStrings.jump);
+                rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+            }
+            else if (touchingDirections.IsOnWall && !isOnWallJumpCooldown)
+            {
+                // 벽에서의 점프 로직
+                Vector2 wallJumpDirection = new Vector2(1f, 1f); // 벽에서 밀려나는 방향 설정
+                rb.velocity = wallJumpDirection * jumpImpulse;
+                isOnWallJumpCooldown = true;
+
+                // 벽과의 충돌 무시 설정 (벽을 뚫고 지나갈 수 있도록)
+                StartCoroutine(DisableWallCollision());
+            }
+        }
+    }
+
+    private IEnumerator DisableWallCollision()
+    {
+        // 벽과의 충돌 무시 설정
+        Physics2D.IgnoreCollision(playerCollider, wallCollider, true);
+
+        // 일정 시간 후에 충돌 무시 해제
+        yield return new WaitForSeconds(0.5f);
+
+        Physics2D.IgnoreCollision(playerCollider, wallCollider, false);
     }
 
     public void OnAttack(InputAction.CallbackContext context)
