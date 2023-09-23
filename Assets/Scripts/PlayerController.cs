@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     Vector2 moveInput;
     TouchingDirections touchingDirections;
     Damageable damageable;
+    Rigidbody2D rb;
+    Animator animator;
+    
+
 
     private GameObject currentOneWayPlatform;
     [SerializeField] private CapsuleCollider2D playerCollider;
@@ -146,9 +150,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    Rigidbody2D rb;
-    Animator animator;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -157,13 +158,49 @@ public class PlayerController : MonoBehaviour
         damageable = GetComponent<Damageable>();
         wallCollider = GetComponentInChildren<Collider2D>();
     }
+    public float blinkDistance = 5f; // 블링크 거리
+    public float blinkDuration = 0.2f; // 블링크 지속 시간
+    private bool isBlinking = false;
+    private float blinkCooldown = 3f; // 블링크 쿨타임 (3초)
+    public void OnBlink(InputAction.CallbackContext context)
+    {
+        if (context.started && !isBlinking && CanMove)
+        {
+            StartCoroutine(PerformBlink());
+        }
+    }
+
+    private IEnumerator PerformBlink()
+    {
+        // 블링크 시작
+        isBlinking = true;
+
+        // 현재 위치와 바라보는 방향을 얻어옴
+        Vector2 startPosition = transform.position;
+        Vector2 blinkDirection = IsFacingRight ? Vector2.right : Vector2.left;
+        
+        // 블링크 끝 위치 계산
+        Vector2 endPosition = startPosition + blinkDirection * blinkDistance;
+
+        // 무적 활성화
+        damageable.isInvincible = true;
+
+        // 플레이어 이동
+        rb.position = endPosition;
+
+        // 무적 비활성화
+        yield return new WaitForSeconds(blinkDuration);
+        damageable.isInvincible = false;
+
+        // 블링크 종료
+        isBlinking = false;
+    }
+
 
     private void FixedUpdate()
     {
         if(!damageable.LockVelocity)
             rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
-
-        animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -243,7 +280,7 @@ public class PlayerController : MonoBehaviour
         {
             if (touchingDirections.IsGrounded)
             {
-                remainingJumps = 2; // 초기 점프 횟수 설정
+                remainingJumps = 1; // 초기 점프 횟수 설정
                 animator.SetTrigger(AnimationStrings.jump);
                 rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
             }

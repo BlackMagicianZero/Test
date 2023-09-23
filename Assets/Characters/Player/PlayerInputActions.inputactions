@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "blink",
+                    "type": "Button",
+                    "id": "7495d161-0b3e-4d16-8409-d3decb841cb5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -303,17 +312,6 @@
                 },
                 {
                     "name": "",
-                    "id": "38076c4a-592b-44a6-b966-ce3d6aa89995",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d857a43a-d927-4d21-b5d7-5d97ac99e311",
                     "path": "<Keyboard>/w",
                     "interactions": "",
@@ -353,6 +351,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "DownJump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0e1e7483-8476-4bc6-b069-b43fb99940b1",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "blink",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
