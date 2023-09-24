@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections),typeof(Damageable))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
 {
     public float walkSpeed = 5f;
@@ -19,15 +18,15 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Animator animator;
     
-
-
     private GameObject currentOneWayPlatform;
     [SerializeField] private CapsuleCollider2D playerCollider;
     [SerializeField] private Collider2D wallCollider;
 
+    private bool isJumpingOffWall = false;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("OneWayPlatform"))
+        if (collision.gameObject.CompareTag("OneWayPlatform"))
         {
             currentOneWayPlatform = collision.gameObject;
         }
@@ -35,30 +34,31 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("OneWayPlatform"))
+        if (collision.gameObject.CompareTag("OneWayPlatform"))
         {
             currentOneWayPlatform = null;
         }
     }
+
     private IEnumerator DisableCollision()
     {
         BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
-
         Physics2D.IgnoreCollision(playerCollider, platformCollider);
         yield return new WaitForSeconds(1f);
         Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
     }
+
     public float CurrentMoveSpeed
     {
         get
         {
-            if(CanMove)
+            if (CanMove)
             {
-                if(IsMoving && !touchingDirections.IsOnWall)
+                if (IsMoving && !touchingDirections.IsOnWall)
                 {
-                    if(touchingDirections.IsGrounded)
+                    if (touchingDirections.IsGrounded)
                     {
-                        if(IsRunning)
+                        if (IsRunning)
                         {
                             return runSpeed;
                         }
@@ -126,12 +126,12 @@ public class PlayerController : MonoBehaviour
         }
         private set
         {
-            if(_isFacingRight !=value)
+            if (_isFacingRight != value)
             {
                 transform.localScale *= new Vector2(-1, 1);
             }
             _isFacingRight = value;
-        } 
+        }
     }
 
     public bool CanMove
@@ -158,10 +158,12 @@ public class PlayerController : MonoBehaviour
         damageable = GetComponent<Damageable>();
         wallCollider = GetComponentInChildren<Collider2D>();
     }
+
     public float blinkDistance = 5f; // 블링크 거리
     public float blinkDuration = 0.2f; // 블링크 지속 시간
     private bool isBlinking = false;
     private float blinkCooldown = 3f; // 블링크 쿨타임 (3초)
+
     public void OnBlink(InputAction.CallbackContext context)
     {
         if (context.started && !isBlinking && CanMove)
@@ -196,18 +198,53 @@ public class PlayerController : MonoBehaviour
         isBlinking = false;
     }
 
-
     private void FixedUpdate()
     {
-        if(!damageable.LockVelocity)
+        if (!damageable.LockVelocity)
             rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
+
+        // 벽에 붙어 있을 때 이동을 막기 위해 추가 제어 로직이 필요합니다.
+        if (touchingDirections.IsOnWall && !isJumpingOffWall)
+        {
+            // 벽에 붙어 있다면 수평 속도를 0으로 설정하여 움직이지 않도록 합니다.
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+
+            // 벽에 붙어 있을 때만 점프할 수 있도록 검사합니다.
+            if (CanMove && !touchingDirections.IsGrounded && !isOnWallJumpCooldown)
+            {
+                WallJump();
+            }
+        }
+    }
+
+    private void WallJump()
+    {
+        // 벽에서의 점프 로직
+        Vector2 wallJumpDirection = IsFacingRight ? Vector2.left : Vector2.right;
+        Jump(jumpImpulse);
+        rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+        rb.AddForce(wallJumpDirection * jumpImpulse * 0.5f, ForceMode2D.Impulse);
+        isOnWallJumpCooldown = true;
+        StartCoroutine(DisableWallCollision());
+        isJumpingOffWall = true;
+    }
+
+    private IEnumerator DisableWallCollision()
+    {
+        // 벽과의 충돌 무시 설정
+        Physics2D.IgnoreCollision(playerCollider, wallCollider, true);
+
+        // 일정 시간 후에 충돌 무시 해제
+        yield return new WaitForSeconds(0.5f);
+
+        Physics2D.IgnoreCollision(playerCollider, wallCollider, false);
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
 
-        if(IsAlive)
+        if (IsAlive)
         {
             IsMoving = moveInput != Vector2.zero;
             SetFacingDirection(moveInput);
@@ -220,11 +257,11 @@ public class PlayerController : MonoBehaviour
 
     private void SetFacingDirection(Vector2 moveInput)
     {
-        if(moveInput.x > 0 && !IsFacingRight)
+        if (moveInput.x > 0 && !IsFacingRight)
         {
             IsFacingRight = true;
         }
-        else if(moveInput.x < 0 && IsFacingRight)
+        else if (moveInput.x < 0 && IsFacingRight)
         {
             IsFacingRight = false;
         }
@@ -232,13 +269,34 @@ public class PlayerController : MonoBehaviour
 
     public void OnRun(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
         {
             IsRunning = true;
         }
-        else if(context.canceled)
+        else if (context.canceled)
         {
             IsRunning = false;
+        }
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started && CanMove)
+        {
+            if (touchingDirections.IsGrounded)
+            {
+                remainingJumps = 1;
+                Jump(jumpImpulse);
+            }
+            else if (remainingJumps > 0)
+            {
+                remainingJumps--;
+                Jump(jumpImpulse);
+            }
+            else if (touchingDirections.IsOnWall && !isOnWallJumpCooldown)
+            {
+                WallJump();
+            }
         }
     }
     // 1 jump
@@ -272,51 +330,15 @@ public class PlayerController : MonoBehaviour
             }
         }
     }*/
-    //벽점 + 2단점프
-    public void OnJump(InputAction.CallbackContext context)
+    private void Jump(float jumpForce)
     {
-        // TODO Check if alive as well
-        if (context.started && CanMove)
-        {
-            if (touchingDirections.IsGrounded)
-            {
-                remainingJumps = 1; // 초기 점프 횟수 설정
-                animator.SetTrigger(AnimationStrings.jump);
-                rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
-            }
-            else if (remainingJumps > 0) // 더블 점프 가능한 경우
-            {
-                remainingJumps--; // 더블 점프 횟수 감소
-                animator.SetTrigger(AnimationStrings.jump);
-                rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
-            }
-            else if (touchingDirections.IsOnWall && !isOnWallJumpCooldown)
-            {
-                // 벽에서의 점프 로직
-                Vector2 wallJumpDirection = new Vector2(1f, 1f); // 벽에서 밀려나는 방향 설정
-                rb.velocity = wallJumpDirection * jumpImpulse;
-                isOnWallJumpCooldown = true;
-
-                // 벽과의 충돌 무시 설정 (벽을 뚫고 지나갈 수 있도록)
-                StartCoroutine(DisableWallCollision());
-            }
-        }
-    }
-
-    private IEnumerator DisableWallCollision()
-    {
-        // 벽과의 충돌 무시 설정
-        Physics2D.IgnoreCollision(playerCollider, wallCollider, true);
-
-        // 일정 시간 후에 충돌 무시 해제
-        yield return new WaitForSeconds(0.5f);
-
-        Physics2D.IgnoreCollision(playerCollider, wallCollider, false);
+        animator.SetTrigger(AnimationStrings.jump);
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
         {
             animator.SetTrigger(AnimationStrings.attack);
         }
@@ -324,11 +346,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnRangedAttack(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
         {
             animator.SetTrigger(AnimationStrings.rangedAttackTrigger);
         }
     }
+
     public void OnHit(int damage, Vector2 knockback)
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
@@ -336,9 +359,9 @@ public class PlayerController : MonoBehaviour
 
     public void DownJump(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
         {
-            if(currentOneWayPlatform != null)
+            if (currentOneWayPlatform != null)
             {
                 StartCoroutine(DisableCollision());
                 animator.SetTrigger(AnimationStrings.jump);
