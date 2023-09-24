@@ -368,4 +368,29 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Fallen"))
+        {
+            // "fallen" 영역에 닿았을 때, 최대 체력의 10%를 감소시킵니다.
+            int maxHealth = damageable.MaxHealth;
+            int healthToReduce = maxHealth / 10; // 최대 체력의 10%를 계산
+            bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero); // 체력 감소
+
+            if (damageApplied)
+            {
+                // "respawn" 영역으로 이동합니다.
+                MoveToRespawnZone();
+            }
+        }
+    }
+    private void MoveToRespawnZone()
+    {
+        // 이동할 위치를 설정하십시오. 예를 들어, respawn 위치를 Vector3로 지정합니다.
+        Vector3 respawnPosition = new Vector3(-17.41f, 5.24f, 0f); // 원하는 위치로 변경하십시오.
+
+        // 플레이어를 respawn 위치로 이동시킵니다.
+        transform.position = respawnPosition;
+    }
+    
 }

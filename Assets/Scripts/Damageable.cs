@@ -143,4 +143,23 @@ public class Damageable : MonoBehaviour
 
         return false;
     }
+    public bool ApplyDamage(int damage, Vector2 knockback)
+    {
+        if (IsAlive && !isInvincible)
+        {
+            Health -= damage;
+            isInvincible = true;
+
+            // Notify other subscribed components that the damageable was hit to handle the knockback and such
+            animator.SetTrigger(AnimationStrings.hitTrigger);
+            LockVelocity = true;
+            damageableHit?.Invoke(damage, knockback);
+            CharacterEvents.characterDamaged.Invoke(gameObject, damage);
+
+            return true;
+        }
+
+        // Unable to be hit
+        return false;
+    }
 }
