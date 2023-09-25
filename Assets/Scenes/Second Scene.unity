@@ -9148,6 +9148,7 @@ GameObject:
   - component: {fileID: 996817619}
   - component: {fileID: 996817618}
   - component: {fileID: 996817617}
+  - component: {fileID: 996817620}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -9222,6 +9223,20 @@ Transform:
   - {fileID: 2001177862}
   m_Father: {fileID: 1812710463}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &996817620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996817616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb06663f75c3d534bb565c465082a3ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenYWhileSKeyPressed: 0.4
+  originalScreenY: 0.5
 --- !u!1 &1005026205
 GameObject:
   m_ObjectHideFlags: 0
@@ -17372,6 +17387,37 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1355132952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1355132953}
+  m_Layer: 0
+  m_Name: Respawn_Area
+  m_TagString: RespawnArea
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1355132953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355132952}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.95, y: 3.15, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1398517749}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1398517747
 GameObject:
   m_ObjectHideFlags: 0
@@ -17423,6 +17469,7 @@ Transform:
   - {fileID: 599058109}
   - {fileID: 1299823031}
   - {fileID: 158223322}
+  - {fileID: 1355132953}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1437310127

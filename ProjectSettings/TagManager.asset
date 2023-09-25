@@ -7,6 +7,7 @@ TagManager:
   - OneWayPlatform
   - Wall
   - Fallen
+  - RespawnArea
   layers:
   - Default
   - TransparentFX

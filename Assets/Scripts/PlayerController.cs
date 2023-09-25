@@ -385,12 +385,23 @@ public class PlayerController : MonoBehaviour
         }
     }
     private void MoveToRespawnZone()
+{
+    // Respawn 영역을 찾습니다. Tag로 찾는 예시입니다.
+    GameObject[] respawnAreas = GameObject.FindGameObjectsWithTag("RespawnArea");
+
+    if (respawnAreas.Length > 0)
     {
-        // 이동할 위치를 설정하십시오. 예를 들어, respawn 위치를 Vector3로 지정합니다.
-        Vector3 respawnPosition = new Vector3(-17.41f, 5.24f, 0f); // 원하는 위치로 변경하십시오.
+        // 첫 번째 Respawn 영역을 사용하거나 필요에 따라 적절한 로직을 추가하여 선택합니다.
+        Vector3 respawnPosition = respawnAreas[0].transform.position;
 
         // 플레이어를 respawn 위치로 이동시킵니다.
         transform.position = respawnPosition;
     }
+    else
+    {
+        // Respawn 영역을 찾지 못한 경우에 대한 예외 처리
+        Debug.LogWarning("Respawn 영역을 찾을 수 없습니다.");
+    }
+}
     
 }
