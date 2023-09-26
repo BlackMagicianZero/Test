@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     public float jumpImpulse = 10f;
     public int remainingJumps = 1;
     private bool isOnWallJumpCooldown = false;
+    public float blinkDistance = 5f; // 블링크 거리
+    public float blinkDuration = 0.2f; // 블링크 지속 시간
+    private bool isBlinking = false;
+    private float blinkCooldown = 3f; // 블링크 쿨타임 (3초)
     Vector2 moveInput;
     TouchingDirections touchingDirections;
     Damageable damageable;
@@ -158,11 +162,6 @@ public class PlayerController : MonoBehaviour
         damageable = GetComponent<Damageable>();
         wallCollider = GetComponentInChildren<Collider2D>();
     }
-
-    public float blinkDistance = 5f; // 블링크 거리
-    public float blinkDuration = 0.2f; // 블링크 지속 시간
-    private bool isBlinking = false;
-    private float blinkCooldown = 3f; // 블링크 쿨타임 (3초)
 
     public void OnBlink(InputAction.CallbackContext context)
     {
@@ -385,23 +384,27 @@ public class PlayerController : MonoBehaviour
         }
     }
     private void MoveToRespawnZone()
-{
-    // Respawn 영역을 찾습니다. Tag로 찾는 예시입니다.
-    GameObject[] respawnAreas = GameObject.FindGameObjectsWithTag("RespawnArea");
-
-    if (respawnAreas.Length > 0)
     {
-        // 첫 번째 Respawn 영역을 사용하거나 필요에 따라 적절한 로직을 추가하여 선택합니다.
-        Vector3 respawnPosition = respawnAreas[0].transform.position;
+        // Respawn 영역을 찾습니다. Tag로 찾는 예시입니다.
+        GameObject[] respawnAreas = GameObject.FindGameObjectsWithTag("RespawnArea");
 
-        // 플레이어를 respawn 위치로 이동시킵니다.
-        transform.position = respawnPosition;
+        if (respawnAreas.Length > 0)
+        {
+            // 첫 번째 Respawn 영역을 사용하거나 필요에 따라 적절한 로직을 추가하여 선택합니다.
+            Vector3 respawnPosition = respawnAreas[0].transform.position;
+
+            // 플레이어를 respawn 위치로 이동시킵니다.
+            transform.position = respawnPosition;
+        }
+        else
+        {
+            // Respawn 영역을 찾지 못한 경우에 대한 예외 처리
+            Debug.LogWarning("Respawn 영역을 찾을 수 없습니다.");
+        }
     }
-    else
-    {
-        // Respawn 영역을 찾지 못한 경우에 대한 예외 처리
-        Debug.LogWarning("Respawn 영역을 찾을 수 없습니다.");
-    }
-}
+    //리스폰 에리어를 체크 하는데 ex 1~ 10 까지 있다. 2와 3구간에 있다 > 무조건 전 숫자로
+    //or 리스폰 에리어를 플레이가 화면에는 안보이지만 체크포인트 개념으로 해서 체크포인트를 넘어가지 않았으면 가장 최근 체크포인트로 리스폰
     
+    //중간고사 전까지 가호확실하게 구현할것 몇가지
+    // 점프 횟수 늘려주는 가호 + 블링크 거리 증가 + 블링크 쿨타임 감소
 }
