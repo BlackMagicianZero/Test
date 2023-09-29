@@ -10,7 +10,7 @@ public class HealthBar : MonoBehaviour
     public Slider healthSlider;
     public TMP_Text healthBarText;
 
-    Damageable playerDamageable;
+    public Damageable playerDamageable;
 
     private void Awake()
     {
