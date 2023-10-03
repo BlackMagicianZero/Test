@@ -10,12 +10,12 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 8f;
     public float airWalkSpeed = 3f;
     public float jumpImpulse = 10f;
-    public int remainingJumps = 1;
+    public float remainingJumps = 0;
     private bool isOnWallJumpCooldown = false;
     public float blinkDistance = 5f; // 블링크 거리
     public float blinkDuration = 0.2f; // 블링크 지속 시간
     private bool isBlinking = false;
-    private float blinkCooldown = 3f; // 블링크 쿨타임 (3초)
+    public float blinkCooldown = 3f; // 블링크 쿨타임 (3초)
     Vector2 moveInput;
     TouchingDirections touchingDirections;
     Damageable damageable;
@@ -277,27 +277,34 @@ public class PlayerController : MonoBehaviour
             IsRunning = false;
         }
     }
-
+public bool hasDBJumpBuff = false;
     public void OnJump(InputAction.CallbackContext context)
+{
+    if (context.started && CanMove)
     {
-        if (context.started && CanMove)
+        if (touchingDirections.IsGrounded)
         {
-            if (touchingDirections.IsGrounded)
+            remainingJumps = 0;
+
+            // DBJump 버프 아이템을 획득한 경우
+            if (hasDBJumpBuff) 
             {
-                remainingJumps = 1;
-                Jump(jumpImpulse);
+                remainingJumps = 1; // DBJump 버프로 인해 2번 점프 가능
             }
-            else if (remainingJumps > 0)
-            {
-                remainingJumps--;
-                Jump(jumpImpulse);
-            }
-            else if (touchingDirections.IsOnWall && !isOnWallJumpCooldown)
-            {
-                WallJump();
-            }
+
+            Jump(jumpImpulse);
+        }
+        else if (remainingJumps > 0)
+        {
+            remainingJumps--;
+            Jump(jumpImpulse);
+        }
+        else if (touchingDirections.IsOnWall && !isOnWallJumpCooldown)
+        {
+            WallJump();
         }
     }
+}
     // 1 jump
     /*public void OnJump(InputAction.CallbackContext context)
     {
@@ -371,7 +378,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Fallen"))
         {
-            // "fallen" 영역에 닿았을 때, 최대 체력의 10%를 감소시킵니다.
+            // "fallen" 영역에 닿았을 때, 최대 체력의 10%를 감소.
             int maxHealth = damageable.MaxHealth;
             int healthToReduce = maxHealth / 10; // 최대 체력의 10%를 계산
             bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero); // 체력 감소
