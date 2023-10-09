@@ -5442,7 +5442,6 @@ GameObject:
   - component: {fileID: 1034389899501018966}
   - component: {fileID: 8444088777924587685}
   - component: {fileID: 8424133302630849900}
-  - component: {fileID: 2092105030450194156}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -5523,7 +5522,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &8629136986857233133
 Rigidbody2D:
   serializedVersion: 4
@@ -5571,7 +5570,7 @@ MonoBehaviour:
   blinkDistance: 5
   blinkDuration: 0.2
   blinkCooldown: 3
-  playerCollider: {fileID: 0}
+  playerCollider: {fileID: 8483983635650893673}
   wallCollider: {fileID: 0}
   _isMoving: 0
   _isRunning: 0
@@ -5730,6 +5729,38 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: c4b2e8bc-016e-4513-93c1-862c68408e2d
     m_ActionName: UI/Escape[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 749343657102894717}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: DownJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 407dc03e-231b-4e6e-a857-f31224316098
+    m_ActionName: Player/DownJump[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 749343657102894717}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnBlink
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7495d161-0b3e-4d16-8409-d3decb841cb5
+    m_ActionName: Player/blink[/Keyboard/leftCtrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -5989,21 +6020,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryData: {fileID: 11400000, guid: 2dac216a4b48eea48af6b8dd46175dd3, type: 2}
---- !u!114 &2092105030450194156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9043928945911057305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b83766450cba5a14c9db47b224a5ebea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
-  inventoryData: {fileID: 11400000, guid: 2dac216a4b48eea48af6b8dd46175dd3, type: 2}
-  parametersToModify:
-  - itemParameter: {fileID: 11400000, guid: b401ce8666cf7e64091861073c245002, type: 2}
-    value: -10
-  itemCurrentState: []

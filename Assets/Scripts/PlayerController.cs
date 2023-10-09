@@ -305,37 +305,6 @@ public bool hasDBJumpBuff = false;
         }
     }
 }
-    // 1 jump
-    /*public void OnJump(InputAction.CallbackContext context)
-    {
-        // TODO Check if alive as well
-        if(context.started && touchingDirections.IsGrounded && CanMove)
-        {
-            animator.SetTrigger(AnimationStrings.jump);
-            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
-        }
-    }*/
-
-    // double jump
-    /*public void OnJump(InputAction.CallbackContext context)
-    {
-        // TODO Check if alive as well
-        if (context.started && CanMove)
-        {
-            if (touchingDirections.IsGrounded)
-            {
-                remainingJumps = 1; // 초기 점프 횟수 설정
-                animator.SetTrigger(AnimationStrings.jump);
-                rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
-            }
-            else if (remainingJumps > 0) // 더블 점프 가능한 경우
-            {
-                remainingJumps--; // 더블 점프 횟수 감소
-                animator.SetTrigger(AnimationStrings.jump);
-                rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
-            }
-        }
-    }*/
     private void Jump(float jumpForce)
     {
         animator.SetTrigger(AnimationStrings.jump);

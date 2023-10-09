@@ -16,6 +16,7 @@ public class BuffScript : MonoBehaviour
     //-------------------------------------------
 
     private PlayerController playercontroller;
+    public GameObject BfIcon;
 
     private void Awake()
     {
@@ -25,8 +26,19 @@ public class BuffScript : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.tag.Equals("Player"))
         {
+            BuffSlot bfslot = collision.GetComponent<BuffSlot>();
+            for(int i = 0; i < bfslot.slots.Count; i++)
+            {
+                if(bfslot.slots[i].isEmpty)
+                {
+                    Instantiate(BfIcon,bfslot.slots[i].slotObj.transform);
+                    bfslot.slots[i].isEmpty = false;
+                    Destroy(this.gameObject);
+                    break;
+                }
+            }
             switch (powerups)
             {
                 case PowerUp.DBJump:
@@ -41,26 +53,9 @@ public class BuffScript : MonoBehaviour
                 default:
                     break;
             }
-            Destroy(gameObject);
-
-            // Bficon1 GameObject를 찾아서 Image 컴포넌트의 sprite 이미지를 설정
-            GameObject bficon1 = GameObject.Find("Bficon_1"); // Bficon1의 GameObject 이름을 정확하게 사용해야 합니다.
-            if (bficon1 != null)
-            {
-                Image bficonImage = bficon1.GetComponent<Image>();
-                if (bficonImage != null)
-                {
-                    bficonImage.sprite = GetComponent<SpriteRenderer>().sprite;
-                }
-                else
-                {
-                    Debug.LogWarning("Bficon1 GameObject에 Image 컴포넌트가 없습니다.");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Bficon1 GameObject를 찾을 수 없습니다.");
-            }
         }
     }
 }
+// 아이콘 기초 로직
+// GameCanvas - UI - Image 해서 이미지 입히고 프리팹화 시킨뒤에 
+// Buffscript 적용 하고 bficon에 프리팹 넣으면 끝.
