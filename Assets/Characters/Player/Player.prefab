@@ -5439,7 +5439,6 @@ GameObject:
   - component: {fileID: 5244546348808543973}
   - component: {fileID: 9139731782032220035}
   - component: {fileID: 8766524781567474857}
-  - component: {fileID: 442056908863336904}
   - component: {fileID: 1034389899501018966}
   - component: {fileID: 8444088777924587685}
   - component: {fileID: 8424133302630849900}
@@ -5568,9 +5567,16 @@ MonoBehaviour:
   runSpeed: 8
   airWalkSpeed: 5
   jumpImpulse: 10
+  remainingJumps: 0
+  blinkDistance: 5
+  blinkDuration: 0.2
+  blinkCooldown: 3
+  playerCollider: {fileID: 0}
+  wallCollider: {fileID: 0}
   _isMoving: 0
   _isRunning: 0
   _isFacingRight: 1
+  hasDBJumpBuff: 0
 --- !u!114 &2627716255886654180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5857,18 +5863,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchPoint: {fileID: 1850074792296654106}
   projectilePrefab: {fileID: 8672721747314608137, guid: a85bff1e2a9dd7243a9d9835ddc56a1d, type: 3}
---- !u!114 &442056908863336904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9043928945911057305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a55ebccd88d644443ac3378fa9af6b81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1034389899501018966
 AudioSource:
   m_ObjectHideFlags: 0

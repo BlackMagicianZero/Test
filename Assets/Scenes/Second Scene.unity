@@ -3000,7 +3000,7 @@ GameObject:
   - component: {fileID: 482903387}
   m_Layer: 0
   m_Name: DoubleJumpBuff
-  m_TagString: Untagged
+  m_TagString: Buff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22635,6 +22635,34 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2635091959779575630, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_Name
+      value: Bficon_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635091959779575630, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_TagString
+      value: Bficon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649711977261603559, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865853067272026450, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_Name
+      value: Bficon_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865853067272026450, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_TagString
+      value: Bficon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972508264657037530, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_Name
+      value: Bficon_6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972508264657037530, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_TagString
+      value: Bficon
+      objectReference: {fileID: 0}
     - target: {fileID: 3060381415310007637, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -22674,6 +22702,14 @@ PrefabInstance:
     - target: {fileID: 3383514941034172890, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727958549856693738, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_Name
+      value: Bficon_5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727958549856693738, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_TagString
+      value: Bficon
       objectReference: {fileID: 0}
     - target: {fileID: 4059536566476840908, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
       propertyPath: m_AnchorMax.y
@@ -22726,6 +22762,14 @@ PrefabInstance:
     - target: {fileID: 4940127400131399628, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -58.07171
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024393862714220512, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_Name
+      value: Bficon_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024393862714220512, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_TagString
+      value: Bficon
       objectReference: {fileID: 0}
     - target: {fileID: 5067666733870323482, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
       propertyPath: m_AnchorMax.y
@@ -22886,6 +22930,14 @@ PrefabInstance:
     - target: {fileID: 7041213544315007233, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7318796715474597923, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_Name
+      value: Bficon_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7318796715474597923, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_TagString
+      value: Bficon
       objectReference: {fileID: 0}
     - target: {fileID: 7349499384947883087, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
       propertyPath: m_AnchorMax.y

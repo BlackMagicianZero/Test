@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - Fallen
   - RespawnArea
+  - Buff
+  - Bficon
   layers:
   - Default
   - TransparentFX

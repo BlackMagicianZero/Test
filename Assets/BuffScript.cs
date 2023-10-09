@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuffScript : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class BuffScript : MonoBehaviour
         playercontroller = FindObjectOfType<PlayerController>();
     }
     
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
@@ -40,6 +42,25 @@ public class BuffScript : MonoBehaviour
                     break;
             }
             Destroy(gameObject);
+
+            // Bficon1 GameObject를 찾아서 Image 컴포넌트의 sprite 이미지를 설정
+            GameObject bficon1 = GameObject.Find("Bficon_1"); // Bficon1의 GameObject 이름을 정확하게 사용해야 합니다.
+            if (bficon1 != null)
+            {
+                Image bficonImage = bficon1.GetComponent<Image>();
+                if (bficonImage != null)
+                {
+                    bficonImage.sprite = GetComponent<SpriteRenderer>().sprite;
+                }
+                else
+                {
+                    Debug.LogWarning("Bficon1 GameObject에 Image 컴포넌트가 없습니다.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Bficon1 GameObject를 찾을 수 없습니다.");
+            }
         }
     }
 }
