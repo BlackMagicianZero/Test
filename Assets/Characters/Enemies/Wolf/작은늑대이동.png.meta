@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,7 +121,133 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: "\uC791\uC740\uB291\uB300\uC774\uB3D9_0"
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 9
+        width: 61
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b377b847ea6568140aa0acf77a8c817b
+      internalID: 778732478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC791\uC740\uB291\uB300\uC774\uB3D9_1"
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 6
+        width: 61
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 949af3fdda57d9440a144a8dfe774bb4
+      internalID: 194264023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC791\uC740\uB291\uB300\uC774\uB3D9_2"
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 5
+        width: 57
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 248094cb6750c514a9a326c9d7c74530
+      internalID: 1892346387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC791\uC740\uB291\uB300\uC774\uB3D9_3"
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 10
+        width: 62
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8d58c7900f725a46b23b9a159c2c1d3
+      internalID: 355582034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC791\uC740\uB291\uB300\uC774\uB3D9_4"
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 5
+        width: 59
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb5069d56d09cbc458b1602089d4c077
+      internalID: 13717320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC791\uC740\uB291\uB300\uC774\uB3D9_5"
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 7
+        width: 58
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e18e3ef5be659944b87d524f8bcdd0f
+      internalID: -1812759477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +258,13 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "\uC791\uC740\uB291\uB300\uC774\uB3D9_0": 778732478
+      "\uC791\uC740\uB291\uB300\uC774\uB3D9_1": 194264023
+      "\uC791\uC740\uB291\uB300\uC774\uB3D9_2": 1892346387
+      "\uC791\uC740\uB291\uB300\uC774\uB3D9_3": 355582034
+      "\uC791\uC740\uB291\uB300\uC774\uB3D9_4": 13717320
+      "\uC791\uC740\uB291\uB300\uC774\uB3D9_5": -1812759477
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
