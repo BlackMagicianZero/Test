@@ -258,11 +258,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7029772135135609596, guid: 9135a938ea2b1244eb160823f00cb3be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.25
+      value: 14.97
       objectReference: {fileID: 0}
     - target: {fileID: 7029772135135609596, guid: 9135a938ea2b1244eb160823f00cb3be, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3
+      value: 2.12
       objectReference: {fileID: 0}
     - target: {fileID: 7029772135135609596, guid: 9135a938ea2b1244eb160823f00cb3be, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3117,7 +3117,7 @@ Transform:
   m_GameObject: {fileID: 482903386}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.43, y: 4.58, z: 0}
+  m_LocalPosition: {x: -20.05, y: 7.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22081,11 +22081,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2493423954655435963, guid: 94432ef4704666f4f89b9d81120ecec3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.573192
+      value: 2.55
       objectReference: {fileID: 0}
     - target: {fileID: 2493423954655435963, guid: 94432ef4704666f4f89b9d81120ecec3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.6757467
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2493423954655435963, guid: 94432ef4704666f4f89b9d81120ecec3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22117,6 +22117,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2493423954655435963, guid: 94432ef4704666f4f89b9d81120ecec3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3457290962848824434, guid: 94432ef4704666f4f89b9d81120ecec3, type: 3}
+      propertyPath: knockback.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3818163233134756534, guid: 94432ef4704666f4f89b9d81120ecec3, type: 3}
+      propertyPath: m_SpriteSortPoint
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
