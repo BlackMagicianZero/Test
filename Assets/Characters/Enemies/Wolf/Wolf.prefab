@@ -92,7 +92,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 1
+  m_SpriteSortPoint: 0
 --- !u!50 &4298386475348144437
 Rigidbody2D:
   serializedVersion: 4
@@ -260,7 +260,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _maxHealth: 100
-  _health: 20
+  _health: 100
   _isAlive: 1
   isInvincible: 0
   invincibilityTime: 0.25
@@ -493,7 +493,7 @@ Transform:
   m_GameObject: {fileID: 8979853449102749980}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.89, y: 0.52, z: 0}
+  m_LocalPosition: {x: 1.31, y: 0.52, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
