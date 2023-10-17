@@ -10,6 +10,7 @@ TagManager:
   - RespawnArea
   - Buff
   - Bficon
+  - UPOnly
   layers:
   - Default
   - TransparentFX

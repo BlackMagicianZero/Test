@@ -279,32 +279,32 @@ public class PlayerController : MonoBehaviour
     }
 public bool hasDBJumpBuff = false;
     public void OnJump(InputAction.CallbackContext context)
-{
-    if (context.started && CanMove)
     {
-        if (touchingDirections.IsGrounded)
+        if (context.started && CanMove)
         {
-            remainingJumps = 0;
-
-            // DBJump 버프 아이템을 획득한 경우
-            if (hasDBJumpBuff) 
+            if (touchingDirections.IsGrounded)
             {
-                remainingJumps = 1; // DBJump 버프로 인해 2번 점프 가능
-            }
+                remainingJumps = 0;
 
-            Jump(jumpImpulse);
-        }
-        else if (remainingJumps > 0)
-        {
-            remainingJumps--;
-            Jump(jumpImpulse);
-        }
-        else if (touchingDirections.IsOnWall && !isOnWallJumpCooldown)
-        {
-            WallJump();
+                // DBJump 버프 아이템을 획득한 경우
+                if (hasDBJumpBuff) 
+                {
+                    remainingJumps = 1; // DBJump 버프로 인해 2번 점프 가능
+                }
+
+                Jump(jumpImpulse);
+            }
+            else if (remainingJumps > 0)
+            {
+                remainingJumps--;
+                Jump(jumpImpulse);
+            }
+            else if (touchingDirections.IsOnWall && !isOnWallJumpCooldown)
+            {
+                WallJump();
+            }
         }
     }
-}
     private void Jump(float jumpForce)
     {
         animator.SetTrigger(AnimationStrings.jump);
@@ -332,7 +332,7 @@ public bool hasDBJumpBuff = false;
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
     }
 
-    public void DownJump(InputAction.CallbackContext context)
+    /*public void DownJump(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -340,6 +340,26 @@ public bool hasDBJumpBuff = false;
             {
                 StartCoroutine(DisableCollision());
                 animator.SetTrigger(AnimationStrings.jump);
+            }
+        }
+    }*/
+    public void DownJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            if (currentOneWayPlatform != null)
+            {
+                // 만약 현재 밟고 있는 플랫폼이 DontDJ 태그를 가진 타일이라면 다운점프를 허용하지 않습니다.
+                if (!currentOneWayPlatform.CompareTag("UPOnly"))
+                {
+                    StartCoroutine(DisableCollision());
+                    animator.SetTrigger(AnimationStrings.jump);
+                }
+                else
+                {
+                    // DontDJ 태그를 가진 타일 위에 있을 때 다운점프를 허용하지 않음을 알리는 메시지를 출력합니다.
+                    Debug.Log("다운점프가 금지된 타일 위에 있습니다.");
+                }
             }
         }
     }
