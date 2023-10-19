@@ -21,22 +21,22 @@ public class CameraScreenController : MonoBehaviour
 
     private void Update()
     {
-        // "S" 키를 누르면 Screen Y 값을 변경합니다.
-        if (Input.GetKey(KeyCode.S))
+        // "X" 키를 누르면 Screen Y 값을 변경
+        if (Input.GetKey(KeyCode.X))
         {
-            // Screen Y 값을 변경합니다.
+            // Screen Y 값을 변경
             ChangeScreenY(screenYWhileSKeyPressed);
         }
         else
         {
-            // "S" 키를 떼면 Screen Y 값을 원래 값으로 돌려놓습니다.
+            // "X" 키를 떼면 Screen Y 값을 원래 값으로
             ChangeScreenY(originalScreenY);
         }
     }
 
     private void ChangeScreenY(float screenY)
     {
-        // CinemachineVirtualCamera의 Body 설정을 변경하여 Screen Y 값을 조절합니다.
+        // CinemachineVirtualCamera의 Body 설정을 변경하여 Screen Y 값을 조절
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = screenY;
     }
 }

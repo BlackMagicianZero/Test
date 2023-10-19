@@ -11,6 +11,8 @@ TagManager:
   - Buff
   - Bficon
   - UPOnly
+  - BOSS
+  - BossEntry
   layers:
   - Default
   - TransparentFX
