@@ -56,7 +56,7 @@ public class ParticleSystemController : MonoBehaviour
         isPlaying = false; // 재생 중이 아님을 표시
 
         // 파티클이 끝난 후에 BossCamera의 Projection Size를 변경합니다.
-        StartCoroutine(ChangeCameraSize(bossCamera.GetComponent<Camera>().orthographicSize, 4.5f, 11.5f, cameraSizeChangeDuration));
+        StartCoroutine(ChangeCameraSize(bossCamera.GetComponent<Camera>().orthographicSize, 6.5f, 11.5f, cameraSizeChangeDuration));
     }
 
     // BossCamera를 부드럽게 이동시키는 코루틴
@@ -78,7 +78,7 @@ public class ParticleSystemController : MonoBehaviour
     // 카메라 이동이 완료된 후 파티클을 시작하는 코루틴
     private IEnumerator StartParticleAfterMove(float delay)
     {
-        yield return new WaitForSeconds(delay); // delay 시간 동안 대기
+        yield return new WaitForSeconds(delay + 1.5f); // delay 시간 동안 대기
 
         // 파티클 시스템 설정
         var main = particleSystems.main;
@@ -127,7 +127,7 @@ public class ParticleSystemController : MonoBehaviour
         Vector3 currentPosition = bossCamera.transform.position;
         while (elapsed < duration)
         {
-            bossCamera.transform.position = Vector3.Lerp(currentPosition, originalBossCameraPosition, elapsed / duration);
+            bossCamera.transform.position = Vector3.Lerp(currentPosition, originalBossCameraPosition, elapsed / (duration * 0.3f));
             elapsed += Time.deltaTime;
             yield return null;
         }
