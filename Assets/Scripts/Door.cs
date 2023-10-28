@@ -28,7 +28,7 @@ public class Door : MonoBehaviour
         {
             GameObject respawnArea = GameObject.FindGameObjectWithTag("RespawnArea");
 
-            // RespawnArea를 찾았으면 플레이어를 해당 위치로 이동시킵니다.
+            // RespawnArea를 찾았으면 플레이어를 해당 위치로 이동
             if (respawnArea != null)
             {
                 GameObject player = GameObject.FindGameObjectWithTag("Player");

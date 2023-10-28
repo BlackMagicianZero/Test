@@ -247,7 +247,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.5, y: 1.2307693}
+  m_Size: {x: 1.53, y: 1.17}
   m_Direction: 1
 --- !u!114 &781189076467288159
 MonoBehaviour:
@@ -502,7 +502,7 @@ MonoBehaviour:
   noCollidersRemain:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 781189076467288159}
         m_TargetAssemblyTypeName: Knight, Assembly-CSharp
         m_MethodName: OnCliffDetected
         m_Mode: 1

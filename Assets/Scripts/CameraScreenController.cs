@@ -12,10 +12,9 @@ public class CameraScreenController : MonoBehaviour
 
     private void Start()
     {
-        // CinemachineVirtualCamera 컴포넌트를 가져옵니다.
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         
-        // 초기 Screen Y 값을 저장합니다.
+        // 초기 Screen Y 값을 저장
         originalScreenY = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY;
     }
 

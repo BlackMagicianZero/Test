@@ -152,9 +152,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.625, y: 1.3333334}
-  m_Direction: 0
+  m_Offset: {x: 0.000000007701509, y: 0.064604945}
+  m_Size: {x: 1.6250002, y: 1.4957936}
+  m_Direction: 1
 --- !u!114 &8256229978691336779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c53f447db12de4b9555972faedc8de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkAcceleration: 3
+  walkAcceleration: 50
   maxSpeed: 3
   walkStopRate: 0.05
   attackZone: {fileID: 814914874515566807}
@@ -260,7 +260,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _maxHealth: 100
-  _health: 100
+  _health: 10
   _isAlive: 1
   isInvincible: 0
   invincibilityTime: 0.25
@@ -385,7 +385,7 @@ Transform:
   m_GameObject: {fileID: 5143742425171662424}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.15, y: -0.0098267, z: 0}
+  m_LocalPosition: {x: 1.15, y: 0, z: 0}
   m_LocalScale: {x: 1.35, y: 1.2875, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

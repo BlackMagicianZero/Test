@@ -171,62 +171,89 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool canBlink = true; // 블링크 사용 가능 여부를 나타내는 변수
+
     private IEnumerator PerformBlink()
+{
+    // 현재 위치와 바라보는 방향을 얻어옴
+    Vector2 startPosition = transform.position;
+    Vector2 blinkDirection = IsFacingRight ? Vector2.right : Vector2.left;
+
+    // 레이캐스트를 쏘아 Ground 레이어를 가진 오브젝트를 체크
+    RaycastHit2D hit = Physics2D.Raycast(startPosition, blinkDirection, blinkDistance, LayerMask.GetMask("Ground"));
+
+    // Ground 레이어를 가진 오브젝트와 충돌하지 않았을 때 블링크 실행
+    if (hit.collider == null)
     {
         // 블링크 시작
         isBlinking = true;
 
-        // 현재 위치와 바라보는 방향을 얻어옴
-        Vector2 startPosition = transform.position;
-        Vector2 blinkDirection = IsFacingRight ? Vector2.right : Vector2.left;
-        
-        // 블링크 끝 위치 계산
-        Vector2 endPosition = startPosition + blinkDirection * blinkDistance;
-
         // 무적 활성화
         damageable.isInvincible = true;
+
+        // 블링크 끝 위치 계산
+        Vector2 endPosition = startPosition + blinkDirection * blinkDistance;
 
         // 플레이어 이동
         rb.position = endPosition;
 
         // 무적 비활성화
-        yield return new WaitForSeconds(blinkDuration);
-        damageable.isInvincible = false;
+        yield return new WaitForSeconds(blinkCooldown);
+        isBlinking = false; // 블링크 쿨타임 후에 다시 블링크 가능하게 설정
 
-        // 블링크 종료
-        isBlinking = false;
     }
+}
 
-    private void FixedUpdate()
+   private void FixedUpdate()
+{
+    // 물리 연산 - 이동 로직
+    if (!damageable.LockVelocity)
+        rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
+
+    if (touchingDirections.IsOnWall && !isJumpingOffWall)
     {
-        if (!damageable.LockVelocity)
-            rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
+        // 벽에 붙어 있다면 수평 속도를 0으로 설정해서 움직이지 않게
+        rb.velocity = new Vector2(0f, rb.velocity.y);
 
-        // 벽에 붙어 있을 때 이동을 막기 위해 추가 제어 로직이 필요합니다.
-        if (touchingDirections.IsOnWall && !isJumpingOffWall)
+        // Shift 키를 누를 때만 벽 반대편으로 튕기도록
+        if (CanMove && !touchingDirections.IsGrounded && Input.GetKey(KeyCode.LeftShift) && !isOnWallJumpCooldown && touchingDirections.Normal != Vector2.zero)
         {
-            // 벽에 붙어 있다면 수평 속도를 0으로 설정하여 움직이지 않도록 합니다.
-            rb.velocity = new Vector2(0f, rb.velocity.y);
-
-            // 벽에 붙어 있을 때만 점프할 수 있도록 검사합니다.
-            if (CanMove && !touchingDirections.IsGrounded && !isOnWallJumpCooldown)
-            {
-                WallJump();
-            }
+            Vector2 jumpDirection = touchingDirections.Normal.normalized;
+            WallJump(jumpDirection);
         }
     }
+}
 
-    private void WallJump()
+private void Update()
+{
+    if (Input.GetKeyDown(KeyCode.LeftShift) && touchingDirections.IsOnWall && !isOnWallJumpCooldown)
     {
-        // 벽에서의 점프 로직
-        Vector2 wallJumpDirection = IsFacingRight ? Vector2.left : Vector2.right;
-        Jump(jumpImpulse);
-        rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
-        rb.AddForce(wallJumpDirection * jumpImpulse * 0.5f, ForceMode2D.Impulse);
-        isOnWallJumpCooldown = true;
-        StartCoroutine(DisableWallCollision());
-        isJumpingOffWall = true;
+        // Shift 키를 눌렀을 때 벽 반대편으로 튕기는 기능을 호출
+        TryWallJump();
     }
+}
+private void TryWallJump()
+{
+    // 캐릭터가 오른쪽을 보고 있으면 왼쪽으로, 왼쪽을 보고 있으면 오른쪽으로 점프하도록 설정
+    Vector2 jumpDirection = IsFacingRight ? Vector2.left : Vector2.right;
+
+    // WallJump 함수에 jumpDirection을 전달
+    WallJump(jumpDirection);
+}
+private void WallJump(Vector2 jumpDirection)
+{
+    Jump(jumpImpulse);
+    rb.velocity = new Vector2(jumpDirection.x * jumpImpulse, jumpImpulse);
+    isOnWallJumpCooldown = true;
+    StartCoroutine(DisableWallJumpCooldown());
+    isJumpingOffWall = true;
+}
+private IEnumerator DisableWallJumpCooldown()
+{
+    yield return new WaitForSeconds(1.0f); // 벽 점프 쿨타임 (1초로 설정)
+
+    isOnWallJumpCooldown = false;
+}
 
     private IEnumerator DisableWallCollision()
     {
@@ -279,32 +306,34 @@ public class PlayerController : MonoBehaviour
     }
 public bool hasDBJumpBuff = false;
     public void OnJump(InputAction.CallbackContext context)
+{
+    if (context.started && CanMove)
     {
-        if (context.started && CanMove)
+        Vector2 jumpDirection = IsFacingRight ? Vector2.right : Vector2.left; // 플레이어가 바라보는 방향으로 설정
+
+        if (touchingDirections.IsGrounded)
         {
-            if (touchingDirections.IsGrounded)
-            {
-                remainingJumps = 0;
+            remainingJumps = 0;
 
-                // DBJump 버프 아이템을 획득한 경우
-                if (hasDBJumpBuff) 
-                {
-                    remainingJumps = 1; // DBJump 버프로 인해 2번 점프 가능
-                }
+            // DBJump 버프 아이템을 획득한 경우
+            if (hasDBJumpBuff) 
+            {
+                remainingJumps = 1; // DBJump 버프로 인해 2번 점프 가능
+            }
 
-                Jump(jumpImpulse);
-            }
-            else if (remainingJumps > 0)
-            {
-                remainingJumps--;
-                Jump(jumpImpulse);
-            }
-            else if (touchingDirections.IsOnWall && !isOnWallJumpCooldown)
-            {
-                WallJump();
-            }
+            Jump(jumpImpulse);
+        }
+        else if (remainingJumps > 0)
+        {
+            remainingJumps--;
+            Jump(jumpImpulse);
+        }
+        else if (touchingDirections.IsOnWall && !isOnWallJumpCooldown)
+        {
+            WallJump(jumpDirection); // jumpDirection을 전달하여 WallJump 호출
         }
     }
+}
     private void Jump(float jumpForce)
     {
         animator.SetTrigger(AnimationStrings.jump);
@@ -349,7 +378,7 @@ public bool hasDBJumpBuff = false;
         {
             if (currentOneWayPlatform != null)
             {
-                // 만약 현재 밟고 있는 플랫폼이 DontDJ 태그를 가진 타일이라면 다운점프를 허용하지 않습니다.
+                // 만약 현재 밟고 있는 플랫폼이 DontDJ 태그를 가진 타일이라면 다운점프를 허용x
                 if (!currentOneWayPlatform.CompareTag("UPOnly"))
                 {
                     StartCoroutine(DisableCollision());
@@ -357,7 +386,7 @@ public bool hasDBJumpBuff = false;
                 }
                 else
                 {
-                    // DontDJ 태그를 가진 타일 위에 있을 때 다운점프를 허용하지 않음을 알리는 메시지를 출력합니다.
+                    // DontDJ 태그를 가진 타일 위에 있을 때 다운점프를 허용하지 않는 메시지 출력
                     Debug.Log("다운점프가 금지된 타일 위에 있습니다.");
                 }
             }
@@ -374,22 +403,21 @@ public bool hasDBJumpBuff = false;
 
             if (damageApplied)
             {
-                // "respawn" 영역으로 이동합니다.
+                // "respawn" 영역으로 이동
                 MoveToRespawnZone();
             }
         }
     }
     private void MoveToRespawnZone()
     {
-        // Respawn 영역을 찾습니다. Tag로 찾는 예시입니다.
+        // Respawn 영역을 찾기
         GameObject[] respawnAreas = GameObject.FindGameObjectsWithTag("RespawnArea");
 
         if (respawnAreas.Length > 0)
         {
-            // 첫 번째 Respawn 영역을 사용하거나 필요에 따라 적절한 로직을 추가하여 선택합니다.
             Vector3 respawnPosition = respawnAreas[0].transform.position;
 
-            // 플레이어를 respawn 위치로 이동시킵니다.
+            // 플레이어를 respawn 위치로 이동
             transform.position = respawnPosition;
         }
         else

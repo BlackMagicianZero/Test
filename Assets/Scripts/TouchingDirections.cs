@@ -66,6 +66,21 @@ public class TouchingDirections : MonoBehaviour
         }
     }
 
+    public Vector2 Normal
+    {
+        get
+        {
+            foreach (var hit in wallHits)
+            {
+                if (hit.collider != null && hit.collider.CompareTag("Wall"))
+                {
+                    return hit.normal;
+                }
+            }
+            return Vector2.zero;
+        }
+    }
+
     private void Awake()
     {
         touchingCol = GetComponent<CapsuleCollider2D>();

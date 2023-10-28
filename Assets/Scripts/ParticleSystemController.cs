@@ -6,7 +6,7 @@ public class ParticleSystemController : MonoBehaviour
 {
     public ParticleSystem particleSystems;
     private bool isPlaying = false;
-
+    public GameObject bossObject; // 보스 오브젝트 추가
     public GameObject bossCamera;
     private Vector3 originalBossCameraPosition; // BossCamera의 원래 위치를 저장할 변수
     private float originalCameraSize; // BossCamera의 원래 Projection Size를 저장할 변수
@@ -17,7 +17,7 @@ public class ParticleSystemController : MonoBehaviour
 
     void Start()
     {
-        // BossCamera의 초기 위치와 크기를 저장합니다.
+        // BossCamera의 초기 위치와 크기를 저장
         originalBossCameraPosition = bossCamera.transform.position;
         originalCameraSize = bossCamera.GetComponent<Camera>().orthographicSize;
     }
@@ -27,15 +27,15 @@ public class ParticleSystemController : MonoBehaviour
         // 충돌한 객체가 Player 태그를 가지고 있다면
         if (collision.CompareTag("Player") && !isPlaying)
         {
-            // BossCamera를 활성화합니다.
+            // BossCamera 활성화
             if (bossCamera != null)
             {
                 bossCamera.SetActive(true);
-                // 5초 동안 부드럽게 이동합니다.
+                // 5초 동안 부드럽게 이동
                 StartCoroutine(MoveBossCamera(targetPosition, moveDuration));
             }
 
-            StartCoroutine(StartParticleAfterMove(moveDuration + 0.1f)); // 카메라 이동 시간 + 0.1초 후에 파티클을 시작합니다.
+            StartCoroutine(StartParticleAfterMove(moveDuration + 0.1f)); // 카메라 이동 시간 + 0.1초 후에 파티클을 시작
         }
     }
 
@@ -55,7 +55,7 @@ public class ParticleSystemController : MonoBehaviour
         particleSystems.Stop(); // 파티클 시스템 멈추기
         isPlaying = false; // 재생 중이 아님을 표시
 
-        // 파티클이 끝난 후에 BossCamera의 Projection Size를 변경합니다.
+        // 파티클이 끝난 후에 BossCamera의 Projection Size를 변경
         StartCoroutine(ChangeCameraSize(bossCamera.GetComponent<Camera>().orthographicSize, 6.5f, 11.5f, cameraSizeChangeDuration));
     }
 
@@ -107,11 +107,12 @@ public class ParticleSystemController : MonoBehaviour
             yield return null;
         }
         bossCamera.GetComponent<Camera>().orthographicSize = targetSize; // 크기 변화가 완료된 후 보정
+        bossObject.SetActive(true);
 
-        // 일정 시간 대기합니다.
+        // 일정 시간 대기
         yield return new WaitForSeconds(1f); // 1초 대기
 
-        // 크기를 원래 크기로 복구합니다.
+        // 크기를 원래 크기로 복구
         elapsed = 0f;
         while (elapsed < duration)
         {
@@ -122,7 +123,7 @@ public class ParticleSystemController : MonoBehaviour
         }
         bossCamera.GetComponent<Camera>().orthographicSize = originalSize; // 크기가 원래 값으로 복구된 후 보정
 
-        // 크기가 원래 값으로 복구된 후, BossCamera의 위치를 원래 위치로 되돌립니다.
+        // 크기가 원래 값으로 복구된 후, BossCamera의 위치를 원래 위치로
         elapsed = 0f;
         Vector3 currentPosition = bossCamera.transform.position;
         while (elapsed < duration)
@@ -132,6 +133,8 @@ public class ParticleSystemController : MonoBehaviour
             yield return null;
         }
         bossCamera.transform.position = originalBossCameraPosition; // 위치가 원래 값으로 복구된 후 보정
+        // 모든 기능이 끝나면 카메라를 비활성화
+        bossCamera.SetActive(false);
     }
 }
 
