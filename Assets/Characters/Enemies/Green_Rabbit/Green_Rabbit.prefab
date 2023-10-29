@@ -247,7 +247,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.53, y: 1.17}
+  m_Size: {x: 1.62, y: 1.27}
   m_Direction: 1
 --- !u!114 &781189076467288159
 MonoBehaviour:
@@ -354,7 +354,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _maxHealth: 100
-  _health: 100
+  _health: 36
   _isAlive: 1
   isInvincible: 0
   invincibilityTime: 0.25
@@ -481,7 +481,7 @@ Transform:
   m_GameObject: {fileID: 8394792977148442409}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.65, y: -1.299428, z: 0}
+  m_LocalPosition: {x: 1.08, y: -1.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

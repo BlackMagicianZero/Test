@@ -260,7 +260,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _maxHealth: 100
-  _health: 100
+  _health: 47
   _isAlive: 1
   isInvincible: 0
   invincibilityTime: 0.25
