@@ -11,8 +11,8 @@ public class BuffScript : MonoBehaviour
 
     // 버프 시스템 수치 조정하는 곳 변수만들어서 switch문에 꽂아넣을 것.
     public float JumpToGive;
-    public float blinkRGToGive;
-    public float blinkClToGive;
+    public float dashRGToGive;
+    public float dahsClToGive;
     //-------------------------------------------
 
     private PlayerController playercontroller;
@@ -45,10 +45,10 @@ public class BuffScript : MonoBehaviour
                     playercontroller.hasDBJumpBuff = true;
                     break;
                 case PowerUp.BlinkRange:
-                    playercontroller.blinkDistance += blinkRGToGive;
+                    playercontroller.dashDistance += dashRGToGive;
                     break;
                 case PowerUp.BlinkCoolTime:
-                    playercontroller.blinkCooldown -= blinkClToGive;
+                    playercontroller.dashCooldown -= dahsClToGive;
                     break;
                 default:
                     break;

@@ -55,7 +55,7 @@ public class Damageable : MonoBehaviour
     public bool isInvincible = false;
 
     private float timeSinceHit = 0;
-    public float invincibilityTime = 0.25f;
+    public float invincibilityTime = 1.0f;
 
     public bool IsAlive {
         get
@@ -149,7 +149,7 @@ public class Damageable : MonoBehaviour
         {
             Health -= damage;
             isInvincible = true;
-
+            timeSinceHit =0;
             // Notify other subscribed components that the damageable was hit to handle the knockback and such
             animator.SetTrigger(AnimationStrings.hitTrigger);
             LockVelocity = true;

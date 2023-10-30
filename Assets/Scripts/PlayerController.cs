@@ -12,15 +12,19 @@ public class PlayerController : MonoBehaviour
     public float jumpImpulse = 10f;
     public float remainingJumps = 0;
     private bool isOnWallJumpCooldown = false;
-    public float blinkDistance = 5f; // 블링크 거리
-    public float blinkDuration = 0.2f; // 블링크 지속 시간
-    private bool isBlinking = false;
-    public float blinkCooldown = 3f; // 블링크 쿨타임 (3초)
+    public float dashDistance = 5f; // 대쉬 거리
+    public float dashDuration = 0.2f; // 대쉬 지속 시간
+    private bool isDashing;
+    public float dashCooldown = 3f; // 대쉬 쿨타임 (3초)
+    private bool canDash = true; // 대쉬 사용 가능 여부를 나타내는 변수
+    public float dashingPower = 0f;
+    public float dashingTime = 0f;
     Vector2 moveInput;
     TouchingDirections touchingDirections;
     Damageable damageable;
     Rigidbody2D rb;
     Animator animator;
+    SpriteRenderer spriteRenderer;
     
     private GameObject currentOneWayPlatform;
     [SerializeField] private CapsuleCollider2D playerCollider;
@@ -161,99 +165,88 @@ public class PlayerController : MonoBehaviour
         touchingDirections = GetComponent<TouchingDirections>();
         damageable = GetComponent<Damageable>();
         wallCollider = GetComponentInChildren<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void OnBlink(InputAction.CallbackContext context)
+    private IEnumerator PerformDashing()
     {
-        if (context.started && !isBlinking && CanMove)
-        {
-            StartCoroutine(PerformBlink());
-        }
-    }
-
-    private bool canBlink = true; // 블링크 사용 가능 여부를 나타내는 변수
-
-    private IEnumerator PerformBlink()
-{
-    // 현재 위치와 바라보는 방향을 얻어옴
-    Vector2 startPosition = transform.position;
-    Vector2 blinkDirection = IsFacingRight ? Vector2.right : Vector2.left;
-
-    // 레이캐스트를 쏘아 Ground 레이어를 가진 오브젝트를 체크
-    RaycastHit2D hit = Physics2D.Raycast(startPosition, blinkDirection, blinkDistance, LayerMask.GetMask("Ground"));
-
-    // Ground 레이어를 가진 오브젝트와 충돌하지 않았을 때 블링크 실행
-    if (hit.collider == null)
-    {
-        // 블링크 시작
-        isBlinking = true;
-
-        // 무적 활성화
         damageable.isInvincible = true;
-
-        // 블링크 끝 위치 계산
-        Vector2 endPosition = startPosition + blinkDirection * blinkDistance;
-
-        // 플레이어 이동
-        rb.position = endPosition;
-
-        // 무적 비활성화
-        yield return new WaitForSeconds(blinkCooldown);
-        isBlinking = false; // 블링크 쿨타임 후에 다시 블링크 가능하게 설정
-
+        canDash = false;
+        animator.SetBool("dashing", true);
+        isDashing =true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        yield return new WaitForSeconds(dashingTime);
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        animator.SetBool("dashing", false);
+        yield return new WaitForSeconds(dashCooldown);
+        canDash =true;
     }
-}
 
-   private void FixedUpdate()
-{
-    // 물리 연산 - 이동 로직
-    if (!damageable.LockVelocity)
-        rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
-
-    if (touchingDirections.IsOnWall && !isJumpingOffWall)
+    private void Update()
     {
-        // 벽에 붙어 있다면 수평 속도를 0으로 설정해서 움직이지 않게
-        rb.velocity = new Vector2(0f, rb.velocity.y);
-
-        // Shift 키를 누를 때만 벽 반대편으로 튕기도록
-        if (CanMove && !touchingDirections.IsGrounded && Input.GetKey(KeyCode.LeftShift) && !isOnWallJumpCooldown && touchingDirections.Normal != Vector2.zero)
+        if(isDashing)
         {
-            Vector2 jumpDirection = touchingDirections.Normal.normalized;
-            WallJump(jumpDirection);
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && touchingDirections.IsOnWall && !isOnWallJumpCooldown)
+        {
+            // Shift 키를 눌렀을 때 벽 반대편으로 튕기는 기능을 호출
+            TryWallJump();
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && canDash)
+        {
+            StartCoroutine(PerformDashing());
         }
     }
-}
-
-private void Update()
-{
-    if (Input.GetKeyDown(KeyCode.LeftShift) && touchingDirections.IsOnWall && !isOnWallJumpCooldown)
+   private void FixedUpdate()
     {
-        // Shift 키를 눌렀을 때 벽 반대편으로 튕기는 기능을 호출
-        TryWallJump();
+        if(isDashing)
+        {
+            return;
+        }
+        // 물리 연산 - 이동 로직
+        if (!damageable.LockVelocity)
+            rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
+
+        if (touchingDirections.IsOnWall && !isJumpingOffWall)
+        {
+            // 벽에 붙어 있다면 수평 속도를 0으로 설정해서 움직이지 않게
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+
+            // Shift 키를 누를 때만 벽 반대편으로 튕기도록
+            if (CanMove && !touchingDirections.IsGrounded && Input.GetKey(KeyCode.LeftShift) && !isOnWallJumpCooldown && touchingDirections.Normal != Vector2.zero)
+            {
+                Vector2 jumpDirection = touchingDirections.Normal.normalized;
+                WallJump(jumpDirection);
+            }
+        }
     }
-}
-private void TryWallJump()
-{
-    // 캐릭터가 오른쪽을 보고 있으면 왼쪽으로, 왼쪽을 보고 있으면 오른쪽으로 점프하도록 설정
-    Vector2 jumpDirection = IsFacingRight ? Vector2.left : Vector2.right;
 
-    // WallJump 함수에 jumpDirection을 전달
-    WallJump(jumpDirection);
-}
-private void WallJump(Vector2 jumpDirection)
-{
-    Jump(jumpImpulse);
-    rb.velocity = new Vector2(jumpDirection.x * jumpImpulse, jumpImpulse);
-    isOnWallJumpCooldown = true;
-    StartCoroutine(DisableWallJumpCooldown());
-    isJumpingOffWall = true;
-}
-private IEnumerator DisableWallJumpCooldown()
-{
-    yield return new WaitForSeconds(1.0f); // 벽 점프 쿨타임 (1초로 설정)
+    private void TryWallJump()
+    {
+        // 캐릭터가 오른쪽을 보고 있으면 왼쪽으로, 왼쪽을 보고 있으면 오른쪽으로 점프하도록 설정
+        Vector2 jumpDirection = IsFacingRight ? Vector2.left : Vector2.right;
 
-    isOnWallJumpCooldown = false;
-}
+        // WallJump 함수에 jumpDirection을 전달
+        WallJump(jumpDirection);
+    }
+    private void WallJump(Vector2 jumpDirection)
+    {
+        Jump(jumpImpulse);
+        rb.velocity = new Vector2(jumpDirection.x * jumpImpulse, jumpImpulse);
+        isOnWallJumpCooldown = true;
+        StartCoroutine(DisableWallJumpCooldown());
+        isJumpingOffWall = true;
+    }
+    private IEnumerator DisableWallJumpCooldown()
+    {
+        yield return new WaitForSeconds(1.0f); // 벽 점프 쿨타임 (1초로 설정)
+
+        isOnWallJumpCooldown = false;
+    }
 
     private IEnumerator DisableWallCollision()
     {
@@ -361,17 +354,6 @@ public bool hasDBJumpBuff = false;
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
     }
 
-    /*public void DownJump(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            if (currentOneWayPlatform != null)
-            {
-                StartCoroutine(DisableCollision());
-                animator.SetTrigger(AnimationStrings.jump);
-            }
-        }
-    }*/
     public void DownJump(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -408,6 +390,7 @@ public bool hasDBJumpBuff = false;
             }
         }
     }
+
     private void MoveToRespawnZone()
     {
         // Respawn 영역을 찾기
@@ -426,9 +409,4 @@ public bool hasDBJumpBuff = false;
             Debug.LogWarning("Respawn 영역을 찾을 수 없습니다.");
         }
     }
-    //리스폰 에리어를 체크 하는데 ex 1~ 10 까지 있다. 2와 3구간에 있다 > 무조건 전 숫자로
-    //or 리스폰 에리어를 플레이가 화면에는 안보이지만 체크포인트 개념으로 해서 체크포인트를 넘어가지 않았으면 가장 최근 체크포인트로 리스폰
-    
-    //중간고사 전까지 가호확실하게 구현할것 몇가지
-    // 점프 횟수 늘려주는 가호 + 블링크 거리 증가 + 블링크 쿨타임 감소
 }

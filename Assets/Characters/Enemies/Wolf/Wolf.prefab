@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 4773905777306163666}
   m_Layer: 8
   m_Name: Wolf
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,8 +152,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.8750002, y: 1.0736498}
+  m_Offset: {x: 0.000000034479484, y: 0.2892349}
+  m_Size: {x: 1.8750005, y: 1.6521323}
   m_Direction: 1
 --- !u!114 &4315033097451527821
 MonoBehaviour:
@@ -341,10 +341,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.32580042, y: 0.539389}
-      - {x: 0.7730441, y: 0.5246526}
-      - {x: 0.78762245, y: -0.46421623}
-      - {x: -0.3211031, y: -0.47102928}
+    - - {x: -0.31915116, y: 0.51279235}
+      - {x: 0.36079645, y: 0.5246526}
+      - {x: 0.36872578, y: -0.45756707}
+      - {x: -0.30115557, y: -0.45773098}
   m_UseDelaunayMesh: 0
 --- !u!114 &3457290962848824434
 MonoBehaviour:
@@ -531,7 +531,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.5558593, y: 0.018353522}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -542,7 +542,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.86, y: 1.05}
+  m_Size: {x: 0.7482815, y: 0.9803206}
   m_EdgeRadius: 0
 --- !u!114 &1275036348819299144
 MonoBehaviour:

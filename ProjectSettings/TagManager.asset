@@ -13,6 +13,7 @@ TagManager:
   - UPOnly
   - BOSS
   - BossEntry
+  - Monster
   layers:
   - Default
   - TransparentFX

@@ -5443,6 +5443,7 @@ GameObject:
   - component: {fileID: 8444088777924587685}
   - component: {fileID: 8424133302630849900}
   - component: {fileID: 1968110192241307732}
+  - component: {fileID: 3936708316824543964}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -5539,7 +5540,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.2
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -5568,14 +5569,16 @@ MonoBehaviour:
   airWalkSpeed: 5
   jumpImpulse: 10
   remainingJumps: 0
-  blinkDistance: 5
-  blinkDuration: 0.2
-  blinkCooldown: 3
+  dashDistance: 2
+  dashDuration: 0.2
+  dashCooldown: 2
   playerCollider: {fileID: 8483983635650893673}
   wallCollider: {fileID: 0}
   _isMoving: 0
   _isRunning: 0
   _isFacingRight: 1
+  dashingPower: 12
+  dashingTime: 0.2
   hasDBJumpBuff: 0
 --- !u!114 &2627716255886654180
 MonoBehaviour:
@@ -5750,7 +5753,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 749343657102894717}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnBlink
+        m_MethodName: OnDash
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6035,3 +6038,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slots: []
   slotPrefab: {fileID: 7346367345038833593, guid: 083c077d969cbe84f8109f417e90a7f1, type: 3}
+--- !u!114 &3936708316824543964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9043928945911057305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d44ea4a7cdc01845b0f231d7bb48621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
