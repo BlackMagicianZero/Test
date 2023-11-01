@@ -35,7 +35,7 @@ public class ParticleSystemController : MonoBehaviour
                 StartCoroutine(MoveBossCamera(targetPosition, moveDuration));
             }
 
-            StartCoroutine(StartParticleAfterMove(moveDuration + 0.1f)); // 카메라 이동 시간 + 0.1초 후에 파티클을 시작
+            StartCoroutine(StartParticleAfterMove(moveDuration + 0.3f)); // 카메라 이동 시간 + 0.3초 후에 파티클을 시작
         }
     }
 
@@ -110,7 +110,14 @@ public class ParticleSystemController : MonoBehaviour
         bossObject.SetActive(true);
 
         // 일정 시간 대기
-        yield return new WaitForSeconds(1f); // 1초 대기
+        yield return new WaitForSeconds(3.5f); // 3.5초 대기
+
+        // Opening 애니메이션 재생
+        Animator bossAnimator = bossObject.GetComponent<Animator>();
+        if (bossAnimator != null)
+        {
+            bossAnimator.SetTrigger("OpeningTrigger");
+        }
 
         // 크기를 원래 크기로 복구
         elapsed = 0f;

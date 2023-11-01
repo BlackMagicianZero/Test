@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    //임시방편 가이드
+    public GameObject explainimage;
+    //
     
     private GameObject currentOneWayPlatform;
     [SerializeField] private CapsuleCollider2D playerCollider;
@@ -200,6 +203,29 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(PerformDashing());
         }
+        //임시코드
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            // 이미지의 활성/비활성을 토글합니다.
+            if (explainimage != null)
+            {
+                bool isImageActive = !explainimage.activeSelf;
+                explainimage.SetActive(isImageActive);
+
+                // 게임 내 시간을 멈추거나 재개합니다.
+                if (isImageActive)
+                {
+                    // 이미지가 열린 경우, 게임 내 시간을 멈춥니다.
+                    Time.timeScale = 0f;
+                }
+                else
+                {
+                    // 이미지가 닫힌 경우, 게임 내 시간을 재개합니다.
+                    Time.timeScale = 1f;
+                }
+            }
+        }
+        //
     }
    private void FixedUpdate()
     {
