@@ -8,8 +8,7 @@ public class TouchingDirections : MonoBehaviour
     public float groundDistance = 0.05f;
     public float wallDistance = 0.2f;
     public float ceilingDistance = 0.05f;
-
-    CapsuleCollider2D touchingCol;
+    BoxCollider2D touchingCol;
     Animator animator;
 
     RaycastHit2D[] groundHits = new RaycastHit2D[5];
@@ -83,14 +82,18 @@ public class TouchingDirections : MonoBehaviour
 
     private void Awake()
     {
-        touchingCol = GetComponent<CapsuleCollider2D>();
+        touchingCol = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
-        IsGrounded = touchingCol.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0;
-        IsOnWall = touchingCol.Cast(wallCheckDirection, castFilter, wallHits, wallDistance) > 0;
-        IsOnCeiling = touchingCol.Cast(Vector2.up, castFilter, ceilingHits, ceilingDistance) > 0;
+        Vector2 raycastStartPoint = (Vector2)transform.position - new Vector2(0f, touchingCol.size.y * 0.5f);
+
+    IsGrounded = Physics2D.Raycast(raycastStartPoint, Vector2.down, groundDistance, castFilter.layerMask);
+    IsOnWall = Physics2D.Raycast(raycastStartPoint, Vector2.right, wallDistance, castFilter.layerMask) ||
+                Physics2D.Raycast(raycastStartPoint, Vector2.left, wallDistance, castFilter.layerMask);
+    IsOnCeiling = Physics2D.Raycast(raycastStartPoint, Vector2.up, ceilingDistance, castFilter.layerMask);
+
     }
 }
