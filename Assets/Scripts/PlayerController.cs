@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     //임시방편 가이드
     public GameObject explainimage;
     //
+    public GhostTrailEffect ghostTrailEffect;
 
     private GameObject currentOneWayPlatform;
     [SerializeField] private BoxCollider2D playerCollider;
@@ -38,7 +39,6 @@ public class PlayerController : MonoBehaviour
     private bool ignoreCollisionsDuringJump = false;
 
     public bool hasDBJumpBuff = false;
-
     private IEnumerator DisableCollision()
     {
         BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
@@ -221,11 +221,13 @@ public class PlayerController : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
         if (IsAlive)
         {
+            ghostTrailEffect.makeGhost = true;
             IsMoving = moveInput != Vector2.zero;
             SetFacingDirection(moveInput);
         }
         else
         {
+            ghostTrailEffect.makeGhost = false;
             IsMoving = false;
         }
     }

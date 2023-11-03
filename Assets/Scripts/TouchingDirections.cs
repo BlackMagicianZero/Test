@@ -87,13 +87,20 @@ public class TouchingDirections : MonoBehaviour
     }
 
     void FixedUpdate()
-    {
-        Vector2 raycastStartPoint = (Vector2)transform.position - new Vector2(0f, touchingCol.size.y * 0.5f);
+    {Vector2 raycastStartPoint1 = (Vector2)transform.position + new Vector2(touchingCol.size.x * 0.5f, -touchingCol.size.y * 0.5f);
+    Vector2 raycastStartPoint2 = (Vector2)transform.position + new Vector2(-touchingCol.size.x * 0.5f, -touchingCol.size.y * 0.5f);
 
-    IsGrounded = Physics2D.Raycast(raycastStartPoint, Vector2.down, groundDistance, castFilter.layerMask);
-    IsOnWall = Physics2D.Raycast(raycastStartPoint, Vector2.right, wallDistance, castFilter.layerMask) ||
-                Physics2D.Raycast(raycastStartPoint, Vector2.left, wallDistance, castFilter.layerMask);
-    IsOnCeiling = Physics2D.Raycast(raycastStartPoint, Vector2.up, ceilingDistance, castFilter.layerMask);
+    // 레이를 쏘고 바닥에 닿았는지 확인
+    bool isGrounded1 = Physics2D.Raycast(raycastStartPoint1, Vector2.down, groundDistance, castFilter.layerMask);
+    bool isGrounded2 = Physics2D.Raycast(raycastStartPoint2, Vector2.down, groundDistance, castFilter.layerMask);
 
+    // 두 레이 중 하나라도 바닥에 닿았다면 isGrounded를 true로 설정
+    IsGrounded = isGrounded1 || isGrounded2;
+        Vector2 raycastStartPoint = (Vector2)transform.position - new Vector2(touchingCol.size.x * 0.5f, touchingCol.size.y * 0.5f);
+
+        //IsGrounded = Physics2D.Raycast(raycastStartPoint, Vector2.down, groundDistance, castFilter.layerMask);
+        IsOnWall = Physics2D.Raycast(raycastStartPoint, Vector2.right, wallDistance, castFilter.layerMask) ||
+                    Physics2D.Raycast(raycastStartPoint, Vector2.left, wallDistance, castFilter.layerMask);
+        IsOnCeiling = Physics2D.Raycast(raycastStartPoint, Vector2.up, ceilingDistance, castFilter.layerMask);
     }
 }
