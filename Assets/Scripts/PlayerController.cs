@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Linq;
+using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private GameObject currentOneWayPlatform;
     [SerializeField] private BoxCollider2D playerCollider;
     [SerializeField] private Collider2D wallCollider;
+    public static PlayerController Instance;
 
     private bool ignoreCollisionsDuringJump = false;
 
@@ -156,6 +158,16 @@ public class PlayerController : MonoBehaviour
         damageable = GetComponent<Damageable>();
         wallCollider = GetComponentInChildren<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        if(Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private IEnumerator PerformDashing()
@@ -208,6 +220,21 @@ public class PlayerController : MonoBehaviour
             }
         }
         //
+
+        //이상하면 지울 카메라 셋
+        if(rb.velocity.y < _fallSpeedYDampingChangeThreshold &&
+            !CameraManager.instance.IsLerpingYDamping &&
+                !CameraManager.instance.LerpedFromPlayerFalling)
+        {
+            CameraManager.instance.LerpYDamping(true);
+        }
+        if(rb.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping &&
+            CameraManager.instance.LerpedFromPlayerFalling)
+        {
+            CameraManager.instance.LerpedFromPlayerFalling = false;
+            CameraManager.instance.LerpYDamping(false);
+        }
+        //
     }
    private void FixedUpdate()
     {
@@ -235,15 +262,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SetFacingDirection(Vector2 moveInput)
+    public void SetFacingDirection(Vector2 moveInput)
     {
         if (moveInput.x > 0 && !IsFacingRight)
         {
             IsFacingRight = true;
+            //_cameraFollowObject.CallTurn();
         }
         else if (moveInput.x < 0 && IsFacingRight)
         {
             IsFacingRight = false;
+            //_cameraFollowObject.CallTurn();
         }
     }
     public void OnAttack(InputAction.CallbackContext context)
@@ -367,5 +396,14 @@ public class PlayerController : MonoBehaviour
             // Respawn 영역을 찾지 못한 경우에 대한 예외 처리
             Debug.LogWarning("Respawn 영역을 찾을 수 없습니다.");
         }
+    }
+    [Header("Camera Stuff")]
+    [SerializeField] private GameObject _cameraFollowGo;
+    private CameraFollowObject _cameraFollowObject;
+    private float _fallSpeedYDampingChangeThreshold;
+    private void Start()
+    {
+        _cameraFollowObject = _cameraFollowGo.GetComponent<CameraFollowObject>();
+        _fallSpeedYDampingChangeThreshold = CameraManager.instance._fallSpeedYDampingChangeThreshold;
     }
 }
