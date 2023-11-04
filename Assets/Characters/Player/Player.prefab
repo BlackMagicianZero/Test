@@ -5444,6 +5444,7 @@ GameObject:
   - component: {fileID: 8424133302630849900}
   - component: {fileID: 1968110192241307732}
   - component: {fileID: 3936708316824543964}
+  - component: {fileID: 4371829275431926586}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -5584,7 +5585,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.024363518, y: -0.16498166}
+  m_Offset: {x: 0.028507233, y: -0.16498166}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5595,8 +5596,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.76119804, y: 1.8356138}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.65568924, y: 1.8356138}
+  m_EdgeRadius: 0.01
 --- !u!114 &749343657102894717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5620,12 +5621,13 @@ MonoBehaviour:
   dashingPower: 12
   dashingTime: 0.2
   explainimage: {fileID: 0}
+  ghostTrailEffect: {fileID: 4371829275431926586}
   playerCollider: {fileID: 4562464942672546114}
   wallCollider: {fileID: 0}
+  hasDBJumpBuff: 0
   _isMoving: 0
   _isRunning: 0
   _isFacingRight: 1
-  hasDBJumpBuff: 0
 --- !u!114 &2627716255886654180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5863,8 +5865,8 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  groundDistance: 0.05
-  wallDistance: 0.2
+  groundDistance: 0.2
+  wallDistance: 0.7
   ceilingDistance: 0.05
   _isGrounded: 0
   _isOnWall: 0
@@ -6061,3 +6063,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d44ea4a7cdc01845b0f231d7bb48621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4371829275431926586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9043928945911057305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e716b1ef05188a46bcfe50ff15dec11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostDelay: 0.08
+  ghost: {fileID: 3986163329271100953, guid: f65d22b553766334c9d43e0c78e8778e, type: 3}
+  makeGhost: 0

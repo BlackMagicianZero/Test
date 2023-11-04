@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BoxCollider2D playerCollider;
     [SerializeField] private Collider2D wallCollider;
 
-    private bool isJumpingOffWall = false;
     private bool ignoreCollisionsDuringJump = false;
 
     public bool hasDBJumpBuff = false;
@@ -184,6 +183,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && canDash)
         {
             StartCoroutine(PerformDashing());
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            MoveToRespawnZone();
         }
         //임시코드
         if (Input.GetKeyDown(KeyCode.F1))

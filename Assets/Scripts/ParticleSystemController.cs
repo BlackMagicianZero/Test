@@ -10,6 +10,7 @@ public class ParticleSystemController : MonoBehaviour
     public GameObject bossCamera;
     private Vector3 originalBossCameraPosition; // BossCamera의 원래 위치를 저장할 변수
     private float originalCameraSize; // BossCamera의 원래 Projection Size를 저장할 변수
+    public GameObject bossroomWall;
 
     public Vector3 targetPosition = new Vector3(48.26f, -40.4f, -1f);
     public float moveDuration = 5f;
@@ -27,11 +28,11 @@ public class ParticleSystemController : MonoBehaviour
         // 충돌한 객체가 Player 태그를 가지고 있다면
         if (collision.CompareTag("Player") && !isPlaying)
         {
+            bossroomWall.SetActive(false);
             // BossCamera 활성화
             if (bossCamera != null)
             {
                 bossCamera.SetActive(true);
-                // 5초 동안 부드럽게 이동
                 StartCoroutine(MoveBossCamera(targetPosition, moveDuration));
             }
 
@@ -140,6 +141,8 @@ public class ParticleSystemController : MonoBehaviour
             yield return null;
         }
         bossCamera.transform.position = originalBossCameraPosition; // 위치가 원래 값으로 복구된 후 보정
+        //이 게임오브젝트를 비활성화
+        gameObject.SetActive(false);
         // 모든 기능이 끝나면 카메라를 비활성화
         bossCamera.SetActive(false);
     }
