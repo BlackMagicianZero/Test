@@ -7700,7 +7700,7 @@ Transform:
   m_GameObject: {fileID: 897389101}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 33, y: 21.86, z: 0}
+  m_LocalPosition: {x: 33.4, y: 22.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25274,6 +25274,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TightAndOpen(OAT_out)
       objectReference: {fileID: 0}
+    - target: {fileID: 4266090136786980807, guid: 2a2c0e328790e134f8295925202aa4d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7609468706276684717, guid: 2a2c0e328790e134f8295925202aa4d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -25603,6 +25607,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OpenAndTight(width)
       objectReference: {fileID: 0}
+    - target: {fileID: 7480554274627794570, guid: 2ce60140964ec5f4aad8dc580a9a8fcf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8498257930204242758, guid: 2ce60140964ec5f4aad8dc580a9a8fcf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -25912,7 +25920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1137777909429678029, guid: 6a9e89b44dafa9043b31d4689933ae71, type: 3}
       propertyPath: customInspectorObjects.panCameraOnContact
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2531565387671673424, guid: 6a9e89b44dafa9043b31d4689933ae71, type: 3}
       propertyPath: m_Size.x
@@ -25921,6 +25929,10 @@ PrefabInstance:
     - target: {fileID: 2531565387671673424, guid: 6a9e89b44dafa9043b31d4689933ae71, type: 3}
       propertyPath: m_Size.y
       value: 15.6928005
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531565387671673424, guid: 6a9e89b44dafa9043b31d4689933ae71, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2531565387671673424, guid: 6a9e89b44dafa9043b31d4689933ae71, type: 3}
       propertyPath: m_Offset.x
@@ -25933,6 +25945,10 @@ PrefabInstance:
     - target: {fileID: 3564498161134489850, guid: 6a9e89b44dafa9043b31d4689933ae71, type: 3}
       propertyPath: m_Name
       value: CameraControlTRIGGER
+      objectReference: {fileID: 0}
+    - target: {fileID: 3564498161134489850, guid: 6a9e89b44dafa9043b31d4689933ae71, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4970928456934855356, guid: 6a9e89b44dafa9043b31d4689933ae71, type: 3}
       propertyPath: m_LocalPosition.x

@@ -44,12 +44,6 @@ public class BuffScript : MonoBehaviour
                 case PowerUp.DBJump:
                     playercontroller.hasDBJumpBuff = true;
                     break;
-                case PowerUp.BlinkRange:
-                    playercontroller.dashDistance += dashRGToGive;
-                    break;
-                case PowerUp.BlinkCoolTime:
-                    playercontroller.dashCooldown -= dahsClToGive;
-                    break;
                 default:
                     break;
             }

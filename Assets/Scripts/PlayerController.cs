@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Linq;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
@@ -13,9 +14,6 @@ public class PlayerController : MonoBehaviour
     public float airWalkSpeed = 3f;
     public float jumpImpulse = 10f;
     public float remainingJumps = 0;
-    private bool isOnWallJumpCooldown = false;
-    public float dashDistance = 5f; // 대쉬 거리
-    public float dashDuration = 0.2f; // 대쉬 지속 시간
     private bool isDashing;
     public float dashCooldown = 3f; // 대쉬 쿨타임 (3초)
     private bool canDash = true; // 대쉬 사용 가능 여부를 나타내는 변수
@@ -170,7 +168,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator PerformDashing()
+    /*private IEnumerator PerformDashing()
     {
         damageable.isInvincible = true;
         canDash = false;
@@ -183,6 +181,32 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
         animator.SetBool("dashing", false);
+        yield return new WaitForSeconds(dashCooldown);
+        canDash =true;
+    }*/
+    private bool hasDashed;
+    private IEnumerator PerformDashing()
+    {
+        isDashing = true;
+        damageable.isInvincible = true;
+        canDash = false;
+        animator.SetBool("dashing", true);
+        isDashing =true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        yield return new WaitForSeconds(dashingTime);
+        rb.gravityScale = originalGravity;
+        if (Input.GetKeyDown((KeyCode)MouseButton.Left))
+        {
+            // 'F' 키가 눌렸을 때 대쉬 공격 애니메이션을 재생합니다.
+            animator.SetTrigger(AnimationStrings.dashAttack);
+            // 대쉬 공격을 발동하면 대쉬 상태를 초기화합니다.
+            hasDashed = true;
+        }
+        isDashing = false;
+        animator.SetBool("dashing", false);
+        hasDashed = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash =true;
     }
@@ -199,6 +223,11 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R))
         {
             MoveToRespawnZone();
+        }
+        if (!touchingDirections.IsGrounded && Input.GetKey(KeyCode.S))
+        {
+        // 빠른 하강 y 속도를 빠르게 증가
+        rb.velocity = new Vector2(rb.velocity.x, -jumpImpulse * 2f);
         }
         //임시코드
         if (Input.GetKeyDown(KeyCode.F1))
