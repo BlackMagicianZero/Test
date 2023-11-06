@@ -168,22 +168,38 @@ public class PlayerController : MonoBehaviour
     {
         return Physics2D.OverlapBox(wallCheckPos.position,wallCheckSize, 0, WallLayer);
     }
-    private void WallSlide()
+    private bool walldash;
+    private float wallSlideTimer = 0f;
+
+private void WallSlide()
+{
+    if (WallCheck() && !touchingDirections.IsGrounded && CanMove)
     {
-        if(WallCheck() && !touchingDirections.IsGrounded && CanMove)
-        {
-            isWallSliding = true;
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y,-wallSlideSpeed));
-            animator.SetBool(AnimationStrings.wallHold,true);
-            ProcessWallJump();
-        }
-        else
+        isWallSliding = true;
+        rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlideSpeed));
+        animator.SetBool(AnimationStrings.wallHold, true);
+        remainingJumps = 1;
+
+        // UpArrow를 누르면 벽의 반대편으로 점프
+        if (Input.GetKeyDown(KeyCode.O))
         {
             isWallSliding = false;
-            animator.SetBool(AnimationStrings.wallHold,false);
+            animator.SetBool(AnimationStrings.wallHold, false);
+            // 벽의 반대 방향으로 튕겨나가도록 설정
+            float jumpDirection = -transform.localScale.x;
+            rb.velocity = new Vector2(jumpDirection * wallJumpPower.x, wallJumpPower.y);
+
+            // WallSlide 타이머 초기화 (벽에서 떨어지기 위한 시간)
+            wallSlideTimer = 0.2f;
         }
     }
-    private void ProcessWallJump()
+    else
+    {
+        isWallSliding = false;
+        animator.SetBool(AnimationStrings.wallHold, false);
+    }
+}
+    /*private void ProcessWallJump()
     {
         if (isWallSliding)
         {
@@ -203,7 +219,7 @@ public class PlayerController : MonoBehaviour
                 wallJumpTimer = 0f;
                 Invoke(nameof(CancelWallJump), wallJumpTime);
             }
-    }
+    }*/
     private void CancelWallJump()
     {
         isWallJumping = false;
@@ -265,6 +281,16 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, -jumpImpulse * 2f);
         }
         WallSlide();
+        // WallSlide 타이머가 0보다 크면 벽에서 떨어지기
+    if (wallSlideTimer > 0f)
+    {
+        wallSlideTimer -= Time.deltaTime;
+        if (wallSlideTimer <= 0f)
+        {
+            // 벽에서 떨어지기
+            rb.velocity = new Vector2(rb.velocity.x, -jumpImpulse);
+        }
+    }
         //임시코드
         if (Input.GetKeyDown(KeyCode.F1))
         {

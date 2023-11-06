@@ -257,17 +257,6 @@
                 },
                 {
                     "name": "",
-                    "id": "bb641248-24f9-4e82-a498-2c212287b190",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "bb4a706c-7b17-4f34-ac45-ee93cd2914da",
                     "path": "<Keyboard>/space",
                     "interactions": "",
