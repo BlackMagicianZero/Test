@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1998394097332500115}
   - component: {fileID: 8530770146655584218}
   - component: {fileID: 3199404075923569331}
+  - component: {fileID: 6532367197674267113}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -153,8 +154,28 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c4b2e8bc-016e-4513-93c1-862c68408e2d
     m_ActionName: UI/Escape[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 407dc03e-231b-4e6e-a857-f31224316098
+    m_ActionName: Player/DownJump[/Keyboard/s,/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7495d161-0b3e-4d16-8409-d3decb841cb5
+    m_ActionName: Player/blink[/Keyboard/leftAlt]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6532367197674267113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461483920724029778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d44ea4a7cdc01845b0f231d7bb48621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

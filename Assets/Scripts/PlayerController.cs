@@ -36,6 +36,18 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
 
     private bool ignoreCollisionsDuringJump = false;
+    //벽점 로직
+    [SerializeField] private Transform wallCheckPos;
+    [SerializeField] private LayerMask WallLayer;
+    public Vector2 wallCheckSize = new Vector2(0.49f, 0.03f);
+    public float wallSlideSpeed = 2f;
+    bool isWallSliding;
+    bool isWallJumping;
+    float wallJumpDirection;
+    float wallJumpTime = 0.5f;
+    float wallJumpTimer;
+    public Vector2 wallJumpPower = new Vector2(5f, 10f);
+
 
     public bool hasDBJumpBuff = false;
     private IEnumerator DisableCollision()
@@ -147,6 +159,55 @@ public class PlayerController : MonoBehaviour
             return animator.GetBool(AnimationStrings.isAlive);
         }
     }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(wallCheckPos.position, wallCheckSize);
+    }
+    private bool WallCheck()
+    {
+        return Physics2D.OverlapBox(wallCheckPos.position,wallCheckSize, 0, WallLayer);
+    }
+    private void WallSlide()
+    {
+        if(WallCheck() && !touchingDirections.IsGrounded && CanMove)
+        {
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y,-wallSlideSpeed));
+            animator.SetBool(AnimationStrings.wallHold,true);
+            ProcessWallJump();
+        }
+        else
+        {
+            isWallSliding = false;
+            animator.SetBool(AnimationStrings.wallHold,false);
+        }
+    }
+    private void ProcessWallJump()
+    {
+        if (isWallSliding)
+        {
+            isWallJumping = false;
+            wallJumpDirection = -transform.localScale.x;
+            wallJumpTimer = wallJumpTime;
+            CancelInvoke(nameof(CancelWallJump));
+        }
+        else if (wallJumpTimer > 0f)
+        {
+            wallJumpTimer -= Time.deltaTime;
+        }
+        if(Input.GetKeyDown(KeyCode.UpArrow) && wallJumpTimer > 0f)
+            {
+                isWallJumping = true;
+                rb.velocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);
+                wallJumpTimer = 0f;
+                Invoke(nameof(CancelWallJump), wallJumpTime);
+            }
+    }
+    private void CancelWallJump()
+    {
+        isWallJumping = false;
+    }
 
     private void Awake()
     {
@@ -168,26 +229,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /*private IEnumerator PerformDashing()
-    {
-        damageable.isInvincible = true;
-        canDash = false;
-        animator.SetBool("dashing", true);
-        isDashing =true;
-        float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
-        yield return new WaitForSeconds(dashingTime);
-        rb.gravityScale = originalGravity;
-        isDashing = false;
-        animator.SetBool("dashing", false);
-        yield return new WaitForSeconds(dashCooldown);
-        canDash =true;
-    }*/
-    private bool hasDashed;
     private IEnumerator PerformDashing()
     {
-        isDashing = true;
         damageable.isInvincible = true;
         canDash = false;
         animator.SetBool("dashing", true);
@@ -197,16 +240,8 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
         yield return new WaitForSeconds(dashingTime);
         rb.gravityScale = originalGravity;
-        if (Input.GetKeyDown((KeyCode)MouseButton.Left))
-        {
-            // 'F' 키가 눌렸을 때 대쉬 공격 애니메이션을 재생합니다.
-            animator.SetTrigger(AnimationStrings.dashAttack);
-            // 대쉬 공격을 발동하면 대쉬 상태를 초기화합니다.
-            hasDashed = true;
-        }
         isDashing = false;
         animator.SetBool("dashing", false);
-        hasDashed = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash =true;
     }
@@ -216,7 +251,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftAlt) && canDash)
         {
             StartCoroutine(PerformDashing());
         }
@@ -224,11 +259,12 @@ public class PlayerController : MonoBehaviour
         {
             MoveToRespawnZone();
         }
-        if (!touchingDirections.IsGrounded && Input.GetKey(KeyCode.S))
+        if (!touchingDirections.IsGrounded && Input.GetKey(KeyCode.DownArrow))
         {
         // 빠른 하강 y 속도를 빠르게 증가
         rb.velocity = new Vector2(rb.velocity.x, -jumpImpulse * 2f);
         }
+        WallSlide();
         //임시코드
         if (Input.GetKeyDown(KeyCode.F1))
         {
@@ -247,21 +283,6 @@ public class PlayerController : MonoBehaviour
                     Time.timeScale = 1f;
                 }
             }
-        }
-        //
-
-        //이상하면 지울 카메라 셋
-        if(rb.velocity.y < _fallSpeedYDampingChangeThreshold &&
-            !CameraManager.instance.IsLerpingYDamping &&
-                !CameraManager.instance.LerpedFromPlayerFalling)
-        {
-            CameraManager.instance.LerpYDamping(true);
-        }
-        if(rb.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping &&
-            CameraManager.instance.LerpedFromPlayerFalling)
-        {
-            CameraManager.instance.LerpedFromPlayerFalling = false;
-            CameraManager.instance.LerpYDamping(false);
         }
         //
     }
@@ -296,12 +317,10 @@ public class PlayerController : MonoBehaviour
         if (moveInput.x > 0 && !IsFacingRight)
         {
             IsFacingRight = true;
-            //_cameraFollowObject.CallTurn();
         }
         else if (moveInput.x < 0 && IsFacingRight)
         {
             IsFacingRight = false;
-            //_cameraFollowObject.CallTurn();
         }
     }
     public void OnAttack(InputAction.CallbackContext context)
@@ -425,14 +444,5 @@ public class PlayerController : MonoBehaviour
             // Respawn 영역을 찾지 못한 경우에 대한 예외 처리
             Debug.LogWarning("Respawn 영역을 찾을 수 없습니다.");
         }
-    }
-    [Header("Camera Stuff")]
-    [SerializeField] private GameObject _cameraFollowGo;
-    private CameraFollowObject _cameraFollowObject;
-    private float _fallSpeedYDampingChangeThreshold;
-    private void Start()
-    {
-        _cameraFollowObject = _cameraFollowGo.GetComponent<CameraFollowObject>();
-        _fallSpeedYDampingChangeThreshold = CameraManager.instance._fallSpeedYDampingChangeThreshold;
-    }
+    }    
 }

@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using DG.Tweening;
 
 public class CameraScreenController : MonoBehaviour
 {
-    public float screenYWhileSKeyPressed = 0.4f; // S 키를 누를 때의 Screen Y 값
-    public float originalScreenY = 0.5f; // 원래의 Screen Y 값
+    public float screenYWhileSKeyPressed = 0.3f; // S 키를 누를 때의 Screen Y 값
+    public float originalScreenY = 0.65f; // 원래의 Screen Y 값
+    public float transitionDuration = 0.5f;
 
     private CinemachineVirtualCamera virtualCamera;
 
@@ -21,7 +23,7 @@ public class CameraScreenController : MonoBehaviour
     private void Update()
     {
         // "X" 키를 누르면 Screen Y 값을 변경
-        if (Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             // Screen Y 값을 변경
             ChangeScreenY(screenYWhileSKeyPressed);

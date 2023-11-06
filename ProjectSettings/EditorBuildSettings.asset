@@ -9,11 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Opening Scene.unity
     guid: 9a5fae0e892121f4f8a8f770b4ca79ec
   - enabled: 1
-    path: Assets/Scenes/Second Scene.unity
-    guid: e8f8e379f5796d24a9adc7d6e2d42761
-  - enabled: 1
-    path: Assets/Scenes/Third Scene.unity
-    guid: ec947cf0fb4a91146983b079955cda6f
+    path: Assets/Scenes/Tutorial.unity
+    guid: 546b23a2c6f0e424a9d902bae7c03d43
   - enabled: 1
     path: Assets/Scenes/QuitScene.unity
     guid: 22861590ebc637a42bb427d80539430c

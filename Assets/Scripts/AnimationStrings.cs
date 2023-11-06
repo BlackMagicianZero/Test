@@ -25,4 +25,5 @@ public class AnimationStrings
     internal static string attackCooldown = "attackCooldown";
     internal static string rangedAttackTrigger = "rangedAttack";
     internal static string dashAttack = "dashAttack";
+    internal static string wallHold = "WallHold";
 }
