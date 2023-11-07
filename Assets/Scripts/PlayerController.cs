@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
     {
         BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
         Physics2D.IgnoreCollision(playerCollider, platformCollider);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
     }
 
@@ -220,7 +220,10 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
         animator.SetBool("AirDash", false);
-        dashimage.DOFade(1f, 2f);
+        dashimage.DOFade(1f, 1.9f).OnComplete(() =>
+        {
+            dashimage.color = Color.red;
+        });
         canjump = true;
         yield return new WaitForSeconds(dashCooldown);
         canDash =true;
@@ -240,7 +243,10 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
         animator.SetBool("LnRDash", false);
-        dashimage.DOFade(1f, 2f);
+        dashimage.DOFade(1f, 1.9f).OnComplete(() =>
+        {
+            dashimage.color = Color.red;
+        });
         canjump = true;
         yield return new WaitForSeconds(dashCooldown);
         canDash =true;
@@ -255,26 +261,11 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(PerformDIADashing());
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (Input.GetKey(KeyCode.LeftArrow) && canDash && Input.GetKeyDown(KeyCode.LeftShift)  ||
+             Input.GetKey(KeyCode.RightArrow)  && canDash && Input.GetKeyDown(KeyCode.LeftShift))
         {
-            // 첫 번째 입력일 때
-            if (!LnRDash)
-            {
-                LnRDash = true;
-                lastRightArrowPressTime = Time.time;
-            }
-            // 두 번째 입력일 때
-            else if (Time.time - lastRightArrowPressTime <= timeBetweenRightArrowPresses)
-            {
-                StartCoroutine(PerformLnRDashing());
-                LnRDash = false; // 두 번째 입력 이후 LnRDash를 false로 설정하여 연속 대쉬 방지
-            }
-            else
-            {
-                // 첫 번째 입력이 있었지만 0.5초 안에 두 번째 입력이 없는 경우, 다시 초기화
-                LnRDash = true;
-                lastRightArrowPressTime = Time.time;
-            }
+
+            StartCoroutine(PerformLnRDashing());
         }
         if(Input.GetKeyDown(KeyCode.R))
         {
