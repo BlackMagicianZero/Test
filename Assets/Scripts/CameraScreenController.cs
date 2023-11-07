@@ -20,17 +20,17 @@ public class CameraScreenController : MonoBehaviour
         originalScreenY = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY;
     }
 
-    private void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        // "X" 키를 누르면 Screen Y 값을 변경
-        if (Input.GetKey(KeyCode.DownArrow))
+        if(collision.gameObject.CompareTag("Player"))
         {
-            // Screen Y 값을 변경
             ChangeScreenY(screenYWhileSKeyPressed);
         }
-        else
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
         {
-            // "X" 키를 떼면 Screen Y 값을 원래 값으로
             ChangeScreenY(originalScreenY);
         }
     }

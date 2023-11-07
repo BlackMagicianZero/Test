@@ -179,19 +179,6 @@ private void WallSlide()
         rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlideSpeed));
         animator.SetBool(AnimationStrings.wallHold, true);
         remainingJumps = 1;
-
-        // UpArrow를 누르면 벽의 반대편으로 점프
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            isWallSliding = false;
-            animator.SetBool(AnimationStrings.wallHold, false);
-            // 벽의 반대 방향으로 튕겨나가도록 설정
-            float jumpDirection = -transform.localScale.x;
-            rb.velocity = new Vector2(jumpDirection * wallJumpPower.x, wallJumpPower.y);
-
-            // WallSlide 타이머 초기화 (벽에서 떨어지기 위한 시간)
-            wallSlideTimer = 0.2f;
-        }
     }
     else
     {
@@ -199,31 +186,6 @@ private void WallSlide()
         animator.SetBool(AnimationStrings.wallHold, false);
     }
 }
-    /*private void ProcessWallJump()
-    {
-        if (isWallSliding)
-        {
-            isWallJumping = false;
-            wallJumpDirection = -transform.localScale.x;
-            wallJumpTimer = wallJumpTime;
-            CancelInvoke(nameof(CancelWallJump));
-        }
-        else if (wallJumpTimer > 0f)
-        {
-            wallJumpTimer -= Time.deltaTime;
-        }
-        if(Input.GetKeyDown(KeyCode.UpArrow) && wallJumpTimer > 0f)
-            {
-                isWallJumping = true;
-                rb.velocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);
-                wallJumpTimer = 0f;
-                Invoke(nameof(CancelWallJump), wallJumpTime);
-            }
-    }*/
-    private void CancelWallJump()
-    {
-        isWallJumping = false;
-    }
 
     private void Awake()
     {
@@ -267,7 +229,7 @@ private void WallSlide()
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.LeftAlt) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(PerformDashing());
         }
@@ -378,7 +340,7 @@ private void WallSlide()
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.started && CanMove)
+        if (context.started && CanMove && !isWallSliding)
         {
             if (touchingDirections.IsGrounded)
             {
