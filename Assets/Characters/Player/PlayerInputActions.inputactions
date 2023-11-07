@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Run",
-                    "type": "Button",
-                    "id": "9d354790-b5ab-4e96-9e57-ae868295e441",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "dd517ab1-0f46-4216-b158-6fb1365398b5",
@@ -63,15 +54,6 @@
                     "name": "DownJump",
                     "type": "Button",
                     "id": "407dc03e-231b-4e6e-a857-f31224316098",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "blink",
-                    "type": "Button",
-                    "id": "7495d161-0b3e-4d16-8409-d3decb841cb5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -246,17 +228,6 @@
                 },
                 {
                     "name": "",
-                    "id": "4f4b4acb-f2dd-4940-a3a4-02db2a561e4e",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "bb4a706c-7b17-4f34-ac45-ee93cd2914da",
                     "path": "<Keyboard>/alt",
                     "interactions": "",
@@ -290,34 +261,12 @@
                 },
                 {
                     "name": "",
-                    "id": "14f79e4e-d1a7-4c26-826f-f898ee7d7db7",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "DownJump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "73de8069-81d0-4b2f-afcc-1028150b53b9",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "DownJump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0e1e7483-8476-4bc6-b069-b43fb99940b1",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "blink",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

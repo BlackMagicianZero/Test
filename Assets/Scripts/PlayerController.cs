@@ -15,10 +15,10 @@ public class PlayerController : MonoBehaviour
     public float jumpImpulse = 10f;
     public float remainingJumps = 0;
     private bool isDashing;
-    public float dashCooldown = 3f; // 대쉬 쿨타임 (3초)
+    public float dashCooldown = 2f; // 대쉬 쿨타임 (2초)
     private bool canDash = true; // 대쉬 사용 가능 여부를 나타내는 변수
     public float dashingPower = 0f;
-    public float dashingTime = 0f;
+    public float dashingTime = 0.2f; //(대쉬 지속시간 0.2초간 무적)
     Vector2 moveInput;
     TouchingDirections touchingDirections;
     Damageable damageable;
@@ -207,11 +207,27 @@ private void WallSlide()
         }
     }
 
-    private IEnumerator PerformDashing()
+    private IEnumerator PerformDIADashing()
     {
         damageable.isInvincible = true;
         canDash = false;
-        animator.SetBool("dashing", true);
+        animator.SetBool("AirDash", true);
+        isDashing =true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower,transform.localScale.y * dashingPower);
+        yield return new WaitForSeconds(dashingTime);
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        animator.SetBool("AirDash", false);
+        yield return new WaitForSeconds(dashCooldown);
+        canDash =true;
+    }
+        private IEnumerator PerformLnRDashing()
+    {
+        damageable.isInvincible = true;
+        canDash = false;
+        animator.SetBool("LnRDash", true);
         isDashing =true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
@@ -219,19 +235,43 @@ private void WallSlide()
         yield return new WaitForSeconds(dashingTime);
         rb.gravityScale = originalGravity;
         isDashing = false;
-        animator.SetBool("dashing", false);
+        animator.SetBool("LnRDash", false);
         yield return new WaitForSeconds(dashCooldown);
         canDash =true;
     }
+    private bool LnRDash = false;
+    private float lastRightArrowPressTime = 0f;
+    private float timeBetweenRightArrowPresses = 1f;
     private void Update()
     {
         if(isDashing)
         {
             return;
-        }
+        }    
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
-            StartCoroutine(PerformDashing());
+            StartCoroutine(PerformDIADashing());
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow) && canDash ||Input.GetKeyDown(KeyCode.LeftArrow) && canDash)
+        {
+            // 첫 번째 입력일 때
+            if (!LnRDash)
+            {
+                LnRDash = true;
+                lastRightArrowPressTime = Time.time;
+            }
+            // 두 번째 입력일 때
+            else if (Time.time - lastRightArrowPressTime <= timeBetweenRightArrowPresses)
+            {
+                StartCoroutine(PerformLnRDashing());
+                LnRDash = false; // 두 번째 입력 이후 LnRDash를 false로 설정하여 연속 대쉬 방지
+            }
+            else
+            {
+                // 첫 번째 입력이 있었지만 0.5초 안에 두 번째 입력이 없는 경우, 다시 초기화
+                LnRDash = true;
+                lastRightArrowPressTime = Time.time;
+            }
         }
         if(Input.GetKeyDown(KeyCode.R))
         {
@@ -332,6 +372,7 @@ private void WallSlide()
         if (context.started)
         {
             IsRunning = true;
+            StartCoroutine(PerformLnRDashing());
         }
         else if (context.canceled)
         {
@@ -432,5 +473,5 @@ private void WallSlide()
             // Respawn 영역을 찾지 못한 경우에 대한 예외 처리
             Debug.LogWarning("Respawn 영역을 찾을 수 없습니다.");
         }
-    }    
+    }
 }
