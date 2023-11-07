@@ -593,6 +593,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 12
   knockback: {x: 0, y: 0}
+--- !u!1 &5785834880617018974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1296892071078318266}
+  m_Layer: 7
+  m_Name: Wall Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1296892071078318266
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5785834880617018974}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4, y: -0.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1500796748829050366}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8797024169791199101
 GameObject:
   m_ObjectHideFlags: 0
@@ -5471,6 +5502,7 @@ Transform:
   - {fileID: 4603349015084959739}
   - {fileID: 2180016407255131481}
   - {fileID: 6663737929138602367}
+  - {fileID: 1296892071078318266}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7495108666105613572
@@ -5513,7 +5545,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 45c2a84b4556c0545a84a1df34309794, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5621,11 +5653,17 @@ MonoBehaviour:
   ghostTrailEffect: {fileID: 4371829275431926586}
   playerCollider: {fileID: 4562464942672546114}
   wallCollider: {fileID: 0}
+  wallCheckPos: {fileID: 1296892071078318266}
+  WallLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  wallCheckSize: {x: 0.16, y: 0.9}
+  wallSlideSpeed: 2
+  wallJumpPower: {x: 5, y: 10}
   hasDBJumpBuff: 0
   _isMoving: 0
   _isRunning: 0
   _isFacingRight: 1
-  _cameraFollowGo: {fileID: 0}
 --- !u!114 &2627716255886654180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5731,22 +5769,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 749343657102894717}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnRun
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 9d354790-b5ab-4e96-9e57-ae868295e441
-    m_ActionName: Player/Run[/Keyboard/leftShift]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 749343657102894717}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
@@ -5795,22 +5817,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 407dc03e-231b-4e6e-a857-f31224316098
     m_ActionName: Player/DownJump[/Keyboard/s]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 749343657102894717}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnDash
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 7495d161-0b3e-4d16-8409-d3decb841cb5
-    m_ActionName: Player/blink[/Keyboard/leftCtrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -5864,7 +5870,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   groundDistance: 0.2
-  wallDistance: 0.7
+  wallDistance: 0
   ceilingDistance: 0.05
   _isGrounded: 0
   _isOnWall: 0

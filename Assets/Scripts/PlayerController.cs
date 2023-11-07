@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Linq;
 using DG.Tweening;
 using Unity.VisualScripting;
+using Microsoft.Unity.VisualStudio.Editor;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
 {
+    public UnityEngine.UI.Image dashimage;
     public float walkSpeed = 5f;
     public float runSpeed = 8f;
     public float airWalkSpeed = 3f;
@@ -16,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public float remainingJumps = 0;
     private bool isDashing;
     public float dashCooldown = 2f; // 대쉬 쿨타임 (2초)
-    private bool canDash = true; // 대쉬 사용 가능 여부를 나타내는 변수
+    public bool canDash = true; // 대쉬 사용 가능 여부를 나타내는 변수
     public float dashingPower = 0f;
     public float dashingTime = 0.2f; //(대쉬 지속시간 0.2초간 무적)
     Vector2 moveInput;
@@ -42,14 +45,32 @@ public class PlayerController : MonoBehaviour
     public Vector2 wallCheckSize = new Vector2(0.49f, 0.03f);
     public float wallSlideSpeed = 2f;
     bool isWallSliding;
-    bool isWallJumping;
-    float wallJumpDirection;
-    float wallJumpTime = 0.5f;
-    float wallJumpTimer;
-    public Vector2 wallJumpPower = new Vector2(5f, 10f);
-
-
     public bool hasDBJumpBuff = false;
+    private bool LnRDash = false;
+    private float lastRightArrowPressTime = 0f;
+    private float timeBetweenRightArrowPresses = 1f;
+    private float wallSlideTimer = 0f;
+    private bool canjump = true;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        touchingDirections = GetComponent<TouchingDirections>();
+        damageable = GetComponent<Damageable>();
+        wallCollider = GetComponentInChildren<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        if(Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private IEnumerator DisableCollision()
     {
         BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
@@ -168,48 +189,27 @@ public class PlayerController : MonoBehaviour
     {
         return Physics2D.OverlapBox(wallCheckPos.position,wallCheckSize, 0, WallLayer);
     }
-    private bool walldash;
-    private float wallSlideTimer = 0f;
 
-private void WallSlide()
-{
-    if (WallCheck() && !touchingDirections.IsGrounded && CanMove)
+    private void WallSlide()
     {
-        isWallSliding = true;
-        rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlideSpeed));
-        animator.SetBool(AnimationStrings.wallHold, true);
-        remainingJumps = 1;
-    }
-    else
-    {
-        isWallSliding = false;
-        animator.SetBool(AnimationStrings.wallHold, false);
-    }
-}
-
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        touchingDirections = GetComponent<TouchingDirections>();
-        damageable = GetComponent<Damageable>();
-        wallCollider = GetComponentInChildren<Collider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        
-        if(Instance == null)
+        if (WallCheck() && !touchingDirections.IsGrounded && CanMove)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlideSpeed));
+            animator.SetBool(AnimationStrings.wallHold, true);
+            remainingJumps = 1;
         }
         else
         {
-            Destroy(gameObject);
+            isWallSliding = false;
+            animator.SetBool(AnimationStrings.wallHold, false);
         }
     }
-
     private IEnumerator PerformDIADashing()
     {
+        canjump = false;
         damageable.isInvincible = true;
+        dashimage.color = new Color(1f, 1f, 1f, 0f);
         canDash = false;
         animator.SetBool("AirDash", true);
         isDashing =true;
@@ -220,12 +220,16 @@ private void WallSlide()
         rb.gravityScale = originalGravity;
         isDashing = false;
         animator.SetBool("AirDash", false);
+        dashimage.DOFade(1f, 2f);
+        canjump = true;
         yield return new WaitForSeconds(dashCooldown);
         canDash =true;
     }
         private IEnumerator PerformLnRDashing()
     {
+        canjump = false;
         damageable.isInvincible = true;
+        dashimage.color = new Color(1f, 1f, 1f, 0f);
         canDash = false;
         animator.SetBool("LnRDash", true);
         isDashing =true;
@@ -236,23 +240,22 @@ private void WallSlide()
         rb.gravityScale = originalGravity;
         isDashing = false;
         animator.SetBool("LnRDash", false);
+        dashimage.DOFade(1f, 2f);
+        canjump = true;
         yield return new WaitForSeconds(dashCooldown);
         canDash =true;
     }
-    private bool LnRDash = false;
-    private float lastRightArrowPressTime = 0f;
-    private float timeBetweenRightArrowPresses = 1f;
     private void Update()
     {
         if(isDashing)
         {
             return;
         }    
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && Input.GetKey(KeyCode.UpArrow) && !touchingDirections.IsGrounded)
         {
             StartCoroutine(PerformDIADashing());
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow) && canDash ||Input.GetKeyDown(KeyCode.LeftArrow) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             // 첫 번째 입력일 때
             if (!LnRDash)
@@ -381,7 +384,7 @@ private void WallSlide()
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.started && CanMove && !isWallSliding)
+        if (context.started && CanMove && !isWallSliding && canjump == true)
         {
             if (touchingDirections.IsGrounded)
             {
