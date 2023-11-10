@@ -3129,7 +3129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &522557812
 Transform:
   m_ObjectHideFlags: 0
@@ -3214,10 +3214,6 @@ PrefabInstance:
     - target: {fileID: 1151358359036545827, guid: 640acf8601077754e9806a32fde076b3, type: 3}
       propertyPath: m_Name
       value: Ice_RamG_2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8256229978691336779, guid: 640acf8601077754e9806a32fde076b3, type: 3}
-      propertyPath: _hasTarget
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6732,7 +6728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1151358359036545827, guid: 640acf8601077754e9806a32fde076b3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DashAttack",
+                    "type": "Button",
+                    "id": "b83d730b-d82a-4f3a-a2d0-4612147cab49",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -267,6 +276,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "DownJump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5acda554-9cd6-4b14-9372-320cbfcbf17f",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "DashAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

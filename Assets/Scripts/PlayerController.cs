@@ -207,6 +207,7 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator PerformDIADashing()
     {
+        isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
         dashimage.color = new Color(1f, 1f, 1f, 0f);
@@ -226,10 +227,12 @@ public class PlayerController : MonoBehaviour
         });
         canjump = true;
         yield return new WaitForSeconds(dashCooldown);
+        isDashingAllowed = true;
         canDash =true;
     }
-        private IEnumerator PerformLnRDashing()
+    private IEnumerator PerformLnRDashing()
     {
+        isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
         dashimage.color = new Color(1f, 1f, 1f, 0f);
@@ -249,6 +252,36 @@ public class PlayerController : MonoBehaviour
         });
         canjump = true;
         yield return new WaitForSeconds(dashCooldown);
+        isDashingAllowed = true;
+        canDash =true;
+    }
+    private bool isDashingAllowed = true;
+    private IEnumerator DashAttack()
+    {
+        if (!isDashingAllowed)
+        {
+            yield break; // 쿨타임 중에는 실행 불가
+        }
+        isDashingAllowed = false; // 쿨타임 시작
+        canjump = false;
+        //damageable.isInvincible = true;
+        dashimage.color = new Color(1f, 1f, 1f, 0f);
+        canDash = false;
+        animator.SetTrigger(AnimationStrings.dashAttack);
+        isDashing =true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        yield return new WaitForSeconds(dashingTime);
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        dashimage.DOFade(1f, 1.9f).OnComplete(() =>
+        {
+            dashimage.color = Color.red;
+        });
+        canjump = true;
+        yield return new WaitForSeconds(dashCooldown);
+        isDashingAllowed = true; // 쿨타임 종료
         canDash =true;
     }
     private void Update()
@@ -290,7 +323,6 @@ public class PlayerController : MonoBehaviour
         //임시코드
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            // 이미지의 활성/비활성을 토글합니다.
             if (explainimage != null)
             {
                 bool isImageActive = !explainimage.activeSelf;
@@ -358,6 +390,13 @@ public class PlayerController : MonoBehaviour
         if (context.started)
         {
             animator.SetTrigger(AnimationStrings.rangedAttackTrigger);
+        }
+    }
+        public void OnDashAttack(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            StartCoroutine(DashAttack());
         }
     }
 
