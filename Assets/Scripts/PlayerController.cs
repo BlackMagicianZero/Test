@@ -207,6 +207,7 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator PerformDIADashing()
     {
+        gameObject.layer = 8;
         isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
@@ -227,11 +228,13 @@ public class PlayerController : MonoBehaviour
         });
         canjump = true;
         yield return new WaitForSeconds(dashCooldown);
+        gameObject.layer = 7;
         isDashingAllowed = true;
         canDash =true;
     }
     private IEnumerator PerformLnRDashing()
     {
+        gameObject.layer = 8;
         isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
@@ -252,6 +255,7 @@ public class PlayerController : MonoBehaviour
         });
         canjump = true;
         yield return new WaitForSeconds(dashCooldown);
+        gameObject.layer = 7;
         isDashingAllowed = true;
         canDash =true;
     }
@@ -262,7 +266,9 @@ public class PlayerController : MonoBehaviour
         {
             yield break; // 쿨타임 중에는 실행 불가
         }
+        gameObject.layer = 8;
         isDashingAllowed = false; // 쿨타임 시작
+        IsMoving= false;
         canjump = false;
         //damageable.isInvincible = true;
         dashimage.color = new Color(1f, 1f, 1f, 0f);
@@ -280,7 +286,9 @@ public class PlayerController : MonoBehaviour
             dashimage.color = Color.red;
         });
         canjump = true;
+        IsMoving= true;
         yield return new WaitForSeconds(dashCooldown);
+        gameObject.layer = 7;
         isDashingAllowed = true; // 쿨타임 종료
         canDash =true;
     }
@@ -480,6 +488,10 @@ public class PlayerController : MonoBehaviour
         {
             currentOneWayPlatform = collision.gameObject;
         }
+        if(collision.gameObject.CompareTag("Monster"))
+        {
+           OnDamaged(collision.transform.position); 
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -487,6 +499,22 @@ public class PlayerController : MonoBehaviour
         {
             currentOneWayPlatform = null;
         }
+    }
+    public void OnDamaged(Vector2 targetPos)
+    {
+        gameObject.gameObject.layer = 8;
+        spriteRenderer.color = new Color(1,1,1,0.4f);
+        int dirc = transform.position.x-targetPos.x > 0 ? 1 : -1;
+        rb.AddForce(new Vector2(dirc, 1)*3, ForceMode2D.Impulse);
+        int maxHealth = damageable.MaxHealth;
+        int healthToReduce = 10;
+        bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);    
+        Invoke("OffDamaged",1.5f);
+    }
+    public void OffDamaged()
+    {
+        gameObject.layer = 7;
+        spriteRenderer.color = new Color(1,1,1,1);
     }
 
     private void MoveToRespawnZone()
