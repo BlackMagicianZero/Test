@@ -143,8 +143,25 @@ public class Knight : MonoBehaviour
     public void OnHit(int damage, Vector2 knockback)
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+        // 넉백 후에 위치를 검사하여 타일 끝에 도달하면 위치를 조정
+        CheckTileEdge();
     }
 
+    private void CheckTileEdge()
+    {
+        float tileSize = 1.0f;
+
+        // 현재 위치의 x 좌표를 기준으로 타일 끝에 도달했는지 검사
+        float currentPositionX = transform.position.x;
+        float remainder = Mathf.Abs(currentPositionX) % tileSize;
+
+        if (remainder > tileSize / 2)
+        {
+            // 타일의 끝에 가까운 경우 위치를 조정
+            float adjustment = tileSize - remainder;
+            transform.position = new Vector2(currentPositionX + Mathf.Sign(currentPositionX) * adjustment, transform.position.y);
+        }
+    }
     public void OnCliffDetected()
     {
         if(touchingDirections.IsGrounded)

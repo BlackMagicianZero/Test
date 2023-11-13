@@ -48,4 +48,8 @@ public class PlayOneShotBehaviour : StateMachineBehaviour
             AudioSource.PlayClipAtPoint(soundToPlay, animator.gameObject.transform.position, volume);
         }
     }
+    public void SetVolume(float newVolume)
+    {
+        volume = newVolume;
+    }
 }
