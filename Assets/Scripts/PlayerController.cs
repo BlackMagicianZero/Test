@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private bool isDashing;
     public float dashCooldown = 2f; // 대쉬 쿨타임 (2초)
     public bool canDash = true; // 대쉬 사용 가능 여부를 나타내는 변수
-    public float dashingPower = 0f;
+    public float dashingPower = 12f;
     public float dashingTime = 0.2f; //(대쉬 지속시간 0.2초간 무적)
     Vector2 moveInput;
     TouchingDirections touchingDirections;
@@ -286,7 +286,6 @@ public class PlayerController : MonoBehaviour
             dashimage.color = Color.red;
         });
         canjump = true;
-        IsMoving= true;
         yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
         isDashingAllowed = true; // 쿨타임 종료

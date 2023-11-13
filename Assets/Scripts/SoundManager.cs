@@ -13,7 +13,7 @@ public class SoundManager : MonoBehaviour
 
     void Awake()
     {
-        playOneShotBehaviour = GetComponent<PlayOneShotBehaviour>();
+        //playOneShotBehaviour = GetComponent<PlayOneShotBehaviour>();
     }
     public void SetOneShotVolume(float value)
     {

@@ -27,18 +27,24 @@ public class HealthBar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateHealthUI();
+    }
+    void Update()
+    {
+        // 실시간으로 체력 정보 업데이트
+        UpdateHealthUI();
+    }
+
+    private void OnPlayerHealthChanged(int newHealth, int maxHealth)
+    {
+        healthSlider.value = CalculateSliderPercentage(newHealth, maxHealth);
+        healthBarText.text = "HP " + newHealth + " / " + maxHealth;
+    }
+
+    private void UpdateHealthUI()
+    {
         healthSlider.value = CalculateSliderPercentage(playerDamageable.Health, playerDamageable.MaxHealth);
         healthBarText.text = "HP " + playerDamageable.Health + " / " + playerDamageable.MaxHealth;
-    }
-
-    private void OnEnable()
-    {
-        playerDamageable.healthChanged.AddListener(OnPlayerHealthChanged);
-    }
-
-    private void OnDisable()
-    {
-        playerDamageable.healthChanged.RemoveListener(OnPlayerHealthChanged);
     }
 
     // Calculates with floats so value is returned as a decimal value
@@ -46,10 +52,4 @@ public class HealthBar : MonoBehaviour
     {
         return currentHealth / maxHealth;
     }
-
-    private void OnPlayerHealthChanged(int newHealth, int maxHealth)
-    {
-        healthSlider.value = CalculateSliderPercentage(newHealth, maxHealth);
-        healthBarText.text = "HP " + newHealth + " / " + maxHealth;
-    }   
 }
