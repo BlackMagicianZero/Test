@@ -53,6 +53,7 @@ public class BuffScript : MonoBehaviour
                     break;
                 case PowerUp.HPUp:
                     damageable.MaxHealth = damageable.MaxHealth + HPToGive;
+                    damageable.Health = damageable.Health + HPToGive;
                     break;
                 case PowerUp.ATKDamageUp:
                     GameObject swordAttack1 = player.transform.Find("SwordAttack1").gameObject;

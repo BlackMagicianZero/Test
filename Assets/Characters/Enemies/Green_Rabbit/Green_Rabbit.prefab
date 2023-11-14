@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2203254102408224249}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0, z: 0}
+  m_LocalPosition: {x: 0.7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkAcceleration: 50
-  maxSpeed: 3
+  maxSpeed: 1
   walkStopRate: 0.05
   attackZone: {fileID: 2137475384901951726}
   cliffDetectionZone: {fileID: 100629577135219755}
@@ -355,18 +355,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0028643608, y: 0}
+  m_Offset: {x: 0.08920288, y: -0.008124828}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8125, y: 0.6666667}
+    oldSize: {x: 1.0833334, y: 0.8888889}
     newSize: {x: 1.5, y: 1.2307693}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8526468, y: 0.71517944}
+  m_Size: {x: 0.8523865, y: 0.8396311}
   m_EdgeRadius: 0
 --- !u!1 &7900325524552548389
 GameObject:
@@ -395,7 +395,7 @@ Transform:
   m_GameObject: {fileID: 7900325524552548389}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0, z: 0}
+  m_LocalPosition: {x: 0.7, y: 0, z: 0}
   m_LocalScale: {x: 1.35, y: 1.2875, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -491,7 +491,7 @@ Transform:
   m_GameObject: {fileID: 8394792977148442409}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: -0.8, z: 0}
+  m_LocalPosition: {x: 0.807, y: -0.972, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
         isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
-        dashimage.color = new Color(1f, 1f, 1f, 0f);
+        dashimage.color = Color.gray;
         canDash = false;
         animator.SetBool("AirDash", true);
         isDashing =true;
@@ -222,14 +222,11 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
         animator.SetBool("AirDash", false);
-        dashimage.DOFade(1f, 1.9f).OnComplete(() =>
-        {
-            dashimage.color = Color.red;
-        });
         canjump = true;
         yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
         isDashingAllowed = true;
+        dashimage.color = new Color(1f,1f,1f,1f);
         canDash =true;
     }
     private IEnumerator PerformLnRDashing()
@@ -238,7 +235,7 @@ public class PlayerController : MonoBehaviour
         isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
-        dashimage.color = new Color(1f, 1f, 1f, 0f);
+        dashimage.color = Color.gray;
         canDash = false;
         animator.SetBool("LnRDash", true);
         isDashing =true;
@@ -249,14 +246,11 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
         animator.SetBool("LnRDash", false);
-        dashimage.DOFade(1f, 1.9f).OnComplete(() =>
-        {
-            dashimage.color = Color.red;
-        });
         canjump = true;
         yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
         isDashingAllowed = true;
+        dashimage.color = new Color(1f,1f,1f,1f);
         canDash =true;
     }
     private bool isDashingAllowed = true;
@@ -270,8 +264,7 @@ public class PlayerController : MonoBehaviour
         isDashingAllowed = false; // 쿨타임 시작
         IsMoving= false;
         canjump = false;
-        //damageable.isInvincible = true;
-        dashimage.color = new Color(1f, 1f, 1f, 0f);
+        dashimage.color = Color.gray;
         canDash = false;
         animator.SetTrigger(AnimationStrings.dashAttack);
         isDashing =true;
@@ -281,14 +274,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashingTime);
         rb.gravityScale = originalGravity;
         isDashing = false;
-        dashimage.DOFade(1f, 1.9f).OnComplete(() =>
-        {
-            dashimage.color = Color.red;
-        });
         canjump = true;
         yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
         isDashingAllowed = true; // 쿨타임 종료
+        dashimage.color = new Color(1f,1f,1f,1f);
         canDash =true;
     }
     private void Update()
