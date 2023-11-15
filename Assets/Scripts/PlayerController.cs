@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using DG.Tweening;
 using Unity.VisualScripting;
-using Microsoft.Unity.VisualStudio.Editor;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
