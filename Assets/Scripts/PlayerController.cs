@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
 {
-    public UnityEngine.UI.Image dashimage;
+    public Image dashimage;
     public float walkSpeed = 5f;
     public float runSpeed = 8f;
     public float airWalkSpeed = 3f;
@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     //임시방편 가이드
     public GameObject explainimage;
     //
+    public GameObject Dieimage;
     public GhostTrailEffect ghostTrailEffect;
 
     private GameObject currentOneWayPlatform;
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
     {
         BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
         Physics2D.IgnoreCollision(playerCollider, platformCollider);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
     }
 
@@ -335,6 +336,17 @@ public class PlayerController : MonoBehaviour
             }
         }
         //
+        if(damageable.Health == 0 && !Dieimage.activeSelf)
+        {
+            bool isImageActive = !Dieimage.activeSelf;
+            Dieimage.SetActive(isImageActive);
+        }
+        else if(damageable.Health != 0)
+        {
+            animator.SetBool(AnimationStrings.isAlive, true);
+            damageable.IsAlive = true;
+            Dieimage.SetActive(false);
+        }
     }
    private void FixedUpdate()
     {
@@ -505,7 +517,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.color = new Color(1,1,1,1);
     }
 
-    private void MoveToRespawnZone()
+    public void MoveToRespawnZone()
     {
         // Respawn 영역을 찾기
         GameObject[] respawnAreas = GameObject.FindGameObjectsWithTag("RespawnArea");

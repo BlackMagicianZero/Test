@@ -12,11 +12,18 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     public string nextSceneName;
     public CanvasGroup ESCGroup;
     public CanvasGroup SoundGroup;
+    public CanvasGroup MainGroup;
+    public CanvasGroup RealQuitQuestionGroup;
     bool isSound;
+    public Damageable playerDamageable;
+    public PlayerController playerController;
 
     private void Start()
     {
         defaultScale = buttonScale.localScale;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        playerDamageable = player.GetComponent<Damageable>();
+        playerController = GetComponent<PlayerController>();
     }
     public void OnBtnClick()
     {
@@ -29,12 +36,36 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
             CanvasGroupOn(SoundGroup);
             CanvasGroupOff(ESCGroup);
             break;
+            case BTNType.Option:
+            CanvasGroupOn(ESCGroup);
+            CanvasGroupOff(SoundGroup);
+            CanvasGroupOff(MainGroup);
+            break;
+            case BTNType.OptionBack:
+            CanvasGroupOn(MainGroup);
+            CanvasGroupOff(ESCGroup);
+            break;
             case BTNType.Back:
             CanvasGroupOn(ESCGroup);
             CanvasGroupOff(SoundGroup);
             break;
+            case BTNType.IngameBack:
+            CanvasGroupOn(ESCGroup);
+            CanvasGroupOff(RealQuitQuestionGroup);
+            break;
+            case BTNType.QuitReal:
+            CanvasGroupOn(RealQuitQuestionGroup);
+            CanvasGroupOff(ESCGroup);
+            break;
             case BTNType.Quit:
             Application.Quit();
+            break;
+            case BTNType.OverYes:
+            playerDamageable.Health = playerDamageable.MaxHealth;
+            playerController.MoveToRespawnZone();
+            break;
+            case BTNType.OverNo:
+            SceneManager.LoadScene(nextSceneName);
             break;
         }
     }
