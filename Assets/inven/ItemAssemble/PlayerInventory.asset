@@ -15,11 +15,6 @@ MonoBehaviour:
   inventoryItems:
   - quantity: 1
     item: {fileID: 11400000, guid: 1d1b70fd3253c2b4fa1379f4af4d290c, type: 2}
-    itemState:
-    - itemParameter: {fileID: 11400000, guid: b401ce8666cf7e64091861073c245002, type: 2}
-      value: 100
-  - quantity: 0
-    item: {fileID: 0}
     itemState: []
   - quantity: 0
     item: {fileID: 0}
@@ -48,43 +43,4 @@ MonoBehaviour:
   - quantity: 0
     item: {fileID: 0}
     itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  - quantity: 0
-    item: {fileID: 0}
-    itemState: []
-  <Size>k__BackingField: 24
+  <Size>k__BackingField: 10

@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd56e5af7706c5d4885f20874257962b, type: 3}
-  m_Name: Helm
+  m_Name: "\uBC14\uB78C\uC758 \uC815\uC218"
   m_EditorClassIdentifier: 
   <IsStackable>k__BackingField: 0
   <MaxStackSize>k__BackingField: 1
-  <Name>k__BackingField: Golden Helm
-  <Description>k__BackingField: Golden helm. Very hard.
-  <ItemImage>k__BackingField: {fileID: 21300000, guid: 77611c58b390aac44bb27536d65a3917, type: 3}
-  <DefaultParametersList>k__BackingField:
-  - itemParameter: {fileID: 11400000, guid: b401ce8666cf7e64091861073c245002, type: 2}
-    value: 100
+  <Name>k__BackingField: "\uB0AD\uC778\uC758 \uC2E0\uB150"
+  <Description>k__BackingField: "\uB354\uBE14 \uC810\uD504\uB97C \uAC00\uB2A5\uD558\uAC8C
+    \uD55C\uB2E4."
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: ab9451cd25caa1142b4506b2600d21c7, type: 3}
+  <DefaultParametersList>k__BackingField: []
   <actionSFX>k__BackingField: {fileID: 8300000, guid: 9ad5de725af4e8f448e0f43f4de4e56d, type: 3}
