@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8028613015578208277}
   - component: {fileID: 4424165701612646080}
   m_Layer: 0
-  m_Name: Item
+  m_Name: "\uB300\uC26C\uAC70\uB9AC \uC99D\uAC00"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4634014199940931762}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.08, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2645156d9b0c18044a923c578c80bfb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <InventoryItem>k__BackingField: {fileID: 11400000, guid: 1d1b70fd3253c2b4fa1379f4af4d290c, type: 2}
+  <InventoryItem>k__BackingField: {fileID: 11400000, guid: 92ebd13bc06e67c4b8c15e0cd36ca65d, type: 2}
   <Quantity>k__BackingField: 1
   audioSource: {fileID: 4424165701612646080}
   duration: 0.3
