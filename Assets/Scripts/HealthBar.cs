@@ -10,7 +10,7 @@ public class HealthBar : MonoBehaviour
     public Slider healthSlider;
     public TMP_Text healthBarText;
 
-    public Damageable playerDamageable;
+    private Damageable playerDamageable;
 
     private void Awake()
     {
@@ -47,7 +47,6 @@ public class HealthBar : MonoBehaviour
         healthBarText.text = "HP " + playerDamageable.Health + " / " + playerDamageable.MaxHealth;
     }
 
-    // Calculates with floats so value is returned as a decimal value
     private float CalculateSliderPercentage(float currentHealth, float maxHealth)
     {
         return currentHealth / maxHealth;
