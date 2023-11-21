@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 10
-  knockback: {x: 5, y: 2}
+  knockback: {x: 2, y: 0}
 --- !u!1 &8394792977148442409
 GameObject:
   m_ObjectHideFlags: 0

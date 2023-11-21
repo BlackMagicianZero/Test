@@ -15,6 +15,7 @@ TagManager:
   - BossEntry
   - Monster
   - Feet
+  - GameManager
   layers:
   - Default
   - TransparentFX

@@ -65,6 +65,11 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
             playerController.MoveToRespawnZone();
             break;
             case BTNType.OverNo:
+            GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
+            if (gameManager != null)
+            {
+                Destroy(gameManager);
+            }
             SceneManager.LoadScene(nextSceneName);
             break;
         }

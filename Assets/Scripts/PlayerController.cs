@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     private GameObject currentOneWayPlatform;
     [SerializeField] private BoxCollider2D playerCollider;
     [SerializeField] private Collider2D wallCollider;
-    public static PlayerController Instance;
+    //public static PlayerController Instance;
 
     private bool ignoreCollisionsDuringJump = false;
     //벽점 로직
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
         wallCollider = GetComponentInChildren<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         
-        if(Instance == null)
+        /*if(Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
+        }*/
     }
     private IEnumerator DisableCollision()
     {
