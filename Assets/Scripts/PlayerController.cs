@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     private float timeBetweenRightArrowPresses = 1f;
     private float wallSlideTimer = 0f;
     private bool canjump = true;
+    public Image bloodScreen;
 
     private void Awake()
     {
@@ -60,22 +61,12 @@ public class PlayerController : MonoBehaviour
         damageable = GetComponent<Damageable>();
         wallCollider = GetComponentInChildren<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
-        /*if(Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }*/
     }
     private IEnumerator DisableCollision()
     {
         BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
         Physics2D.IgnoreCollision(playerCollider, platformCollider);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
     }
 
@@ -470,6 +461,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Fallen"))
         {
+            StartCoroutine(ShowBloodScreen());
             // "fallen" 영역에 닿았을 때, 최대 체력의 10%를 감소.
             int maxHealth = damageable.MaxHealth;
             int healthToReduce = maxHealth / 10; // 최대 체력의 10%를 계산
@@ -490,7 +482,8 @@ public class PlayerController : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Monster"))
         {
-           OnDamaged(collision.transform.position); 
+            StartCoroutine(ShowBloodScreen());
+            OnDamaged(collision.transform.position); 
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
@@ -515,6 +508,12 @@ public class PlayerController : MonoBehaviour
     {
         gameObject.layer = 7;
         spriteRenderer.color = new Color(1,1,1,1);
+    }
+    IEnumerator ShowBloodScreen()
+    {
+        bloodScreen.color = new Color(1, 0, 0, UnityEngine.Random.Range(0.1f, 0.2f));
+        yield return new WaitForSeconds(0.1f);
+        bloodScreen.color = Color.clear;
     }
 
     public void MoveToRespawnZone()
