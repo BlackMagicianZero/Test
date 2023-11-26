@@ -27,4 +27,8 @@ public class AnimationStrings
     internal static string dashAttack = "dashAttack";
     internal static string wallHold = "WallHold";
     internal static string LnRDash = "LnRDash";
+    internal static string hasSPAtk1 = "hasSPAtk1";
+    internal static string hasSPAtk2 = "hasSPAtk2";
+    internal static string hasGroggy = "hasGroggy";
+    internal static string hasHeal = "hasHeal";
 }

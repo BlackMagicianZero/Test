@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class ThunderRamG : MonoBehaviour
 {
-    public float walkAcceleration = 3f;
+    public float walkAcceleration = 50f;
     public float maxSpeed = 3f;
     public float walkStopRate = 0.05f;
     public DetectionZone attackZone;
@@ -16,12 +16,16 @@ public class ThunderRamG : MonoBehaviour
     TouchingDirections touchingDirections;
     Animator animator;
     Damageable damageable;
+    Damageable playerdamageable;
     public Transform playerTransform;
     public float followDistance = 15f;
     public float jumpDistance = 2f;
     public float jumpForce = 5f;
     public float jumpCooldown = 3f;
     public float jumpTimer = 0f;
+    private float SP1targetDetectionTimer = 0f;
+    private float SP2targetDetectionTimer = 0f;
+    
 
     public enum WalkableDirection { Right, Left }
 
@@ -89,6 +93,45 @@ public class ThunderRamG : MonoBehaviour
             animator.SetFloat(AnimationStrings.attackCooldown, Mathf.Max(value, 0));
         } 
     }
+    public bool _SP_Atk1 = false;
+    public bool SP_Atk1
+    {
+        get
+        {
+            return _SP_Atk1;
+        }
+        private set
+        {
+            _SP_Atk1 = value;
+            animator.SetBool(AnimationStrings.hasSPAtk1, value);
+        }
+    }
+    public bool _SP_Atk2 = false;
+    public bool SP_Atk2
+    {
+        get
+        {
+            return _SP_Atk2;
+        }
+        private set
+        {
+            _SP_Atk2 = value;
+            animator.SetBool(AnimationStrings.hasSPAtk2, value);
+        }
+    }
+    public bool _Groggy = false;
+    public bool Groggy
+    {
+        get
+        {
+            return _Groggy;
+        }
+        private set
+        {
+            _Groggy = value;
+            animator.SetBool(AnimationStrings.hasGroggy, value);
+        }
+    }
 
     private void Awake()
     {
@@ -96,17 +139,57 @@ public class ThunderRamG : MonoBehaviour
         touchingDirections = GetComponent<TouchingDirections>();
         animator = GetComponent<Animator>();
         damageable = GetComponent<Damageable>();
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        playerdamageable = player.GetComponent<Damageable>();
     }
 
+    private IEnumerator SPATK1()
+    {
+        SP_Atk1 = true;
+        yield return new WaitForSeconds(0.5f);
+        SP_Atk1 = false;
+        Groggy = true;
+        yield return new WaitForSeconds(3f);
+        Groggy = false;
+        walkAcceleration = 50f;
+    }
+    private IEnumerator SPATK2()
+    {
+        SP_Atk2 = true;
+        yield return new WaitForSeconds(0.5f);
+        SP_Atk2 = false;
+        Groggy = true;
+        yield return new WaitForSeconds(3f);
+        Groggy = false;
+        walkAcceleration = 50f;
+    }
     void Update()
     {
-        HasTarget = attackZone.detectedColliders.Count > 0;
-
-        if (AttackCooldown > 0)
+        // 번개 내려치기 로직
+        if (!HasTarget)
         {
-            AttackCooldown -= Time.deltaTime;
+            SP1targetDetectionTimer += Time.deltaTime;
+            if (SP1targetDetectionTimer >= 3f && SP_Atk2 == false)
+            {
+                SP1targetDetectionTimer = 0f;
+                walkAcceleration = 0f;
+                StartCoroutine(SPATK1());
+            }
         }
+        //
 
+        // 번개 울음 로직
+        if(!HasTarget)
+        {
+            float distanceToPlayerForLightning = Vector2.Distance(transform.position, playerTransform.position);
+            if(distanceToPlayerForLightning < 7f && distanceToPlayerForLightning > 3f && SP_Atk1 == false)
+            {
+                walkAcceleration = 0f;
+                StartCoroutine(SPATK2());
+            }
+        }
+        //
+        HasTarget = attackZone.detectedColliders.Count > 0;
         // 점프 쿨다운 타이머 갱신
         jumpTimer -= Time.deltaTime;
 
@@ -128,7 +211,7 @@ public class ThunderRamG : MonoBehaviour
                 }
 
                 // 점프 쿨다운이 끝났고, 플레이어와의 거리가 일정 값 이상이면 점프
-                if (jumpTimer <= 0 && Mathf.Abs(playerTransform.position.y - transform.position.y) > jumpDistance)
+                if (!SP_Atk1 && !SP_Atk2 &&!Groggy && jumpTimer <= 0 && Mathf.Abs(playerTransform.position.y - transform.position.y) > jumpDistance)
                 {
                     Jump();
 
@@ -138,7 +221,6 @@ public class ThunderRamG : MonoBehaviour
             }
         }
     }
-
     private void FixedUpdate()
     {
 
