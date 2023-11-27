@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
@@ -93,45 +94,6 @@ public class ThunderRamG : MonoBehaviour
             animator.SetFloat(AnimationStrings.attackCooldown, Mathf.Max(value, 0));
         } 
     }
-    public bool _SP_Atk1 = false;
-    public bool SP_Atk1
-    {
-        get
-        {
-            return _SP_Atk1;
-        }
-        private set
-        {
-            _SP_Atk1 = value;
-            animator.SetBool(AnimationStrings.hasSPAtk1, value);
-        }
-    }
-    public bool _SP_Atk2 = false;
-    public bool SP_Atk2
-    {
-        get
-        {
-            return _SP_Atk2;
-        }
-        private set
-        {
-            _SP_Atk2 = value;
-            animator.SetBool(AnimationStrings.hasSPAtk2, value);
-        }
-    }
-    public bool _Groggy = false;
-    public bool Groggy
-    {
-        get
-        {
-            return _Groggy;
-        }
-        private set
-        {
-            _Groggy = value;
-            animator.SetBool(AnimationStrings.hasGroggy, value);
-        }
-    }
 
     private void Awake()
     {
@@ -142,88 +104,132 @@ public class ThunderRamG : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerdamageable = player.GetComponent<Damageable>();
     }
+    private bool hasSPAtk1 = false;
+    private bool isSPATK1CorRunning = false;
+    private float SPAtk1Timer = 3f;
+    private bool hasSPAtk2 = false;
+    private bool isSPATK2CorRunning = false;
+    private bool hasGroggy = false;
+    private bool hasHeal = false;
+    private IEnumerator SPAtk1cor()
+    {
+        isSPATK1CorRunning = true;
+        walkAcceleration = 0f;
+        hasSPAtk1 = true;
+        animator.SetBool("hasSPAtk1", hasSPAtk1);
+        yield return new WaitForSeconds(0.5f);
+        hasSPAtk1 = false;
+        animator.SetBool("hasSPAtk1", hasSPAtk1);
+        hasGroggy = true;
+        animator.SetBool("hasGroggy", hasGroggy);
+        yield return new WaitForSeconds(4f);
+        hasGroggy = false;
+        animator.SetBool("hasGroggy", hasGroggy);
+        walkAcceleration = 50f;
+        SPAtk1Timer = 3f;
+        isSPATK1CorRunning = false;
+        if (!hasGroggy && damageable.Health <= damageable.MaxHealth / 2 && !hasHeal)
+        {
+            StartCoroutine(SPHealcor());
+        }
+    }
+    private IEnumerator SPAtk2cor()
+    {
+        isSPATK2CorRunning = true;
+        float originalWalkAcceleration = walkAcceleration;
+        walkAcceleration = 0f;
+        hasSPAtk2 = true;
+        animator.SetBool("hasSPAtk2", hasSPAtk2);
+        yield return new WaitForSeconds(2.5f);
+        hasSPAtk2 = false;
+        animator.SetBool("hasSPAtk2", hasSPAtk2);
+        hasGroggy = true;
+        animator.SetBool("hasGroggy", hasGroggy);
+        yield return new WaitForSeconds(4f);
+        hasGroggy = false;
+        animator.SetBool("hasGroggy", hasGroggy);
+        isSPATK2CorRunning = false;
+        walkAcceleration = originalWalkAcceleration;
+        if (!hasGroggy && damageable.Health <= damageable.MaxHealth / 2 && !hasHeal)
+        {
+            StartCoroutine(SPHealcor());
+        }
+    }
 
-    private IEnumerator SPATK1()
-    {
-        SP_Atk1 = true;
-        yield return new WaitForSeconds(0.5f);
-        SP_Atk1 = false;
-        Groggy = true;
-        yield return new WaitForSeconds(3f);
-        Groggy = false;
+    private IEnumerator SPHealcor()
+    {   
+        walkAcceleration = 0f;
+        hasSPAtk1 = false;
+        hasSPAtk2 = false;
+        hasHeal = true;
+        animator.SetBool("hasHeal", hasHeal);
+        yield return new WaitForSeconds(10f);
+        int healAmount = Mathf.CeilToInt(damageable.MaxHealth * 0.03f);
+        damageable.Heal(healAmount);
         walkAcceleration = 50f;
+        hasHeal = false;
+        animator.SetBool("hasHeal", hasHeal);
     }
-    private IEnumerator SPATK2()
-    {
-        SP_Atk2 = true;
-        yield return new WaitForSeconds(0.5f);
-        SP_Atk2 = false;
-        Groggy = true;
-        yield return new WaitForSeconds(3f);
-        Groggy = false;
-        walkAcceleration = 50f;
-    }
+
     void Update()
     {
         // 번개 내려치기 로직
-        if (!HasTarget)
+        if (!isSPATK1CorRunning)
         {
-            SP1targetDetectionTimer += Time.deltaTime;
-            if (SP1targetDetectionTimer >= 3f && SP_Atk2 == false)
+            SPAtk1Timer -= Time.deltaTime;
+            if (SPAtk1Timer <= 0)
             {
-                SP1targetDetectionTimer = 0f;
-                walkAcceleration = 0f;
-                StartCoroutine(SPATK1());
+                StartCoroutine(SPAtk1cor());
             }
         }
         //
 
-        // 번개 울음 로직
-        if(!HasTarget)
-        {
-            float distanceToPlayerForLightning = Vector2.Distance(transform.position, playerTransform.position);
-            if(distanceToPlayerForLightning < 7f && distanceToPlayerForLightning > 3f && SP_Atk1 == false)
+        //번개 울음 로직
+        if (!isSPATK2CorRunning)
+        {   
+            float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
+            if (walkAcceleration == 50f && distanceToPlayer >= 3f && distanceToPlayer <= 6f)
             {
                 walkAcceleration = 0f;
-                StartCoroutine(SPATK2());
+                StartCoroutine(SPAtk2cor());
             }
         }
         //
+
+        // 플레이어가 추적로직
         HasTarget = attackZone.detectedColliders.Count > 0;
-        // 점프 쿨다운 타이머 갱신
         jumpTimer -= Time.deltaTime;
-
-        // 플레이어가 추적 거리 안에 있는지 확인
         if (playerTransform != null)
         {
             float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
-
             if (distanceToPlayer < followDistance)
             {
-                // 플레이어를 따라가도록 walkDirection 업데이트
-                if (playerTransform.position.x > transform.position.x)
+                if (!hasGroggy || !hasHeal)
                 {
-                    WalkDirection = WalkableDirection.Right;
-                }
-                else
-                {
-                    WalkDirection = WalkableDirection.Left;
+                    if (playerTransform.position.x > transform.position.x)
+                    {
+                        WalkDirection = WalkableDirection.Right;
+                    }
+                    else
+                    {
+                        WalkDirection = WalkableDirection.Left;
+                    }
                 }
 
-                // 점프 쿨다운이 끝났고, 플레이어와의 거리가 일정 값 이상이면 점프
-                if (!SP_Atk1 && !SP_Atk2 &&!Groggy && jumpTimer <= 0 && Mathf.Abs(playerTransform.position.y - transform.position.y) > jumpDistance)
+                if (jumpTimer <= 0 && Mathf.Abs(playerTransform.position.y - transform.position.y) > jumpDistance)
                 {
-                    Jump();
-
-                    // 점프 후 쿨다운을 설정한 값으로 초기화
-                    jumpTimer = jumpCooldown;
+                    if (!hasGroggy && !hasSPAtk1 && !hasSPAtk2)
+                    {
+                        Jump();
+                        jumpTimer = jumpCooldown;
+                    }
                 }
             }
         }
+        //
     }
     private void FixedUpdate()
     {
-
         if(touchingDirections.IsGrounded && touchingDirections.IsOnWall)
         {
             FlipDirection();    
