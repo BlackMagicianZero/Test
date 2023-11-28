@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class ThunderRamG : MonoBehaviour
 {
-    public float walkAcceleration = 50f;
+    public float walkAcceleration = 75f;
     public float maxSpeed = 3f;
     public float walkStopRate = 0.05f;
     public DetectionZone attackZone;
@@ -125,7 +125,7 @@ public class ThunderRamG : MonoBehaviour
         yield return new WaitForSeconds(4f);
         hasGroggy = false;
         animator.SetBool("hasGroggy", hasGroggy);
-        walkAcceleration = 50f;
+        walkAcceleration = 75f;
         SPAtk1Timer = 3f;
         isSPATK1CorRunning = false;
         if (!hasGroggy && damageable.Health <= damageable.MaxHealth / 2 && !hasHeal)
@@ -166,7 +166,7 @@ public class ThunderRamG : MonoBehaviour
         yield return new WaitForSeconds(10f);
         int healAmount = Mathf.CeilToInt(damageable.MaxHealth * 0.03f);
         damageable.Heal(healAmount);
-        walkAcceleration = 50f;
+        walkAcceleration = 75f;
         hasHeal = false;
         animator.SetBool("hasHeal", hasHeal);
     }
@@ -188,7 +188,7 @@ public class ThunderRamG : MonoBehaviour
         if (!isSPATK2CorRunning)
         {   
             float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
-            if (walkAcceleration == 50f && distanceToPlayer >= 3f && distanceToPlayer <= 6f)
+            if (walkAcceleration == 75f && distanceToPlayer >= 3f && distanceToPlayer <= 6f)
             {
                 walkAcceleration = 0f;
                 StartCoroutine(SPAtk2cor());
@@ -204,7 +204,7 @@ public class ThunderRamG : MonoBehaviour
             float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
             if (distanceToPlayer < followDistance)
             {
-                if (!hasGroggy || !hasHeal)
+                if (!hasGroggy && !hasHeal)
                 {
                     if (playerTransform.position.x > transform.position.x)
                     {
@@ -302,3 +302,13 @@ public class ThunderRamG : MonoBehaviour
         }
     }
 }
+/* ------------------------------------------------------
+
+힐링 관련 재생시간 -> 총 재생시간 3초
+이동속도 현재 유지
+최대 체력 250
+
+체력바는 플레이어 UI 재활용 + 테두리 검정 + 모서리 둥글게
+
+보스방 윗타일 6포인트에 힐링 아이템 생성 / 조건 : 보스 힐링패턴 무력화시 1개 생성
+*/
