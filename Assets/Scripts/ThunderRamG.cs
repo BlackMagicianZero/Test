@@ -23,10 +23,7 @@ public class ThunderRamG : MonoBehaviour
     public float jumpDistance = 2f;
     public float jumpForce = 5f;
     public float jumpCooldown = 3f;
-    public float jumpTimer = 0f;
-    private float SP1targetDetectionTimer = 0f;
-    private float SP2targetDetectionTimer = 0f;
-    
+    public float jumpTimer = 0f;    
 
     public enum WalkableDirection { Right, Left }
 
@@ -111,13 +108,15 @@ public class ThunderRamG : MonoBehaviour
     private bool isSPATK2CorRunning = false;
     private bool hasGroggy = false;
     private bool hasHeal = false;
+    private bool isHealCorRunning = false;
+
     private IEnumerator SPAtk1cor()
     {
         isSPATK1CorRunning = true;
         walkAcceleration = 0f;
         hasSPAtk1 = true;
         animator.SetBool("hasSPAtk1", hasSPAtk1);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         hasSPAtk1 = false;
         animator.SetBool("hasSPAtk1", hasSPAtk1);
         hasGroggy = true;
@@ -125,13 +124,11 @@ public class ThunderRamG : MonoBehaviour
         yield return new WaitForSeconds(4f);
         hasGroggy = false;
         animator.SetBool("hasGroggy", hasGroggy);
+        hasHeal = true;
+        animator.SetBool("hasHeal", hasHeal);
         walkAcceleration = 75f;
         SPAtk1Timer = 3f;
         isSPATK1CorRunning = false;
-        if (!hasGroggy && damageable.Health <= damageable.MaxHealth / 2 && !hasHeal)
-        {
-            StartCoroutine(SPHealcor());
-        }
     }
     private IEnumerator SPAtk2cor()
     {
@@ -145,30 +142,34 @@ public class ThunderRamG : MonoBehaviour
         animator.SetBool("hasSPAtk2", hasSPAtk2);
         hasGroggy = true;
         animator.SetBool("hasGroggy", hasGroggy);
+        walkAcceleration = 0f;
         yield return new WaitForSeconds(4f);
         hasGroggy = false;
         animator.SetBool("hasGroggy", hasGroggy);
-        isSPATK2CorRunning = false;
-        walkAcceleration = originalWalkAcceleration;
-        if (!hasGroggy && damageable.Health <= damageable.MaxHealth / 2 && !hasHeal)
-        {
-            StartCoroutine(SPHealcor());
-        }
-    }
-
-    private IEnumerator SPHealcor()
-    {   
-        walkAcceleration = 0f;
-        hasSPAtk1 = false;
-        hasSPAtk2 = false;
         hasHeal = true;
         animator.SetBool("hasHeal", hasHeal);
-        yield return new WaitForSeconds(10f);
+        SPAtk1Timer = 3f;
+        walkAcceleration = originalWalkAcceleration;
+        hasSPAtk1 = false;
+        animator.SetBool("hasSPAtk1", hasSPAtk1);
+        isSPATK2CorRunning = false;
+    }
+
+     private IEnumerator SPHealcor()
+    {   
+        isHealCorRunning = true;
+        walkAcceleration = 0f;
+        if(hasHeal == false)
+        {
+            yield break;
+        }
+        yield return new WaitForSeconds(7f);
         int healAmount = Mathf.CeilToInt(damageable.MaxHealth * 0.03f);
         damageable.Heal(healAmount);
-        walkAcceleration = 75f;
         hasHeal = false;
         animator.SetBool("hasHeal", hasHeal);
+        walkAcceleration = 75f;
+        isHealCorRunning = false;
     }
 
     void Update()
@@ -192,9 +193,19 @@ public class ThunderRamG : MonoBehaviour
             {
                 walkAcceleration = 0f;
                 StartCoroutine(SPAtk2cor());
+                SPAtk1Timer = 3f;
             }
         }
         //
+        if(!isHealCorRunning && damageable.Health > damageable.MaxHealth / 2 )
+        {
+            hasHeal = false;
+            animator.SetBool("hasHeal", hasHeal);
+        }
+        if(!isHealCorRunning && hasHeal && damageable.Health <= damageable.MaxHealth / 2)
+        {
+            StartCoroutine(SPHealcor());
+        }
 
         // 플레이어가 추적로직
         HasTarget = attackZone.detectedColliders.Count > 0;
@@ -204,7 +215,7 @@ public class ThunderRamG : MonoBehaviour
             float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
             if (distanceToPlayer < followDistance)
             {
-                if (!hasGroggy && !hasHeal)
+                if (!hasGroggy && !hasHeal & !hasSPAtk1 & !hasSPAtk2)
                 {
                     if (playerTransform.position.x > transform.position.x)
                     {
@@ -268,6 +279,8 @@ public class ThunderRamG : MonoBehaviour
     public void OnHit(int damage, Vector2 knockback)
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+        hasHeal = false;
+        animator.SetBool("hasHeal", hasHeal);
         // 넉백 후에 위치를 검사하여 타일 끝에 도달하면 위치를 조정
         CheckTileEdge();
     }

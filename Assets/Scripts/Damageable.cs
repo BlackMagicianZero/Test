@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,13 +38,15 @@ public class Damageable : MonoBehaviour
         }
         set
         {
-            _health = value;
-            healthChanged?.Invoke(_health, MaxHealth);
-
-            // If health drops below 0, character is no longer alive
-            if(_health <= 0)
+            if (_health != value)
             {
-                IsAlive = false;
+                _health = value;
+                healthChanged?.Invoke(_health, MaxHealth);
+
+                if (_health <= 0)
+                {
+                    IsAlive = false;
+                }
             }
         }
     }
