@@ -460,7 +460,6 @@ MonoBehaviour:
   jumpCooldown: 4
   jumpTimer: 0
   _hasTarget: 0
-  _SP_Atk1: 0
 --- !u!114 &320546604018031306
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -526,6 +526,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -2630471632951325119}
     m_Position: {x: 430, y: -220, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -284901018754893623}
+    m_Position: {x: 465, y: -155, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: -7170166586578046412}
@@ -538,14 +541,14 @@ AnimatorStateMachine:
   - {fileID: -4695996437349641032}
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -7170166586578046412}
-    second:
-    - {fileID: -6492037343912466896}
   - first: {fileID: 3493541783273977169}
     second:
     - {fileID: -3521899577226884052}
     - {fileID: -6315228553694222990}
     - {fileID: 1607602188852109283}
+  - first: {fileID: -7170166586578046412}
+    second:
+    - {fileID: -6492037343912466896}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 590, y: 230, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
@@ -612,6 +615,32 @@ MonoBehaviour:
   playOnExit: 0
   playAfterDelay: 0
   playDelay: 0.25
+--- !u!1102 &-284901018754893623
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Opening_ThunderRamG
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 683908d9a25b15448b6cc58e3a7dad55, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -695,6 +724,12 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: hasHeal
     m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: OpeningTrigger
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
