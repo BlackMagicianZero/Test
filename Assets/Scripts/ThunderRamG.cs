@@ -109,6 +109,7 @@ public class ThunderRamG : MonoBehaviour
     private bool hasGroggy = false;
     private bool hasHeal = false;
     private bool isHealCorRunning = false;
+    private bool hasJump = false;
 
     private IEnumerator SPAtk1cor()
     {
@@ -124,8 +125,10 @@ public class ThunderRamG : MonoBehaviour
         yield return new WaitForSeconds(4f);
         hasGroggy = false;
         animator.SetBool("hasGroggy", hasGroggy);
-        hasHeal = true;
-        animator.SetBool("hasHeal", hasHeal);
+        if(hasHeal == true)
+        {
+            StartCoroutine(SPHealcor());
+        }
         walkAcceleration = 75f;
         SPAtk1Timer = 3f;
         isSPATK1CorRunning = false;
@@ -146,8 +149,10 @@ public class ThunderRamG : MonoBehaviour
         yield return new WaitForSeconds(4f);
         hasGroggy = false;
         animator.SetBool("hasGroggy", hasGroggy);
-        hasHeal = true;
-        animator.SetBool("hasHeal", hasHeal);
+        if(hasHeal == true)
+        {
+            StartCoroutine(SPHealcor());
+        }
         SPAtk1Timer = 3f;
         walkAcceleration = originalWalkAcceleration;
         hasSPAtk1 = false;
@@ -159,15 +164,9 @@ public class ThunderRamG : MonoBehaviour
     {   
         isHealCorRunning = true;
         walkAcceleration = 0f;
-        if(hasHeal == false)
-        {
-            yield break;
-        }
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(1f);
         int healAmount = Mathf.CeilToInt(damageable.MaxHealth * 0.03f);
         damageable.Heal(healAmount);
-        hasHeal = false;
-        animator.SetBool("hasHeal", hasHeal);
         walkAcceleration = 75f;
         isHealCorRunning = false;
     }
@@ -197,14 +196,9 @@ public class ThunderRamG : MonoBehaviour
             }
         }
         //
-        if(!isHealCorRunning && damageable.Health > damageable.MaxHealth / 2 )
+        if(!isHealCorRunning && damageable.Health < damageable.MaxHealth / 2 )
         {
-            hasHeal = false;
-            animator.SetBool("hasHeal", hasHeal);
-        }
-        if(!isHealCorRunning && hasHeal && damageable.Health <= damageable.MaxHealth / 2)
-        {
-            StartCoroutine(SPHealcor());
+            hasHeal = true;
         }
 
         // 플레이어가 추적로직
@@ -311,6 +305,8 @@ public class ThunderRamG : MonoBehaviour
     {
         if (touchingDirections.IsGrounded)
         {
+            hasJump = true;
+            animator.SetBool("hasJump",hasJump);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
     }
