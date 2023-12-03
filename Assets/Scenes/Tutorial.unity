@@ -4018,7 +4018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1500796748829050366, guid: b004bad934425114f893a03657abda68, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -24.72
+      value: -25.58
       objectReference: {fileID: 0}
     - target: {fileID: 1500796748829050366, guid: b004bad934425114f893a03657abda68, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4072,6 +4072,10 @@ PrefabInstance:
       propertyPath: knockback.x
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7495108666105613572, guid: b004bad934425114f893a03657abda68, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1684123090, guid: 26ecec01da3d35842a05a996b19a2dc9, type: 3}
     - target: {fileID: 8444088777924587685, guid: b004bad934425114f893a03657abda68, type: 3}
       propertyPath: inventoryUI
       value: 
