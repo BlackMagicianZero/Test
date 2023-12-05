@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-330098596362832210
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ArrowPatternL
+  m_Name: Right
   m_Shader: {fileID: -6465566751694194690, guid: 41d69835bdcbf5f4cbb8588c322f685b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -51,11 +38,23 @@ Material:
     m_Ints: []
     m_Floats:
     - _Direction: -1
-    - _Diretion: -1
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _1st_color: {r: 2.9960785, g: 0, b: 0, a: 0}
-    - _2nd_color: {r: 2.9960785, g: 2.4941177, b: 0, a: 0}
+    - _1st_color: {r: 1, g: 0, b: 0, a: 0}
+    - _2nd_color: {r: 12566473, g: 6734016.5, b: 0, a: 0.6509804}
     - _Tilling: {r: 10, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &1548201762583223293
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
