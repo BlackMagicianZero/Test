@@ -16,6 +16,12 @@ public class ParticleSystemController : MonoBehaviour
     public Canvas warningcanvas;
     public Image image1;
     public Image image2;
+    public PlayerController player;
+    private float playeroriginalspeed = 0f;
+    private float playeroriginaljumpimpulse = 0f;
+    private float playeroriginalRunspeed = 0f;
+    private float playeroriginalairwalkspeed = 0f;
+    private float playeroriginaldashingpower = 0f;
 
     public Vector3 targetPosition = new Vector3(18f, -20f, 0f);
     public float moveDuration = 5f;
@@ -27,8 +33,13 @@ public class ParticleSystemController : MonoBehaviour
         originalBossCameraPosition = bossCamera.transform.position;
         originalCameraSize = bossCamera.GetComponent<Camera>().orthographicSize;
         warningcanvas.enabled = false;
+        player = FindObjectOfType<PlayerController>();
+        playeroriginalspeed = player.walkSpeed;
+        playeroriginaljumpimpulse = player.jumpImpulse;
+        playeroriginalRunspeed = player.runSpeed;
+        playeroriginalairwalkspeed = player.airWalkSpeed;
+        playeroriginaldashingpower = player.dashingPower;
     }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         // 충돌한 객체가 Player 태그를 가지고 있다면
@@ -38,19 +49,17 @@ public class ParticleSystemController : MonoBehaviour
             if (bossCamera != null)
             {
                 bossCamera.SetActive(true);
+                player.walkSpeed = 0f;
+                player.jumpImpulse = 0f;
+                player.runSpeed = 0f;
+                player.airWalkSpeed = 0f;
+                player.dashingPower = 0f;
+                player.canDash = false;
                 StartCoroutine(MoveBossCamera(targetPosition, moveDuration));
             }
             StartCoroutine(StartParticleAfterMove(moveDuration + 0.3f)); // 카메라 이동 시간 + 0.3초 후에 파티클을 시작
         }
     }
-
-    // 파티클의 모양을 변경하는 코루틴
-    private IEnumerator ChangeShapeAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        StartCoroutine(ChangeCameraSize(bossCamera.GetComponent<Camera>().orthographicSize, 6.5f, 11.5f, cameraSizeChangeDuration));
-    }
-
     // BossCamera를 부드럽게 이동시키는 코루틴
     private IEnumerator MoveBossCamera(Vector3 targetPos, float duration)
 {
@@ -82,6 +91,13 @@ public class ParticleSystemController : MonoBehaviour
             StartCoroutine(ChangeImage1AlphaPeriodically(0.3f));
         }
     }
+     // 파티클의 모양을 변경하는 코루틴
+    private IEnumerator ChangeShapeAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        StartCoroutine(ChangeCameraSize(bossCamera.GetComponent<Camera>().orthographicSize, 6.5f, 11.5f, cameraSizeChangeDuration));
+    }
+
 
     // BossCamera의 크기를 변경하는 코루틴
     private IEnumerator ChangeCameraSize(float startSize, float targetSize, float originalSize, float duration)
@@ -138,6 +154,12 @@ public class ParticleSystemController : MonoBehaviour
         gameObject.SetActive(false);
         // 모든 기능이 끝나면 카메라를 비활성화
         bossCamera.SetActive(false);
+        player.walkSpeed = playeroriginalspeed;
+        player.jumpImpulse = playeroriginaljumpimpulse;
+        player.runSpeed = playeroriginalRunspeed;
+        player.airWalkSpeed = playeroriginalairwalkspeed;
+        player.dashingPower = playeroriginaldashingpower;
+        player.canDash = true;
     }
     // 코루틴을 이용하여 일정 주기로 image1의 알파값을 변경하는 함수
     private IEnumerator ChangeImage1AlphaPeriodically(float interval)

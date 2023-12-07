@@ -200,6 +200,10 @@ public class ThunderRamG : MonoBehaviour
         {
             hasHeal = true;
         }
+        if(!isHealCorRunning && damageable.Health > damageable.MaxHealth / 2 )
+        {
+            hasHeal = false;
+        }
 
         // 플레이어가 추적로직
         HasTarget = attackZone.detectedColliders.Count > 0;
