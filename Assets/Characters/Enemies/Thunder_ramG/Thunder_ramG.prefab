@@ -339,7 +339,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4734530211371204962
 Transform:
   m_ObjectHideFlags: 0
@@ -466,6 +466,7 @@ MonoBehaviour:
   jumpForce: 23
   jumpCooldown: 4
   jumpTimer: 0
+  bossHpbar: {fileID: 0}
   _hasTarget: 0
 --- !u!114 &320546604018031306
 MonoBehaviour:

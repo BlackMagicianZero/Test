@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Master Volume
+  m_text: "(\uC900\uBE44\uC911)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: abe5f2b275eb9cf438b704ec31d697f2, type: 2}
   m_sharedMaterial: {fileID: -8750600972377985146, guid: abe5f2b275eb9cf438b704ec31d697f2, type: 2}
@@ -6857,7 +6857,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Master Volume
+  m_text: "(\uC900\uBE44\uC911)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: abe5f2b275eb9cf438b704ec31d697f2, type: 2}
   m_sharedMaterial: {fileID: -8750600972377985146, guid: abe5f2b275eb9cf438b704ec31d697f2, type: 2}

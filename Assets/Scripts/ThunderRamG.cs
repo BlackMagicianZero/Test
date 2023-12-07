@@ -24,6 +24,7 @@ public class ThunderRamG : MonoBehaviour
     public float jumpForce = 5f;
     public float jumpCooldown = 3f;
     public float jumpTimer = 0f;    
+    public GameObject bossHpbar;
 
     public enum WalkableDirection { Right, Left }
 
@@ -203,6 +204,10 @@ public class ThunderRamG : MonoBehaviour
         if(!isHealCorRunning && damageable.Health > damageable.MaxHealth / 2 )
         {
             hasHeal = false;
+        }
+        if(damageable.Health <=0 )
+        {
+            bossHpbar.SetActive(false);
         }
 
         // 플레이어가 추적로직
