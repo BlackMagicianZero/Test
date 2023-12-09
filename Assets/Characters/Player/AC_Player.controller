@@ -2164,7 +2164,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player_attack_wait 0 0
-  m_Speed: 0.2
+  m_Speed: 0.05
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -7530505006538696677}
@@ -2764,7 +2764,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player_attack_wait
-  m_Speed: 0.2
+  m_Speed: 0.05
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3258065416230503293}
@@ -3584,7 +3584,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player_attack_wait 0
-  m_Speed: 0.2
+  m_Speed: 0.05
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -776451400104707872}
