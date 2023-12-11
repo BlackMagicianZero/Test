@@ -59344,6 +59344,10 @@ PrefabInstance:
       propertyPath: m_IgnoreReversedGraphics
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4007921168761507122, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 4162404836436728394, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 3
@@ -59375,6 +59379,10 @@ PrefabInstance:
     - target: {fileID: 8036731436425345781, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257543083480077617, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8572673704932565802, guid: c2d8c7100eee5394481e65723d7b2885, type: 3}
       propertyPath: m_AnchorMax.x
