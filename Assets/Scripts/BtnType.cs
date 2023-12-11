@@ -14,9 +14,11 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     public CanvasGroup SoundGroup;
     public CanvasGroup MainGroup;
     public CanvasGroup RealQuitQuestionGroup;
+    public CanvasGroup HelpGroup;
+    public CanvasGroup AssetGroup;
     bool isSound;
-    public Damageable playerDamageable;
-    public PlayerController playerController;
+    private Damageable playerDamageable;
+    private PlayerController playerController;
 
     private void Start()
     {
@@ -36,34 +38,42 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
             CanvasGroupOn(SoundGroup);
             CanvasGroupOff(ESCGroup);
             break;
+
             case BTNType.Option:
             CanvasGroupOn(ESCGroup);
             CanvasGroupOff(SoundGroup);
             CanvasGroupOff(MainGroup);
             break;
+
             case BTNType.OptionBack:
             CanvasGroupOn(MainGroup);
             CanvasGroupOff(ESCGroup);
             break;
+
             case BTNType.Back:
             CanvasGroupOn(ESCGroup);
             CanvasGroupOff(SoundGroup);
             break;
+
             case BTNType.IngameBack:
             CanvasGroupOn(ESCGroup);
             CanvasGroupOff(RealQuitQuestionGroup);
             break;
+
             case BTNType.QuitReal:
             CanvasGroupOn(RealQuitQuestionGroup);
             CanvasGroupOff(ESCGroup);
             break;
+
             case BTNType.Quit:
             Application.Quit();
             break;
+
             case BTNType.OverYes:
             playerDamageable.Health = playerDamageable.MaxHealth;
             playerController.MoveToRespawnZone();
             break;
+
             case BTNType.OverNo:
             GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
             if (gameManager != null)
@@ -71,6 +81,16 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
                 Destroy(gameManager);
             }
             SceneManager.LoadScene(nextSceneName);
+            break;
+
+            case BTNType.Help:
+            CanvasGroupOn(HelpGroup);
+            CanvasGroupOff(ESCGroup);
+            break;
+
+            case BTNType.asset:
+            CanvasGroupOn(AssetGroup);
+            CanvasGroupOff(ESCGroup);
             break;
         }
     }

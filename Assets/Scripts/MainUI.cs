@@ -14,7 +14,9 @@ public enum BTNType
     Quit,
     QuitReal,
     OverYes,
-    OverNo
+    OverNo,
+    Help,
+    asset
 }
 public class MainUI : MonoBehaviour
 {

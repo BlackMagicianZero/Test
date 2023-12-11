@@ -1300,8 +1300,8 @@ MonoBehaviour:
   SoundGroup: {fileID: 551863546}
   MainGroup: {fileID: 0}
   RealQuitQuestionGroup: {fileID: 0}
-  playerDamageable: {fileID: 0}
-  playerController: {fileID: 0}
+  HelpGroup: {fileID: 0}
+  AssetGroup: {fileID: 0}
 --- !u!114 &379528873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3006,8 +3006,8 @@ MonoBehaviour:
   SoundGroup: {fileID: 0}
   MainGroup: {fileID: 0}
   RealQuitQuestionGroup: {fileID: 0}
-  playerDamageable: {fileID: 0}
-  playerController: {fileID: 0}
+  HelpGroup: {fileID: 0}
+  AssetGroup: {fileID: 0}
 --- !u!1 &874877567
 GameObject:
   m_ObjectHideFlags: 0
@@ -3218,8 +3218,8 @@ MonoBehaviour:
   SoundGroup: {fileID: 551863546}
   MainGroup: {fileID: 1737556701}
   RealQuitQuestionGroup: {fileID: 0}
-  playerDamageable: {fileID: 0}
-  playerController: {fileID: 0}
+  HelpGroup: {fileID: 0}
+  AssetGroup: {fileID: 0}
 --- !u!114 &913195986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3962,8 +3962,8 @@ MonoBehaviour:
   SoundGroup: {fileID: 551863546}
   MainGroup: {fileID: 0}
   RealQuitQuestionGroup: {fileID: 0}
-  playerDamageable: {fileID: 0}
-  playerController: {fileID: 0}
+  HelpGroup: {fileID: 0}
+  AssetGroup: {fileID: 0}
 --- !u!114 &1098080219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4592,8 +4592,8 @@ MonoBehaviour:
   SoundGroup: {fileID: 551863546}
   MainGroup: {fileID: 1737556701}
   RealQuitQuestionGroup: {fileID: 0}
-  playerDamageable: {fileID: 0}
-  playerController: {fileID: 0}
+  HelpGroup: {fileID: 0}
+  AssetGroup: {fileID: 0}
 --- !u!114 &1303209731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5968,8 +5968,8 @@ MonoBehaviour:
   SoundGroup: {fileID: 0}
   MainGroup: {fileID: 0}
   RealQuitQuestionGroup: {fileID: 0}
-  playerDamageable: {fileID: 0}
-  playerController: {fileID: 0}
+  HelpGroup: {fileID: 0}
+  AssetGroup: {fileID: 0}
 --- !u!114 &1697863492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6391,7 +6391,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737556699}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!1 &1748132449
 GameObject:
   m_ObjectHideFlags: 0
@@ -6553,8 +6553,8 @@ MonoBehaviour:
   SoundGroup: {fileID: 0}
   MainGroup: {fileID: 0}
   RealQuitQuestionGroup: {fileID: 0}
-  playerDamageable: {fileID: 0}
-  playerController: {fileID: 0}
+  HelpGroup: {fileID: 0}
+  AssetGroup: {fileID: 0}
 --- !u!114 &1752869834
 MonoBehaviour:
   m_ObjectHideFlags: 0
