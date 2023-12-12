@@ -309,7 +309,7 @@ public class PlayerController : MonoBehaviour
         }
     }
         //임시코드
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (explainimage != null)
             {

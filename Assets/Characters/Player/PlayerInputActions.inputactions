@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RangedAttack",
-                    "type": "Button",
-                    "id": "54ce9730-ec1c-4e4c-9ab2-70e965d52e23",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "DownJump",
                     "type": "Button",
                     "id": "407dc03e-231b-4e6e-a857-f31224316098",
@@ -259,17 +250,6 @@
                 },
                 {
                     "name": "",
-                    "id": "bb8c7572-1d89-49bc-8885-381f72aa661e",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "RangedAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "73de8069-81d0-4b2f-afcc-1028150b53b9",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
@@ -382,15 +362,6 @@
                     "type": "PassThrough",
                     "id": "13031a53-1032-4068-bc4f-e3090723d295",
                     "expectedControlType": "Quaternion",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Escape",
-                    "type": "Button",
-                    "id": "c4b2e8bc-016e-4513-93c1-862c68408e2d",
-                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -812,17 +783,6 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "33cf9917-8fb4-48b1-9b7a-10ef1ba3df53",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
