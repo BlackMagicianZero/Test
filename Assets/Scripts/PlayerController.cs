@@ -518,7 +518,7 @@ public class PlayerController : MonoBehaviour
         int maxHealth = damageable.MaxHealth;
         int healthToReduce = 10;
         bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);    
-        Invoke("OffDamaged",1.5f);
+        Invoke("OffDamaged",1f);
     }
     public void OffDamaged()
     {

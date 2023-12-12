@@ -42,7 +42,7 @@ public class InvenStat : MonoBehaviour
 
     private void UpdateHealthUI()
     {
-        healthText.text = "HP " + playerDamageable.Health + " / " + playerDamageable.MaxHealth;
+        healthText.text = playerDamageable.Health + " / " + playerDamageable.MaxHealth;
     }
 
     private void UpdateATKUI()
@@ -54,8 +54,6 @@ public class InvenStat : MonoBehaviour
         Attack attack2 = swordAttack2.GetComponent<Attack>();
         Attack attack3 = swordAttack3.GetComponent<Attack>();
 
-        AtkText.text = "공격력 " + atk1 + "(+" + (attack1.attackDamage - atk1) + ") / " 
-            + atk2 + "(+" + (attack2.attackDamage - atk2) + ") / "
-            + atk3 + "(+" + (attack3.attackDamage - atk3) + ")";
+        AtkText.text = atk1 + "(+" + (attack1.attackDamage - atk1) + ")" + atk2 + "(+" + (attack2.attackDamage - atk2) + ")" + atk3 + "(+" + (attack3.attackDamage - atk3) + ")";
     }
 }

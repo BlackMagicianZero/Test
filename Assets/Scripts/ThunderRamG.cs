@@ -115,7 +115,6 @@ public class ThunderRamG : MonoBehaviour
     private IEnumerator SPAtk1cor()
     {
         isSPATK1CorRunning = true;
-        walkAcceleration = 0f;
         hasSPAtk1 = true;
         animator.SetBool("hasSPAtk1", hasSPAtk1);
         yield return new WaitForSeconds(1f);
@@ -130,7 +129,6 @@ public class ThunderRamG : MonoBehaviour
         {
             StartCoroutine(SPHealcor());
         }
-        walkAcceleration = 75f;
         SPAtk1Timer = 3f;
         isSPATK1CorRunning = false;
     }
@@ -138,7 +136,6 @@ public class ThunderRamG : MonoBehaviour
     {
         isSPATK2CorRunning = true;
         float originalWalkAcceleration = walkAcceleration;
-        walkAcceleration = 0f;
         hasSPAtk2 = true;
         animator.SetBool("hasSPAtk2", hasSPAtk2);
         yield return new WaitForSeconds(2.5f);
@@ -146,7 +143,6 @@ public class ThunderRamG : MonoBehaviour
         animator.SetBool("hasSPAtk2", hasSPAtk2);
         hasGroggy = true;
         animator.SetBool("hasGroggy", hasGroggy);
-        walkAcceleration = 0f;
         yield return new WaitForSeconds(4f);
         hasGroggy = false;
         animator.SetBool("hasGroggy", hasGroggy);
@@ -155,7 +151,6 @@ public class ThunderRamG : MonoBehaviour
             StartCoroutine(SPHealcor());
         }
         SPAtk1Timer = 3f;
-        walkAcceleration = originalWalkAcceleration;
         hasSPAtk1 = false;
         animator.SetBool("hasSPAtk1", hasSPAtk1);
         isSPATK2CorRunning = false;
@@ -196,6 +191,22 @@ public class ThunderRamG : MonoBehaviour
                 SPAtk1Timer = 3f;
             }
         }
+        if(hasSPAtk1 == true)
+        {
+            walkAcceleration = 0f;
+        }
+        else if(hasSPAtk2 == true)
+        {
+            walkAcceleration = 0f;
+        }
+        else if(hasGroggy == true)
+        {
+            walkAcceleration = 0f;
+        }
+        else
+        {
+            walkAcceleration = 75f;
+        }
         //
         if(!isHealCorRunning && damageable.Health < damageable.MaxHealth / 2 )
         {
@@ -218,7 +229,7 @@ public class ThunderRamG : MonoBehaviour
             float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
             if (distanceToPlayer < followDistance)
             {
-                if (!hasGroggy && !hasHeal & !hasSPAtk1 & !hasSPAtk2)
+                if (!hasGroggy &&  !hasSPAtk1 && !hasSPAtk2)
                 {
                     if (playerTransform.position.x > transform.position.x)
                     {
@@ -229,7 +240,6 @@ public class ThunderRamG : MonoBehaviour
                         WalkDirection = WalkableDirection.Left;
                     }
                 }
-
                 if (jumpTimer <= 0 && Mathf.Abs(playerTransform.position.y - transform.position.y) > jumpDistance)
                 {
                     if (!hasGroggy && !hasSPAtk1 && !hasSPAtk2)
@@ -237,6 +247,11 @@ public class ThunderRamG : MonoBehaviour
                         Jump();
                         jumpTimer = jumpCooldown;
                     }
+                }
+                if (Mathf.Abs(playerTransform.position.y - transform.position.y) < jumpDistance)
+                {
+                    hasJump = false;
+                    animator.SetBool("hasJump",hasJump);
                 }
             }
         }
@@ -320,13 +335,3 @@ public class ThunderRamG : MonoBehaviour
         }
     }
 }
-/* ------------------------------------------------------
-
-힐링 관련 재생시간 -> 총 재생시간 3초
-이동속도 현재 유지
-최대 체력 250
-
-체력바는 플레이어 UI 재활용 + 테두리 검정 + 모서리 둥글게
-
-보스방 윗타일 6포인트에 힐링 아이템 생성 / 조건 : 보스 힐링패턴 무력화시 1개 생성
-*/

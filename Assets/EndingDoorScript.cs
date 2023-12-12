@@ -8,12 +8,9 @@ public class EndingDoorScript : MonoBehaviour
     private Damageable ThunderRamGDamageable;
     Animator animator;
     public GameObject endimage;
-    public GameObject bossHpbar;
 
     private void Awake()
     {
-        GameObject ThunderRamG = GameObject.FindGameObjectWithTag("BOSS");
-        ThunderRamGDamageable = ThunderRamG.GetComponent<Damageable>();
         animator = GetComponent<Animator>();
     }
     private void Start()
@@ -23,7 +20,8 @@ public class EndingDoorScript : MonoBehaviour
 
     private void Update()
     {
-        if(bossHpbar.activeSelf == false)
+        GameObject ThunderRamG = GameObject.FindGameObjectWithTag("BOSS");
+        if(!ThunderRamG)
         {
             animator.SetBool("EndingDoorOpen",true);
         }
