@@ -297,6 +297,7 @@ public class PlayerController : MonoBehaviour
         // 빠른 하강 y 속도를 빠르게 증가
         rb.velocity = new Vector2(rb.velocity.x, -jumpImpulse * 2f);
         }
+        
         WallSlide();
         // WallSlide 타이머가 0보다 크면 벽에서 떨어지기
     if (wallSlideTimer > 0f)
@@ -327,12 +328,12 @@ public class PlayerController : MonoBehaviour
             }
         }
         //
-        if(damageable.Health == 0 && !Dieimage.activeSelf)
+        if(damageable.Health <= 0 && !Dieimage.activeSelf)
         {
             bool isImageActive = !Dieimage.activeSelf;
             Dieimage.SetActive(isImageActive);
         }
-        else if(damageable.Health != 0)
+        else if(damageable.Health > 0)
         {
             animator.SetBool(AnimationStrings.isAlive, true);
             damageable.IsAlive = true;
@@ -483,7 +484,7 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.CompareTag("Monster"))
         {
             StartCoroutine(ShowBloodScreen());
-            OnDamaged(collision.transform.position); 
+            OnDamaged(collision.transform.position);
         }
         if(collision.gameObject.CompareTag("BOSS"))
         {

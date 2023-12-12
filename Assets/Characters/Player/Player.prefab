@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 15
-  knockback: {x: 1, y: 0}
+  knockback: {x: 2, y: 0}
 --- !u!1 &1135838343185737644
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 10
-  knockback: {x: 1, y: 0}
+  knockback: {x: 2, y: 0}
 --- !u!1 &1908585759267245788
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 25
-  knockback: {x: 5, y: 0}
+  knockback: {x: 2, y: 0}
 --- !u!1 &2122440727431580332
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +752,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6663737929138602367
 Transform:
   m_ObjectHideFlags: 0
@@ -5658,7 +5658,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 45c2a84b4556c0545a84a1df34309794, type: 3}
+  m_Sprite: {fileID: 1684123090, guid: 26ecec01da3d35842a05a996b19a2dc9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5692,9 +5692,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &4562464942672546114
 BoxCollider2D:
@@ -5728,18 +5728,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.028507233, y: -0.16498166}
+  m_Offset: {x: 0.028507233, y: -0.13}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.125, y: 2.3125}
+    pivot: {x: 0.5, y: 0.6}
+    oldSize: {x: 1.1875, y: 1.875}
     newSize: {x: 3.125, y: 2.3125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.65568924, y: 1.8356138}
+  m_Size: {x: 0.65568924, y: 1.7650933}
   m_EdgeRadius: 0.01
 --- !u!114 &749343657102894717
 MonoBehaviour:
@@ -5775,6 +5775,7 @@ MonoBehaviour:
   wallCheckSize: {x: 0.16, y: 0.8}
   wallSlideSpeed: 2
   hasDBJumpBuff: 0
+  bloodScreen: {fileID: 0}
   _isMoving: 0
   _isRunning: 0
   _isFacingRight: 1
@@ -5899,26 +5900,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 749343657102894717}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnRangedAttack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 54ce9730-ec1c-4e4c-9ab2-70e965d52e23
-    m_ActionName: Player/RangedAttack[/Keyboard/f]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c4b2e8bc-016e-4513-93c1-862c68408e2d
-    m_ActionName: UI/Escape[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 749343657102894717}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: DownJump
         m_Mode: 0
         m_Arguments:
@@ -6030,7 +6011,7 @@ MonoBehaviour:
   _health: 100
   _isAlive: 1
   isInvincible: 0
-  invincibilityTime: 0.25
+  invincibilityTime: 0.5
 --- !u!114 &8766524781567474857
 MonoBehaviour:
   m_ObjectHideFlags: 0

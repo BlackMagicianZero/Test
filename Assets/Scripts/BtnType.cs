@@ -71,7 +71,7 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
 
             case BTNType.OverYes:
             playerDamageable.Health = playerDamageable.MaxHealth;
-            playerController.MoveToRespawnZone();
+            MoveToRespawnZone();
             break;
 
             case BTNType.OverNo:
@@ -91,6 +91,12 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
             case BTNType.asset:
             CanvasGroupOn(AssetGroup);
             CanvasGroupOff(ESCGroup);
+            break;
+
+            case BTNType.BossYes:
+            playerDamageable.Health = playerDamageable.MaxHealth;
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.transform.localPosition = new Vector3(180f, -3.35f, 0f);
             break;
         }
     }
@@ -113,5 +119,35 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     public void OnPointerExit(PointerEventData eventData)
     {
         buttonScale.localScale = defaultScale;
+    }
+    public void MoveToRespawnZone()
+    {
+        // Respawn 영역을 찾기
+        GameObject[] respawnAreas = GameObject.FindGameObjectsWithTag("RespawnArea");
+
+         List<GameObject> activeRespawnAreas = new List<GameObject>();
+    foreach (var respawnArea in respawnAreas)
+    {
+        if (respawnArea.activeSelf)
+        {
+            activeRespawnAreas.Add(respawnArea);
+        }
+    }
+
+    if (activeRespawnAreas.Count > 0)
+    {
+        // 리스트에서 무작위로 Respawn 영역 선택
+        int randomIndex = Random.Range(0, activeRespawnAreas.Count);
+        Vector3 respawnPosition = activeRespawnAreas[randomIndex].transform.position;
+
+        // 플레이어를 respawn 위치로 이동
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.position = respawnPosition;
+    }
+        else
+        {
+            // Respawn 영역을 찾지 못한 경우에 대한 예외 처리
+            Debug.LogWarning("Respawn 영역을 찾을 수 없습니다.");
+        }
     }
 }

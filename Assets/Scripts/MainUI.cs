@@ -16,7 +16,8 @@ public enum BTNType
     OverYes,
     OverNo,
     Help,
-    asset
+    asset,
+    BossYes
 }
 public class MainUI : MonoBehaviour
 {

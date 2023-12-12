@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class ParticleSystemController : MonoBehaviour
     public GameObject bossHpbar;
     private Vector3 originalBossCameraPosition; // BossCamera의 원래 위치를 저장할 변수
     private float originalCameraSize; // BossCamera의 원래 Projection Size를 저장할 변수
-    public Canvas warningcanvas;
+    public GameObject warningcanvas;
     public Image image1;
     public Image image2;
     public PlayerController player;
@@ -33,7 +34,7 @@ public class ParticleSystemController : MonoBehaviour
         // BossCamera의 초기 위치와 크기를 저장
         originalBossCameraPosition = bossCamera.transform.position;
         originalCameraSize = bossCamera.GetComponent<Camera>().orthographicSize;
-        warningcanvas.enabled = false;
+        warningcanvas.SetActive(false);
         player = FindObjectOfType<PlayerController>();
         playeroriginalspeed = player.walkSpeed;
         playeroriginaljumpimpulse = player.jumpImpulse;
@@ -48,7 +49,7 @@ public class ParticleSystemController : MonoBehaviour
         {
             // BossCamera 활성화
             if (bossCamera != null)
-            {
+            {   
                 bossCamera.SetActive(true);
                 player.walkSpeed = 0f;
                 player.jumpImpulse = 0f;
@@ -78,7 +79,7 @@ public class ParticleSystemController : MonoBehaviour
 
     // 도착지점에 도달하면 최종 위치를 설정
     bossCamera.transform.position = new Vector3(bossCamera.transform.position.x, bossCamera.transform.position.y, -19.15f);
-    warningcanvas.enabled = true;
+    warningcanvas.SetActive(true);
 }
 
     // 카메라 이동이 완료된 후 파티클을 시작하는 코루틴
@@ -87,7 +88,7 @@ public class ParticleSystemController : MonoBehaviour
         yield return new WaitForSeconds(delay + 1.5f); // delay 시간 동안 대기
         StartCoroutine(ChangeShapeAfterDelay(2f)); // 2초 후에 모양 변경 코루틴 시작
         // warningcanvas가 활성화되면서 ChangeImage1AlphaPeriodically 코루틴 시작
-        if (warningcanvas.enabled)
+        if (warningcanvas == true)
         {
             StartCoroutine(ChangeImage1AlphaPeriodically(0.3f));
             bossroomwall.SetActive(false);
@@ -114,7 +115,7 @@ public class ParticleSystemController : MonoBehaviour
             yield return null;
         }
         bossCamera.GetComponent<Camera>().orthographicSize = targetSize; // 크기 변화가 완료된 후 보정
-        warningcanvas.enabled = false;
+        warningcanvas.SetActive(false);
         bossAniObject.SetActive(true);
 
         // 일정 시간 대기
@@ -166,7 +167,7 @@ public class ParticleSystemController : MonoBehaviour
     // 코루틴을 이용하여 일정 주기로 image1의 알파값을 변경하는 함수
     private IEnumerator ChangeImage1AlphaPeriodically(float interval)
     {
-        while (warningcanvas.enabled)
+        while (warningcanvas == true)
         {
             // image1의 알파값을 0.3초 동안 0.1로 설정
             image1.DOFade(0.1f, 0.3f);

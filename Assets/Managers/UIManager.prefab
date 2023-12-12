@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1998394097332500115}
   - component: {fileID: 8530770146655584218}
   - component: {fileID: 3199404075923569331}
-  - component: {fileID: 6532367197674267113}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -88,16 +87,8 @@ MonoBehaviour:
     m_ActionName: Player/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 9d354790-b5ab-4e96-9e57-ae868295e441
-    m_ActionName: Player/Run[/Keyboard/leftShift]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: dd517ab1-0f46-4216-b158-6fb1365398b5
     m_ActionName: Player/Jump[/Keyboard/space,/Keyboard/w,/Keyboard/upArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 54ce9730-ec1c-4e4c-9ab2-70e965d52e23
-    m_ActionName: Player/RangedAttack[/Keyboard/f]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: b4014c9e-f740-402d-a713-ca6b964c00af
@@ -139,43 +130,15 @@ MonoBehaviour:
     m_ActionId: 13031a53-1032-4068-bc4f-e3090723d295
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8530770146655584218}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: OnExitGame
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: c4b2e8bc-016e-4513-93c1-862c68408e2d
-    m_ActionName: UI/Escape[/Keyboard/escape]
-  - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 407dc03e-231b-4e6e-a857-f31224316098
     m_ActionName: Player/DownJump[/Keyboard/s,/Keyboard/downArrow]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 7495d161-0b3e-4d16-8409-d3decb841cb5
-    m_ActionName: Player/blink[/Keyboard/leftAlt]
+    m_ActionId: b83d730b-d82a-4f3a-a2d0-4612147cab49
+    m_ActionName: Player/DashAttack[/Keyboard/z]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &6532367197674267113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2461483920724029778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d44ea4a7cdc01845b0f231d7bb48621, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

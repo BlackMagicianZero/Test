@@ -8,6 +8,7 @@ public class EndingDoorScript : MonoBehaviour
     private Damageable ThunderRamGDamageable;
     Animator animator;
     public GameObject endimage;
+    private bool hasopen = false;
 
     private void Awake()
     {
@@ -23,17 +24,19 @@ public class EndingDoorScript : MonoBehaviour
         GameObject ThunderRamG = GameObject.FindGameObjectWithTag("BOSS");
         if(!ThunderRamG)
         {
-            animator.SetBool("EndingDoorOpen",true);
+            hasopen = true;
+            animator.SetBool("EndingDoorOpen",hasopen);
         }
         else
         {
-            animator.SetBool("EndingDoorOpen",false);
+            hasopen = false;
+            animator.SetBool("EndingDoorOpen",hasopen);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (ThunderRamGDamageable.Health <= 0 && collision.CompareTag("Player"))
+        if (hasopen == true)
         {
             endimage.SetActive(true);
         }    
