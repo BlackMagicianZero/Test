@@ -17,6 +17,7 @@ public class ParticleSystemController : MonoBehaviour
     public Image image1;
     public Image image2;
     public PlayerController player;
+    public GameObject bossroomwall;
     private float playeroriginalspeed = 0f;
     private float playeroriginaljumpimpulse = 0f;
     private float playeroriginalRunspeed = 0f;
@@ -89,6 +90,7 @@ public class ParticleSystemController : MonoBehaviour
         if (warningcanvas.enabled)
         {
             StartCoroutine(ChangeImage1AlphaPeriodically(0.3f));
+            bossroomwall.SetActive(false);
         }
     }
      // 파티클의 모양을 변경하는 코루틴

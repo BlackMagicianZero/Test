@@ -485,6 +485,11 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ShowBloodScreen());
             OnDamaged(collision.transform.position); 
         }
+        if(collision.gameObject.CompareTag("BOSS"))
+        {
+            StartCoroutine(ShowBloodScreen());
+            OnDamagedwithBOSS(collision.transform.position); 
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -499,6 +504,17 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.color = new Color(1,1,1,0.4f);
         int dirc = transform.position.x-targetPos.x > 0 ? 1 : -1;
         rb.AddForce(new Vector2(dirc, 1)*3, ForceMode2D.Impulse);
+        int maxHealth = damageable.MaxHealth;
+        int healthToReduce = 10;
+        bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);    
+        Invoke("OffDamaged",1.5f);
+    }
+    public void OnDamagedwithBOSS(Vector2 targetPos)
+    {
+        gameObject.gameObject.layer = 8;
+        spriteRenderer.color = new Color(1,1,1,0.4f);
+        int dirc = transform.position.x-targetPos.x > 0 ? 1 : -1;
+        rb.AddForce(new Vector2(dirc, 1)*5, ForceMode2D.Impulse);
         int maxHealth = damageable.MaxHealth;
         int healthToReduce = 10;
         bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);    
