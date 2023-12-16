@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd56e5af7706c5d4885f20874257962b, type: 3}
   m_Name: "\uC232\uC18D\uC758 \uBE57\uBB3C"
   m_EditorClassIdentifier: 
-  <IsStackable>k__BackingField: 0
-  <MaxStackSize>k__BackingField: 1
+  <IsStackable>k__BackingField: 1
+  <MaxStackSize>k__BackingField: 999
   <Name>k__BackingField: "\uC232\uC18D\uC758 \uBE57\uBB3C"
   <Description>k__BackingField: "\uC232\uC758 \uB9D1\uC740 \uC815\uAE30\uAC00 \uBAA8\uC778
     \uB9D1\uC740 \uC774\uC2AC \uB369\uC5B4\uB9AC\uB2E4.\n\n\uCD5C\uB300 HP\uC640
