@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
@@ -64,9 +65,9 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator DisableCollision()
     {
-        BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
+        CompositeCollider2D platformCollider = currentOneWayPlatform.GetComponent<CompositeCollider2D>();
         Physics2D.IgnoreCollision(playerCollider, platformCollider);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(2f);
         Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
     }
 
@@ -170,11 +171,6 @@ public class PlayerController : MonoBehaviour
         {
             return animator.GetBool(AnimationStrings.isAlive);
         }
-    }
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(wallCheckPos.position, wallCheckSize);
     }
     private bool WallCheck()
     {
