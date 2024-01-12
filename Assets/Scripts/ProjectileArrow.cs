@@ -20,6 +20,8 @@ public class ProjectileArrow : MonoBehaviour
     {
         // If you want the projectile to be effected by gravity by default, make it dynamic mode rigidbody
         rb.velocity = new Vector2(moveSpeed.x * transform.localScale.x, moveSpeed.y);
+
+        Invoke("DestroyArrow", 2f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,5 +40,9 @@ public class ProjectileArrow : MonoBehaviour
                 Debug.Log(collision.name + " hit for " + damage);
                 Destroy(gameObject);
         }
+    }
+    private void DestroyArrow()
+    {
+        Destroy(gameObject);
     }
 }
