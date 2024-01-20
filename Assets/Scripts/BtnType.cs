@@ -114,7 +114,7 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        buttonScale.localScale = defaultScale * 1.2f;
+        buttonScale.localScale = defaultScale * 1.0f;
     }
     public void OnPointerExit(PointerEventData eventData)
     {

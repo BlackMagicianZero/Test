@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RespawnManager : MonoBehaviour
-{
+{/*
     public GameObject past_save_point;
     public GameObject past_save_point1;
     public GameObject past_save_point2;
@@ -47,5 +47,29 @@ public class RespawnManager : MonoBehaviour
             past_save_point12.SetActive(false);
             pre_save_point.SetActive(true);
         }
+    }*/
+    public List<GameObject> pastSavePoints = new List<GameObject>();
+    public GameObject preSavePoint;
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            DeactivatePastSavePoints();
+            ActivatePreSavePoint();
+        }
+    }
+
+    void DeactivatePastSavePoints()
+    {
+        foreach (GameObject savePoint in pastSavePoints)
+        {
+            savePoint.SetActive(false);
+        }
+    }
+
+    void ActivatePreSavePoint()
+    {
+        preSavePoint.SetActive(true);
     }
 }
