@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Opening Scene.unity
     guid: 9a5fae0e892121f4f8a8f770b4ca79ec
   - enabled: 1
-    path: Assets/Scenes/2024_0101_map.unity
+    path: Assets/Scenes/2024_0101_Tuto.unity
     guid: 694cf9c6ce6a56446b1dbfee86ab20e6
   - enabled: 1
     path: Assets/Scenes/QuitScene.unity
