@@ -500,10 +500,10 @@ public class PlayerController : MonoBehaviour
         gameObject.gameObject.layer = 8;
         spriteRenderer.color = new Color(1,1,1,0.4f);
         int dirc = transform.position.x-targetPos.x > 0 ? 1 : -1;
-        rb.AddForce(new Vector2(dirc, 1)*3, ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(dirc, 1)*1.5f, ForceMode2D.Impulse);
         int maxHealth = damageable.MaxHealth;
         int healthToReduce = 10;
-        bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);    
+        bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);
         Invoke("OffDamaged",1.5f);
     }
     public void OnDamagedwithBOSS(Vector2 targetPos)

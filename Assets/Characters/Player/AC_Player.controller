@@ -366,7 +366,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.5
+  m_ExitTime: 0.1
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -2347,7 +2347,7 @@ AnimatorStateMachine:
     m_Position: {x: 220, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6991258014824624985}
-    m_Position: {x: 380, y: -70, z: 0}
+    m_Position: {x: 340, y: -80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1405222835536850408}
     m_Position: {x: 800, y: 0, z: 0}
@@ -3281,8 +3281,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boolName: canMove
-  updateOnState: 1
-  updateOnStateMachine: 0
+  updateOnState: 0
+  updateOnStateMachine: 1
   valueOnEnter: 0
   valueOnExit: 1
 --- !u!1109 &7494513420138708716
