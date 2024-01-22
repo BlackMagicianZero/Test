@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1850087823899709190}
   m_Layer: 8
   m_Name: fire_ball_ice_ramG
-  m_TagString: Untagged
+  m_TagString: RangeAtk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   moveSpeed: {x: 7, y: 0}
-  knockback: {x: 2, y: 0}
+  knockback: {x: 0, y: 0}
 --- !u!50 &7413201677483208161
 Rigidbody2D:
   serializedVersion: 4

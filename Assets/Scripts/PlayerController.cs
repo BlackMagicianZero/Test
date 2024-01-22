@@ -262,6 +262,7 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
         canjump = true;
+        IsMoving = true;
         yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
         isDashingAllowed = true; // 쿨타임 종료
@@ -470,6 +471,13 @@ public class PlayerController : MonoBehaviour
                 MoveToRespawnZone();
             }
         }
+        if(other.CompareTag("RangeAtk"))
+        {
+            gameObject.gameObject.layer = 8;
+            spriteRenderer.color = new Color(1,1,1,0.1f);
+            StartCoroutine(ShowBloodScreen());
+            Invoke("OffDamaged",1.5f);
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -498,24 +506,24 @@ public class PlayerController : MonoBehaviour
     public void OnDamaged(Vector2 targetPos)
     {
         gameObject.gameObject.layer = 8;
-        spriteRenderer.color = new Color(1,1,1,0.4f);
+        spriteRenderer.color = new Color(1,1,1,0.1f);
         int dirc = transform.position.x-targetPos.x > 0 ? 1 : -1;
-        rb.AddForce(new Vector2(dirc, 1)*1.5f, ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(dirc, 1)*0.5f, ForceMode2D.Impulse);
         int maxHealth = damageable.MaxHealth;
         int healthToReduce = 10;
         bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);
-        Invoke("OffDamaged",1.5f);
+        Invoke("OffDamaged",1.3f);
     }
     public void OnDamagedwithBOSS(Vector2 targetPos)
-    {
+    {   
         gameObject.gameObject.layer = 8;
-        spriteRenderer.color = new Color(1,1,1,0.4f);
+        spriteRenderer.color = new Color(1,1,1,0.1f);
         int dirc = transform.position.x-targetPos.x > 0 ? 1 : -1;
-        rb.AddForce(new Vector2(dirc, 1)*5, ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(dirc, 1)*0.5f, ForceMode2D.Impulse);
         int maxHealth = damageable.MaxHealth;
         int healthToReduce = 10;
         bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);    
-        Invoke("OffDamaged",1f);
+        Invoke("OffDamaged",1.3f);
     }
     public void OffDamaged()
     {

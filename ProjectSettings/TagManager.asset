@@ -16,6 +16,7 @@ TagManager:
   - Monster
   - Feet
   - GameManager
+  - RangeAtk
   layers:
   - Default
   - TransparentFX

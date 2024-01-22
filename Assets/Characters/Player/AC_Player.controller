@@ -695,7 +695,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 1
+  m_ExitTime: 0.1
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -1302,7 +1302,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: player_hit
-  m_Speed: 0.1
+  m_Speed: 0.05
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8775494948171149712}
@@ -2344,7 +2344,7 @@ AnimatorStateMachine:
     m_Position: {x: 570, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6696254243098669025}
-    m_Position: {x: 220, y: 10, z: 0}
+    m_Position: {x: 220, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6991258014824624985}
     m_Position: {x: 340, y: -80, z: 0}
@@ -3281,8 +3281,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boolName: canMove
-  updateOnState: 0
-  updateOnStateMachine: 1
+  updateOnState: 1
+  updateOnStateMachine: 0
   valueOnEnter: 0
   valueOnExit: 1
 --- !u!1109 &7494513420138708716
