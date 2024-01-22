@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Door : MonoBehaviour
 {
     // 다음으로 이동할 씬의 이름
-    public string nextSceneName;
+    public Image Panel;
+    float time = 0f;
+    float F_time = 1f;
     private PlayerController thePlayer;
 
     private bool hasPlayerEntered = false;
     private Animator anim;
     public float distance = 3.0f;
+    public GameObject toObj;
 
     void Start()
     {
@@ -23,9 +27,7 @@ public class Door : MonoBehaviour
         if (!hasPlayerEntered && collision.CompareTag("Player"))
         {
             hasPlayerEntered = true;
-            // 다음 씬의 이름으로 이동
-            SceneManager.LoadScene(nextSceneName);
-            Debug.Log("씬 이동!");
+            StartCoroutine(FadeFlow());
         }
     }
 
@@ -39,23 +41,37 @@ public class Door : MonoBehaviour
         {
             anim.SetBool("Open", false);
         }
-        // 현재 씬에 플레이어가 있는지 확인하고 RespawnArea로 이동
-        if (hasPlayerEntered)
-        {
-            GameObject respawnArea = GameObject.FindGameObjectWithTag("RespawnArea");
+    }
 
-            // RespawnArea를 찾았으면 플레이어를 해당 위치로 이동
-            if (respawnArea != null)
-            {
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-                player.transform.position = respawnArea.transform.position;
-                Debug.Log("RespawnArea로 이동!");
-            }
-            else
-            {
-                Debug.LogWarning("RespawnArea를 찾을 수 없습니다!");
-            }
-            hasPlayerEntered = false;
+    IEnumerator FadeFlow()
+    {
+        Panel.gameObject.SetActive(true);
+        time = 0f;
+        Color alpha = Panel.color;
+        while (alpha.a < 1f)
+        {
+            time += Time.deltaTime / F_time;
+            alpha.a = Mathf.Lerp(0, 1, time);
+            Panel.color = alpha;
+            yield return null;
         }
+        // 플레이어 이동
+        thePlayer.transform.position = toObj.transform.position;
+
+        // 여기서 이동이 완료될 때까지 대기
+        //yield return new WaitUntil(() => Vector3.Distance(thePlayer.transform.position, toObj.transform.position) < 0.1f);
+
+        time = 0f;
+        yield return new WaitForSeconds(2f);
+
+        while (alpha.a > 0f)
+        {
+            time += Time.deltaTime / F_time;
+            alpha.a = Mathf.Lerp(1, 0, time);
+            Panel.color = alpha;
+            yield return null;
+        }
+        Panel.gameObject.SetActive(false);
+        yield return null;
     }
 }
