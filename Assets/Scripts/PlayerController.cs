@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
     private float wallSlideTimer = 0f;
     private bool canjump = true;
     public Image bloodScreen;
+    public Image DieFadeimage;
 
     private void Awake()
     {
@@ -262,7 +263,10 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
         canjump = true;
-        IsMoving = true;
+        if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            IsMoving = true;
+        }
         yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
         isDashingAllowed = true; // 쿨타임 종료
@@ -329,13 +333,42 @@ public class PlayerController : MonoBehaviour
         {
             bool isImageActive = !Dieimage.activeSelf;
             Dieimage.SetActive(isImageActive);
+            damageable.LockVelocity = false;
+            gameObject.gameObject.layer = 8;
+            IsMoving = false;
+            //walkSpeed = 0f;
+            StartCoroutine(DelayedFreezeTime());
         }
         else if(damageable.Health > 0)
         {
             animator.SetBool(AnimationStrings.isAlive, true);
             damageable.IsAlive = true;
             Dieimage.SetActive(false);
+            Color alpha = DieFadeimage.color;
+            alpha.a = 0f;
+            DieFadeimage.color = alpha;
+            Time.timeScale = 1f;
+            DieFadeimage.gameObject.SetActive(false);
+            gameObject.gameObject.layer = 7;
+            //walkSpeed = 5f;
         }
+    }
+    IEnumerator DelayedFreezeTime()
+    {
+        float time = 0f;
+        float F_time = 1f;
+        DieFadeimage.gameObject.SetActive(true);
+        time = 0f;
+        Color alpha = DieFadeimage.color;
+        while (alpha.a < 1f)
+        {
+            time += Time.deltaTime / F_time;
+            alpha.a = Mathf.Lerp(0, 1, time);
+            DieFadeimage.color = alpha;
+            yield return null;
+        }
+        time = 0f;
+        Time.timeScale = 0f;
     }
    private void FixedUpdate()
     {
@@ -512,7 +545,7 @@ public class PlayerController : MonoBehaviour
         int maxHealth = damageable.MaxHealth;
         int healthToReduce = 10;
         bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);
-        Invoke("OffDamaged",1.3f);
+        Invoke("OffDamaged",1.0f);
     }
     public void OnDamagedwithBOSS(Vector2 targetPos)
     {   
@@ -523,7 +556,7 @@ public class PlayerController : MonoBehaviour
         int maxHealth = damageable.MaxHealth;
         int healthToReduce = 10;
         bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);    
-        Invoke("OffDamaged",1.3f);
+        Invoke("OffDamaged",1.0f);
     }
     public void OffDamaged()
     {
@@ -548,11 +581,6 @@ public class PlayerController : MonoBehaviour
 
             // 플레이어를 respawn 위치로 이동
             transform.position = respawnPosition;
-        }
-        else
-        {
-            // Respawn 영역을 찾지 못한 경우에 대한 예외 처리
-            Debug.LogWarning("Respawn 영역을 찾을 수 없습니다.");
         }
     }
 }

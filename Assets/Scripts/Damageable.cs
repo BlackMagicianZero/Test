@@ -78,8 +78,6 @@ public class Damageable : MonoBehaviour
         }
     }
 
-    // The velocity should not be changed while this is true but needs to be respected by other physics components like
-    // the player controller
     public bool LockVelocity
     {
         get
@@ -103,23 +101,19 @@ public class Damageable : MonoBehaviour
         {
             if(timeSinceHit > invincibilityTime)
             {
-                // Remove invincibility
                 isInvincible = false;
                 timeSinceHit = 0;
             }
-
             timeSinceHit += Time.deltaTime;
         }
     }
-    // Returns whether the damageable took damage or not
+
     public bool Hit(int damage, Vector2 knockback)
     {
         if(IsAlive && !isInvincible)
         {
             Health -= damage;
             isInvincible = true;
-
-            // Notify other subscribed components that the damageable was hit to handle the knockback and such
             animator.SetTrigger(AnimationStrings.hitTrigger);
             LockVelocity = true;
             damageableHit?.Invoke(damage, knockback);
@@ -127,12 +121,9 @@ public class Damageable : MonoBehaviour
 
             return true;
         }
-
-        // Unable to be hit
         return false;
     }
 
-    // Returns whether the character was healed or not
     public bool Heal(int healthRestore)
     {
         if(IsAlive && Health < MaxHealth)
@@ -143,7 +134,6 @@ public class Damageable : MonoBehaviour
             CharacterEvents.characterHealed(gameObject, actualHeal);
             return true;
         }
-
         return false;
     }
     public bool ApplyDamage(int damage, Vector2 knockback)
@@ -153,7 +143,6 @@ public class Damageable : MonoBehaviour
             Health -= damage;
             isInvincible = true;
             timeSinceHit =0;
-            // Notify other subscribed components that the damageable was hit to handle the knockback and such
             animator.SetTrigger(AnimationStrings.hitTrigger);
             LockVelocity = true;
             damageableHit?.Invoke(damage, knockback);
@@ -161,8 +150,6 @@ public class Damageable : MonoBehaviour
 
             return true;
         }
-
-        // Unable to be hit
         return false;
     }
 }
