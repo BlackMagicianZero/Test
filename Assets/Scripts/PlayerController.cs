@@ -333,7 +333,7 @@ public class PlayerController : MonoBehaviour
         {
             bool isImageActive = !Dieimage.activeSelf;
             Dieimage.SetActive(isImageActive);
-            damageable.LockVelocity = false;
+            //damageable.LockVelocity = false;
             gameObject.gameObject.layer = 8;
             IsMoving = false;
             //walkSpeed = 0f;

@@ -963,9 +963,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boolName: lockVelocity
-  updateOnState: 0
+  updateOnState: 1
   updateOnStateMachine: 0
-  valueOnEnter: 0
+  valueOnEnter: 1
   valueOnExit: 0
 --- !u!1101 &-4442903984114000697
 AnimatorStateTransition:
