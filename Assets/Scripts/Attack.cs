@@ -11,7 +11,7 @@ public class Attack : MonoBehaviour
     {
         // See if it can be hit
         Damageable damageable = collision.GetComponent<Damageable>();
-        FindObjectOfType<HitStop>().Stop(0.07f);
+        FindObjectOfType<HitStop>().Stop(0.5f);
         if(damageable != null)
         {
             // If parent is facing the left by localscale, our knockback x flips its value to face the left as well

@@ -195,6 +195,7 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator PerformDIADashing()
     {
+        ghostTrailEffect.makeGhost = true;
         gameObject.layer = 8;
         isDashingAllowed = false;
         canjump = false;
@@ -211,6 +212,7 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         animator.SetBool("AirDash", false);
         canjump = true;
+        ghostTrailEffect.makeGhost = false;
         yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
         isDashingAllowed = true;
@@ -219,6 +221,7 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator PerformLnRDashing()
     {
+        ghostTrailEffect.makeGhost = true;
         gameObject.layer = 8;
         isDashingAllowed = false;
         canjump = false;
@@ -235,6 +238,7 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         animator.SetBool("LnRDash", false);
         canjump = true;
+        ghostTrailEffect.makeGhost = false;
         yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
         isDashingAllowed = true;
@@ -248,6 +252,7 @@ public class PlayerController : MonoBehaviour
         {
             yield break; // 쿨타임 중에는 실행 불가
         }
+        ghostTrailEffect.makeGhost = true;
         gameObject.layer = 8;
         isDashingAllowed = false; // 쿨타임 시작
         IsMoving= false;
@@ -267,6 +272,7 @@ public class PlayerController : MonoBehaviour
         {
             IsMoving = true;
         }
+        ghostTrailEffect.makeGhost = false;
         yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
         isDashingAllowed = true; // 쿨타임 종료
@@ -385,7 +391,7 @@ public class PlayerController : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
         if (IsAlive)
         {
-            ghostTrailEffect.makeGhost = true;
+            ghostTrailEffect.makeGhost = false;
             IsMoving = moveInput != Vector2.zero;
             SetFacingDirection(moveInput);
         }
@@ -411,7 +417,9 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
+            ghostTrailEffect.makeGhost = true;
             animator.SetTrigger(AnimationStrings.attack);
+            
         }
     }
 
