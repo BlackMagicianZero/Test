@@ -4673,7 +4673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentType: 0
   buttonScale: {fileID: 842486772}
-  nextSceneName: 2024_0101_Tuto
+  nextSceneName: NDM
   ESCGroup: {fileID: 0}
   SoundGroup: {fileID: 0}
   MainGroup: {fileID: 0}

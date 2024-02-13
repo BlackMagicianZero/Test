@@ -202,7 +202,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 10
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -226,8 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c53f447db12de4b9555972faedc8de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkAcceleration: 50
-  maxSpeed: 1
+  walkAcceleration: 500
+  maxSpeed: 3
   walkStopRate: 0.05
   attackZone: {fileID: 2137475384901951726}
   cliffDetectionZone: {fileID: 100629577135219755}

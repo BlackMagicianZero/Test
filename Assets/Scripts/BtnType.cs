@@ -19,6 +19,7 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     bool isSound;
     private Damageable playerDamageable;
     private PlayerController playerController;
+    private Damageable ThunderRamGDamageable;
 
     private void Start()
     {
@@ -26,6 +27,9 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerDamageable = player.GetComponent<Damageable>();
         playerController = GetComponent<PlayerController>();
+        GameObject ThunderRamG = GameObject.FindGameObjectWithTag("BOSS");
+        ThunderRamGDamageable = ThunderRamG.GetComponent<Damageable>();
+
     }
     public void OnBtnClick()
     {
@@ -72,6 +76,7 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
             case BTNType.OverYes:
             playerDamageable.Health = playerDamageable.MaxHealth;
             MoveToRespawnZone();
+            ThunderRamGDamageable.Health = ThunderRamGDamageable.MaxHealth;
             break;
 
             case BTNType.OverNo:
@@ -97,6 +102,7 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
             playerDamageable.Health = playerDamageable.MaxHealth;
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             player.transform.localPosition = new Vector3(180f, -3.35f, 0f);
+            ThunderRamGDamageable.Health = ThunderRamGDamageable.MaxHealth;
             break;
         }
     }

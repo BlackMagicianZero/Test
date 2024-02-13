@@ -7,6 +7,7 @@ using System.Linq;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
@@ -63,13 +64,6 @@ public class PlayerController : MonoBehaviour
         damageable = GetComponent<Damageable>();
         wallCollider = GetComponentInChildren<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-    private IEnumerator DisableCollision()
-    {
-        CompositeCollider2D platformCollider = currentOneWayPlatform.GetComponent<CompositeCollider2D>();
-        Physics2D.IgnoreCollision(playerCollider, platformCollider);
-        yield return new WaitForSeconds(2f);
-        Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
     }
 
     public float CurrentMoveSpeed
@@ -196,7 +190,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator PerformDIADashing()
     {
         ghostTrailEffect.makeGhost = true;
-        gameObject.layer = 8;
+        gameObject.layer = 15;
         isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
@@ -213,8 +207,8 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("AirDash", false);
         canjump = true;
         ghostTrailEffect.makeGhost = false;
-        yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
+        yield return new WaitForSeconds(dashCooldown);
         isDashingAllowed = true;
         dashimage.color = new Color(1f,1f,1f,1f);
         canDash =true;
@@ -222,7 +216,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator PerformLnRDashing()
     {
         ghostTrailEffect.makeGhost = true;
-        gameObject.layer = 8;
+        gameObject.layer = 15;
         isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
@@ -239,8 +233,8 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("LnRDash", false);
         canjump = true;
         ghostTrailEffect.makeGhost = false;
-        yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
+        yield return new WaitForSeconds(dashCooldown);
         isDashingAllowed = true;
         dashimage.color = new Color(1f,1f,1f,1f);
         canDash =true;
@@ -253,7 +247,7 @@ public class PlayerController : MonoBehaviour
             yield break; // 쿨타임 중에는 실행 불가
         }
         ghostTrailEffect.makeGhost = true;
-        gameObject.layer = 8;
+        gameObject.layer = 15;
         isDashingAllowed = false; // 쿨타임 시작
         IsMoving= false;
         canjump = false;
@@ -292,7 +286,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow) && canDash && Input.GetKeyDown(KeyCode.LeftShift)  ||
              Input.GetKey(KeyCode.RightArrow)  && canDash && Input.GetKeyDown(KeyCode.LeftShift))
         {
-
             StartCoroutine(PerformLnRDashing());
         }
         if(Input.GetKeyDown(KeyCode.R))
@@ -302,7 +295,7 @@ public class PlayerController : MonoBehaviour
         if (!touchingDirections.IsGrounded && Input.GetKey(KeyCode.DownArrow))
         {
         // 빠른 하강 y 속도를 빠르게 증가
-        rb.velocity = new Vector2(rb.velocity.x, -jumpImpulse * 2f);
+        rb.velocity = new Vector2(rb.velocity.x, -jumpImpulse * 1f);
         }
         
         WallSlide();
@@ -340,7 +333,7 @@ public class PlayerController : MonoBehaviour
             bool isImageActive = !Dieimage.activeSelf;
             Dieimage.SetActive(isImageActive);
             //damageable.LockVelocity = false;
-            gameObject.gameObject.layer = 8;
+            gameObject.gameObject.layer = 15;
             IsMoving = false;
             //walkSpeed = 0f;
             StartCoroutine(DelayedFreezeTime());
@@ -355,8 +348,7 @@ public class PlayerController : MonoBehaviour
             DieFadeimage.color = alpha;
             Time.timeScale = 1f;
             DieFadeimage.gameObject.SetActive(false);
-            gameObject.gameObject.layer = 7;
-            //walkSpeed = 5f;
+            //gameObject.gameObject.layer = 7;
         }
     }
     IEnumerator DelayedFreezeTime()
@@ -430,7 +422,7 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger(AnimationStrings.rangedAttackTrigger);
         }
     }
-        public void OnDashAttack(InputAction.CallbackContext context)
+    public void OnDashAttack(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -438,18 +430,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnRun(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            IsRunning = true;
-            StartCoroutine(PerformLnRDashing());
-        }
-        else if (context.canceled)
-        {
-            IsRunning = false;
-        }
-    }
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started && CanMove && !isWallSliding && canjump == true)
@@ -476,6 +456,7 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
+    public bool fallThrough;
     public void DownJump(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -491,6 +472,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
     public void OnHit(int damage, Vector2 knockback)
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
@@ -517,7 +499,7 @@ public class PlayerController : MonoBehaviour
             gameObject.gameObject.layer = 8;
             spriteRenderer.color = new Color(1,1,1,0.1f);
             StartCoroutine(ShowBloodScreen());
-            Invoke("OffDamaged",1.5f);
+            Invoke("OffDamaged",0.3f);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -553,11 +535,11 @@ public class PlayerController : MonoBehaviour
         int maxHealth = damageable.MaxHealth;
         int healthToReduce = 10;
         bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);
-        Invoke("OffDamaged",1.0f);
+        Invoke("OffDamaged",1.2f);
     }
     public void OnDamagedwithBOSS(Vector2 targetPos)
     {   
-        gameObject.gameObject.layer = 8;
+        gameObject.gameObject.layer = 15;
         spriteRenderer.color = new Color(1,1,1,0.1f);
         int dirc = transform.position.x-targetPos.x > 0 ? 1 : -1;
         rb.AddForce(new Vector2(dirc, 1)*0.5f, ForceMode2D.Impulse);
@@ -576,6 +558,13 @@ public class PlayerController : MonoBehaviour
         bloodScreen.color = new Color(1, 0, 0, UnityEngine.Random.Range(0.1f, 0.2f));
         yield return new WaitForSeconds(0.1f);
         bloodScreen.color = Color.clear;
+    }
+    private IEnumerator DisableCollision()
+    {
+        CompositeCollider2D platformCollider = currentOneWayPlatform.GetComponent<CompositeCollider2D>();
+        Physics2D.IgnoreCollision(playerCollider, platformCollider);
+        yield return new WaitForSeconds(0.3f);
+        Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
     }
 
     public void MoveToRespawnZone()
