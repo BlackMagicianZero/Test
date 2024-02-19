@@ -289,6 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchPoint: {fileID: 6236838064330742050}
   projectilePrefab: {fileID: 8672721747314608137, guid: 78ab78bef0e1e5749857bbde0284a86b, type: 3}
+  fireCooldown: 1.5
 --- !u!1 &5054430892595844806
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +394,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6236838064330742050}
   - component: {fileID: 3771468907022542457}
-  - component: {fileID: 2282662101952231240}
   m_Layer: 10
   m_Name: AttackZone
   m_TagString: Untagged
@@ -465,20 +465,6 @@ PolygonCollider2D:
       - {x: 0.72, y: -0.41}
       - {x: -0.32, y: -0.41}
   m_UseDelaunayMesh: 0
---- !u!114 &2282662101952231240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5143742425171662424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2edd8c479b11ded409f2c251270f039e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDamage: 0
-  knockback: {x: 0, y: 0}
 --- !u!1 &8239654981261533968
 GameObject:
   m_ObjectHideFlags: 0

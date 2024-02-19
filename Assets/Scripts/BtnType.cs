@@ -76,7 +76,8 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
             case BTNType.OverYes:
             playerDamageable.Health = playerDamageable.MaxHealth;
             MoveToRespawnZone();
-            ThunderRamGDamageable.Health = ThunderRamGDamageable.MaxHealth;
+            //ThunderRamGDamageable.Health = ThunderRamGDamageable.MaxHealth;
+            ThunderRamGDamageable.Health = 600;
             break;
 
             case BTNType.OverNo:
@@ -102,7 +103,8 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
             playerDamageable.Health = playerDamageable.MaxHealth;
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             player.transform.localPosition = new Vector3(180f, -3.35f, 0f);
-            ThunderRamGDamageable.Health = ThunderRamGDamageable.MaxHealth;
+            //ThunderRamGDamageable.Health = ThunderRamGDamageable.MaxHealth;
+            ThunderRamGDamageable.Health = 600;
             break;
         }
     }

@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator PerformDIADashing()
     {
         ghostTrailEffect.makeGhost = true;
-        gameObject.layer = 15;
+        gameObject.layer = 12;
         isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator PerformLnRDashing()
     {
         ghostTrailEffect.makeGhost = true;
-        gameObject.layer = 15;
+        gameObject.layer = 12;
         isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
@@ -247,7 +247,7 @@ public class PlayerController : MonoBehaviour
             yield break; // 쿨타임 중에는 실행 불가
         }
         ghostTrailEffect.makeGhost = true;
-        gameObject.layer = 15;
+        gameObject.layer = 12;
         isDashingAllowed = false; // 쿨타임 시작
         IsMoving= false;
         canjump = false;
@@ -333,7 +333,7 @@ public class PlayerController : MonoBehaviour
             bool isImageActive = !Dieimage.activeSelf;
             Dieimage.SetActive(isImageActive);
             //damageable.LockVelocity = false;
-            gameObject.gameObject.layer = 15;
+            //gameObject.gameObject.layer = 12;
             IsMoving = false;
             //walkSpeed = 0f;
             StartCoroutine(DelayedFreezeTime());
@@ -531,7 +531,7 @@ public class PlayerController : MonoBehaviour
         gameObject.gameObject.layer = 8;
         spriteRenderer.color = new Color(1,1,1,0.1f);
         int dirc = transform.position.x-targetPos.x > 0 ? 1 : -1;
-        rb.AddForce(new Vector2(dirc, 1)*0.5f, ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(dirc, 1)*2.5f, ForceMode2D.Impulse);
         int maxHealth = damageable.MaxHealth;
         int healthToReduce = 10;
         bool damageApplied = damageable.ApplyDamage(healthToReduce, Vector2.zero);
@@ -539,7 +539,7 @@ public class PlayerController : MonoBehaviour
     }
     public void OnDamagedwithBOSS(Vector2 targetPos)
     {   
-        gameObject.gameObject.layer = 15;
+        gameObject.gameObject.layer = 12;
         spriteRenderer.color = new Color(1,1,1,0.1f);
         int dirc = transform.position.x-targetPos.x > 0 ? 1 : -1;
         rb.AddForce(new Vector2(dirc, 1)*0.5f, ForceMode2D.Impulse);
