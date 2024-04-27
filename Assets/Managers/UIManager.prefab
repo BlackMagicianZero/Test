@@ -137,6 +137,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: b83d730b-d82a-4f3a-a2d0-4612147cab49
     m_ActionName: Player/DashAttack[/Keyboard/z]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cd2d0634-bceb-4436-b059-48239ad92a31
+    m_ActionName: Player/Dash[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI

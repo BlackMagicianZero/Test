@@ -5781,6 +5781,7 @@ MonoBehaviour:
   _isMoving: 0
   _isRunning: 0
   _isFacingRight: 1
+  fallThrough: 0
 --- !u!114 &2627716255886654180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5930,6 +5931,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b83d730b-d82a-4f3a-a2d0-4612147cab49
     m_ActionName: Player/DashAttack[/Keyboard/z]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cd2d0634-bceb-4436-b059-48239ad92a31
+    m_ActionName: Player/Dash[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -6028,6 +6033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchPoint: {fileID: 1850074792296654106}
   projectilePrefab: {fileID: 8672721747314608137, guid: a85bff1e2a9dd7243a9d9835ddc56a1d, type: 3}
+  fireCooldown: 1.5
 --- !u!82 &1034389899501018966
 AudioSource:
   m_ObjectHideFlags: 0
