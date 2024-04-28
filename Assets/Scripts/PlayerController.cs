@@ -13,6 +13,7 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     public Image dashimage;
+    public Image dashimage_Cool;
     public float walkSpeed = 5f;
     public float runSpeed = 8f;
     public float airWalkSpeed = 3f;
@@ -194,7 +195,8 @@ public class PlayerController : MonoBehaviour
         isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
-        dashimage.color = Color.gray;
+        dashimage.color = new Color(0f, 0f, 0f, 0f);
+        dashimage_Cool.color = new Color(1f,1f,1f,1f);
         canDash = false;
         animator.SetBool("AirDash", true);
         isDashing =true;
@@ -210,6 +212,7 @@ public class PlayerController : MonoBehaviour
         gameObject.layer = 7;
         yield return new WaitForSeconds(dashCooldown);
         isDashingAllowed = true;
+        dashimage_Cool.color = new Color(0f, 0f, 0f, 0f);
         dashimage.color = new Color(1f,1f,1f,1f);
         canDash =true;
     }
@@ -220,7 +223,8 @@ public class PlayerController : MonoBehaviour
         isDashingAllowed = false;
         canjump = false;
         damageable.isInvincible = true;
-        dashimage.color = Color.gray;
+        dashimage.color = new Color(0f, 0f, 0f, 0f);
+        dashimage_Cool.color = new Color(1f,1f,1f,1f);
         canDash = false;
         animator.SetBool("LnRDash", true);
         isDashing =true;
@@ -236,6 +240,7 @@ public class PlayerController : MonoBehaviour
         gameObject.layer = 7;
         yield return new WaitForSeconds(dashCooldown);
         isDashingAllowed = true;
+        dashimage_Cool.color = new Color(0f, 0f, 0f, 0f);
         dashimage.color = new Color(1f,1f,1f,1f);
         canDash =true;
     }
@@ -251,7 +256,8 @@ public class PlayerController : MonoBehaviour
         isDashingAllowed = false; // 쿨타임 시작
         IsMoving= false;
         canjump = false;
-        dashimage.color = Color.gray;
+        dashimage.color = new Color(0f, 0f, 0f, 0f);
+        dashimage_Cool.color = new Color(1f,1f,1f,1f);
         canDash = false;
         animator.SetTrigger(AnimationStrings.dashAttack);
         isDashing =true;
@@ -270,6 +276,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         gameObject.layer = 7;
         isDashingAllowed = true; // 쿨타임 종료
+        dashimage_Cool.color = new Color(0f, 0f, 0f, 0f);
         dashimage.color = new Color(1f,1f,1f,1f);
         canDash =true;
     }
