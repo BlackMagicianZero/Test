@@ -59,7 +59,7 @@ public class Damageable : MonoBehaviour
 
     private float timeSinceHit = 0;
     public float invincibilityTime = 1.0f;
-
+    [SerializeField] Mons_HealthBar healthBar;
     public bool IsAlive {
         get
         {
@@ -93,6 +93,12 @@ public class Damageable : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        healthBar = GetComponentInChildren<Mons_HealthBar>();
+    }
+
+    private void Start()
+    {
+        healthBar.UpdateHealthBar(Health,MaxHealth);
     }
 
     private void Update()
@@ -113,6 +119,7 @@ public class Damageable : MonoBehaviour
         if(IsAlive && !isInvincible)
         {
             Health -= damage;
+            healthBar.UpdateHealthBar(Health,MaxHealth);
             isInvincible = true;
             animator.SetTrigger(AnimationStrings.hitTrigger);
             LockVelocity = true;

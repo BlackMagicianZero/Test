@@ -17,6 +17,6 @@ MonoBehaviour:
   <Name>k__BackingField: "\uB0AD\uC778\uC758 \uC2E0\uB150"
   <Description>k__BackingField: "\uC232 \uADFC\uCC98\uC5D0 \uBAA8\uC778 \uBB34\uAE30
     \uBD80\uC2A4\uB7EC\uAE30.\n\n\uACF5\uACA9\uB825\uC774 1 \uC99D\uAC00\uD55C\uB2E4."
-  <ItemImage>k__BackingField: {fileID: 21300000, guid: f8cfc012766eb38498f212482cd8ff2f, type: 3}
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: f8c88e5440c9df748b361cf11b02737a, type: 3}
   <DefaultParametersList>k__BackingField: []
   <actionSFX>k__BackingField: {fileID: 8300000, guid: 9ad5de725af4e8f448e0f43f4de4e56d, type: 3}

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8028613015578208277}
   - component: {fileID: 4424165701612646080}
   - component: {fileID: 1839988347345842121}
+  - component: {fileID: -461701386060357027}
   m_Layer: 0
   m_Name: "\uB0AD\uC778\uC758 \uC2E0\uB150"
   m_TagString: Buff
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f8cfc012766eb38498f212482cd8ff2f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f8c88e5440c9df748b361cf11b02737a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -254,3 +255,17 @@ MonoBehaviour:
   DashATKDamageToGive: 0
   HPToGive: 0
   BfIcon: {fileID: 4634014199940931762}
+--- !u!114 &-461701386060357027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4634014199940931762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ddb555a850a1741ba39174a3f414b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatSpeed: 3
+  floatAmplitude: 0.1
