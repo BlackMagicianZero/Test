@@ -17,6 +17,7 @@ TagManager:
   - Feet
   - GameManager
   - RangeAtk
+  - Player_atk
   layers:
   - Default
   - TransparentFX
