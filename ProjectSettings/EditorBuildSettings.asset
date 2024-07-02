@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/2024_0101_Tuto.unity
     guid: 694cf9c6ce6a56446b1dbfee86ab20e6
   - enabled: 1
-    path: Assets/Scenes/NDM.unity
-    guid: 1b0fe6ac0dccb3d47895b558f7956a37
-  - enabled: 1
     path: Assets/Scenes/QuitScene.unity
     guid: 22861590ebc637a42bb427d80539430c
   m_configObjects: {}

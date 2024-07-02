@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class logolight : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class logolight : MonoBehaviour
 
     private float elapsedTime = 0f;
     private bool isFadingOut = true; // 알파값이 줄어드는지 늘어나는지 여부
+    public string sceneName;
 
     private void Start()
     {
@@ -49,6 +51,10 @@ public class logolight : MonoBehaviour
                 elapsedTime = 0f;
                 isFadingOut = true; // 방향 전환
             }
+        }
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            SceneManager.LoadScene(sceneName);
         }
     }
 

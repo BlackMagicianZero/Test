@@ -335,6 +335,8 @@ MonoBehaviour:
   walkStopRate: 0.05
   attackZone: {fileID: 2137475384901951726}
   cliffDetectionZone: {fileID: 100629577135219755}
+  slider: {fileID: 4381476227517231668}
+  monsterTransform: {fileID: 3297305621216572212}
   _hasTarget: 0
 --- !u!114 &3593144770502336660
 MonoBehaviour:
@@ -677,10 +679,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: dc4a8f55e0e75ac48a201b4494603f54, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0

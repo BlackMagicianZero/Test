@@ -11,7 +11,8 @@ public class ParticleSystemController : MonoBehaviour
     public GameObject bossObject; // 보스 오브젝트 추가
     public GameObject bossAniObject;
     public GameObject bossCamera;
-    public GameObject bossHpbar;
+    public GameObject bossHpbar_1;
+    public GameObject bossHpbar_2;
     private Vector3 originalBossCameraPosition; // BossCamera의 원래 위치를 저장할 변수
     private float originalCameraSize; // BossCamera의 원래 Projection Size를 저장할 변수
     public GameObject warningcanvas;
@@ -152,7 +153,8 @@ public class ParticleSystemController : MonoBehaviour
         bossAniObject.SetActive(false);
         bossObject.SetActive(true);
         bossCamera.transform.position = originalBossCameraPosition; // 위치가 원래 값으로 복구된 후 보정
-        bossHpbar.SetActive(true);
+        bossHpbar_1.SetActive(true);
+        bossHpbar_2.SetActive(true);
         //이 게임오브젝트를 비활성화
         gameObject.SetActive(false);
         // 모든 기능이 끝나면 카메라를 비활성화

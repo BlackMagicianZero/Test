@@ -114,12 +114,15 @@ public class Damageable : MonoBehaviour
         }
     }
 
-    public bool Hit(int damage, Vector2 knockback)
+    public bool Hit(int damage, Vector2 knockback, Collider2D collision)
     {
         if(IsAlive && !isInvincible)
         {
             Health -= damage;
-            healthBar.UpdateHealthBar(Health,MaxHealth);
+            if(collision.CompareTag("Monster"))
+            {
+                healthBar.UpdateHealthBar(Health,MaxHealth);
+            }
             isInvincible = true;
             animator.SetTrigger(AnimationStrings.hitTrigger);
             LockVelocity = true;

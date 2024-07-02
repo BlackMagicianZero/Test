@@ -34,7 +34,7 @@ public class ProjectileArrow : MonoBehaviour
             Vector2 deliveredKnockback = transform.localScale.x > 0 ? knockback : new Vector2(-knockback.x, knockback.y);
 
             // Hit the target
-            bool gotHit = damageable.Hit(damage, deliveredKnockback);
+            bool gotHit = damageable.Hit(damage, deliveredKnockback,collision);
 
             if (gotHit)
                 Debug.Log(collision.name + " hit for " + damage);

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class Knight : MonoBehaviour
@@ -16,6 +17,10 @@ public class Knight : MonoBehaviour
     TouchingDirections touchingDirections;
     Animator animator;
     Damageable damageable;
+
+    public Slider slider;
+    public Transform monsterTransform;
+    private Vector3 initialScale;
 
     public enum WalkableDirection { Right, Left }
 
@@ -91,6 +96,10 @@ public class Knight : MonoBehaviour
         animator = GetComponent<Animator>();
         damageable = GetComponent<Damageable>();
     }
+    private void Start()
+    {
+        initialScale = slider.transform.localScale;
+    }
 
     void Update()
     {
@@ -99,6 +108,15 @@ public class Knight : MonoBehaviour
         if(AttackCooldown > 0)
         {
             AttackCooldown -= Time.deltaTime;
+        }
+        // Slider의 스케일을 초기 스케일로 설정
+        slider.transform.localScale = initialScale;
+
+        // 몬스터가 flip되었는지 확인하여 Slider의 방향 설정
+        if (monsterTransform.localScale.x < 0)
+        {
+            // 몬스터가 flip되면 Slider도 반대로 회전
+            slider.transform.localScale = new Vector3(-initialScale.x, initialScale.y, initialScale.z);
         }
     }
 
